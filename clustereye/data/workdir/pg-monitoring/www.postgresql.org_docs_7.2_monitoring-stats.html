@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 7.2: Statistics Collector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/7.2/monitoring-stats.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2012-01-01T00:00:00" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="Statistics Collector" />
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?77152761" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?77152761">
+
+  <script src="/media/js/theme.js?77152761"></script>
+
+  
+  <meta name="robots" content="nofollow" />
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/monitoring-stats.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 16, 2026: <a href="/about/news/out-of-cycle-release-scheduled-for-february-26-2026-3241/">
+  Out-of-cycle release scheduled for February 26, 2026
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/7.2/index.html">PostgreSQL 7.2</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/monitoring-stats.html" title="PostgreSQL 18 - Statistics Collector" >Current</a>
+                          (<a href="/docs/18/monitoring-stats.html" title="PostgreSQL 18 - Statistics Collector" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/monitoring-stats.html" title="PostgreSQL 17 - Statistics Collector" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/monitoring-stats.html" title="PostgreSQL 16 - Statistics Collector" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/monitoring-stats.html" title="PostgreSQL 15 - Statistics Collector" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/monitoring-stats.html" title="PostgreSQL 14 - Statistics Collector" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/monitoring-stats.html" title="PostgreSQL devel - Statistics Collector"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/monitoring-stats.html" title="PostgreSQL 13 - Statistics Collector"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/monitoring-stats.html" title="PostgreSQL 12 - Statistics Collector"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/monitoring-stats.html" title="PostgreSQL 11 - Statistics Collector"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/monitoring-stats.html" title="PostgreSQL 10 - Statistics Collector"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/monitoring-stats.html" title="PostgreSQL 9.6 - Statistics Collector"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/monitoring-stats.html" title="PostgreSQL 9.5 - Statistics Collector"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/monitoring-stats.html" title="PostgreSQL 9.4 - Statistics Collector"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/monitoring-stats.html" title="PostgreSQL 9.3 - Statistics Collector"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/monitoring-stats.html" title="PostgreSQL 9.2 - Statistics Collector"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/monitoring-stats.html" title="PostgreSQL 9.1 - Statistics Collector"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/monitoring-stats.html" title="PostgreSQL 9.0 - Statistics Collector"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/monitoring-stats.html" title="PostgreSQL 8.4 - Statistics Collector"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/monitoring-stats.html" title="PostgreSQL 8.3 - Statistics Collector"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/monitoring-stats.html" title="PostgreSQL 8.2 - Statistics Collector"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/monitoring-stats.html" title="PostgreSQL 8.1 - Statistics Collector"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/monitoring-stats.html" title="PostgreSQL 8.0 - Statistics Collector"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/monitoring-stats.html" title="PostgreSQL 7.4 - Statistics Collector"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/monitoring-stats.html" title="PostgreSQL 7.3 - Statistics Collector"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/monitoring-stats.html" title="PostgreSQL 7.2 - Statistics Collector" class="docs-version-selected" rel="nofollow">7.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/7.2/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+	  <div class="text-center alert-warning">
+	    This documentation is for an unsupported version of PostgreSQL.<br/>
+	    You may want to view the same page for the
+	    <a href="/docs/current/monitoring-stats.html" title="PostgreSQL  - Statistics Collector">current</a>
+	    version, or one of the other supported versions listed above instead.
+	  </div>
+
+          <div id="docContent">
+            <div class="NAVHEADER">
+  <table summary="Header navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <th colspan="3" align="center">PostgreSQL 7.2.8
+      Documentation</th>
+    </tr>
+
+    <tr>
+      <td width="10%" align="left" valign="bottom"><a href=
+      "monitoring.html" accesskey="P">Prev</a></td>
+
+      <td width="80%" align="center" valign="bottom">Chapter 10.
+      Monitoring Database Activity</td>
+
+      <td width="10%" align="right" valign="bottom"><a href=
+      "wal.html" accesskey="N">Next</a></td>
+    </tr>
+  </table>
+  <hr class="c1" width="100%" />
+</div>
+
+<div class="SECT1">
+  <h1 class="SECT1"><a name="MONITORING-STATS" id=
+  "MONITORING-STATS">10.2. Statistics Collector</a></h1><a name=
+  "AEN17894" id="AEN17894"></a>
+
+  <p><span class="PRODUCTNAME">PostgreSQL</span>'s <i class=
+  "FIRSTTERM">statistics collector</i> is a subsystem that supports
+  collection and reporting of information about server activity.
+  Presently, the collector can count accesses to tables and indexes
+  in both disk-block and individual-row terms. It also supports
+  determining the exact query currently being executed by other
+  server processes.</p>
+
+  <div class="SECT2">
+    <h2 class="SECT2"><a name="MONITORING-STATS-SETUP" id=
+    "MONITORING-STATS-SETUP">10.2.1. Statistics Collection
+    Configuration</a></h2>
+
+    <p>Since collection of statistics adds some overhead to query
+    execution, the system can be configured to collect or not
+    collect information. This is controlled by configuration
+    variables that are normally set in <tt class=
+    "FILENAME">postgresql.conf</tt> (see <a href=
+    "runtime-config.html">Section 3.4</a> for details about setting
+    configuration variables).</p>
+
+    <p>The variable <code class=
+    "VARNAME">STATS_START_COLLECTOR</code> must be set to
+    <tt class="LITERAL">true</tt> for the statistics collector to
+    be launched at all. This is the default and recommended
+    setting, but it may be turned off if you have no interest in
+    statistics and want to squeeze out every last drop of overhead.
+    (The savings is likely to be small, however.) Note that this
+    option cannot be changed while the server is running.</p>
+
+    <p>The variables <code class=
+    "VARNAME">STATS_COMMAND_STRING</code>, <code class=
+    "VARNAME">STATS_BLOCK_LEVEL</code>, and <code class=
+    "VARNAME">STATS_ROW_LEVEL</code> control how much information
+    is actually sent to the collector, and thus determine how much
+    runtime overhead occurs. These respectively determine whether a
+    server process sends its current command string,
+    disk-block-level access statistics, and row-level access
+    statistics to the collector. Normally these variables are set
+    in <tt class="FILENAME">postgresql.conf</tt> so that they apply
+    to all server processes, but it is possible to turn them on or
+    off in individual server processes using the <b class=
+    "COMMAND">SET</b> command. (To prevent ordinary users from
+    hiding their activity from the administrator, only superusers
+    are allowed to change these variables with <b class=
+    "COMMAND">SET</b>.)</p>
+
+    <div class="IMPORTANT">
+      <blockquote class="IMPORTANT">
+        <p><b>Important:</b> Since the variables <code class=
+        "VARNAME">STATS_COMMAND_STRING</code>, <code class=
+        "VARNAME">STATS_BLOCK_LEVEL</code>, and <code class=
+        "VARNAME">STATS_ROW_LEVEL</code> default to <tt class=
+        "LITERAL">false</tt>, no statistics are actually collected
+        in the default configuration! You must turn one or more of
+        them on before you will get useful results from the
+        statistical display functions.</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="SECT2">
+    <h2 class="SECT2"><a name="MONITORING-STATS-VIEWS" id=
+    "MONITORING-STATS-VIEWS">10.2.2. Viewing Collected
+    Statistics</a></h2>
+
+    <p>Several predefined views are available to show the results
+    of statistics collection. Alternatively, one can build custom
+    views using the underlying statistics functions.</p>
+
+    <p>When using the statistics to monitor current activity, it is
+    important to realize that the information does not update
+    instantaneously. Each individual server process transmits new
+    access counts to the collector just before waiting for another
+    client command; so a query still in progress does not affect
+    the displayed totals. Also, the collector itself emits new
+    totals at most once per PGSTAT_STAT_INTERVAL (500 milliseconds
+    by default). So the displayed totals lag behind actual
+    activity.</p>
+
+    <p>Another important point is that when a server process is
+    asked to display any of these statistics, it first fetches the
+    most recent totals emitted by the collector process. It then
+    continues to use this snapshot for all statistical views and
+    functions until the end of its current transaction. So the
+    statistics will appear not to change as long as you continue
+    the current transaction. This is a feature, not a bug, because
+    it allows you to perform several queries on the statistics and
+    correlate the results without worrying that the numbers are
+    changing underneath you. But if you want to see new results
+    with each query, be sure to do the queries outside any
+    transaction block.</p>
+
+    <div class="TABLE">
+      <a name="AEN17925" id="AEN17925"></a>
+
+      <p class="c2">Table 10-1. Standard Statistics Views</p>
+
+      <table border="1" class="CALSTABLE">
+        <col />
+        <col />
+
+        <thead>
+          <tr>
+            <th>View Name</th>
+
+            <th>Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><tt class="STRUCTNAME">pg_stat_activity</tt></td>
+
+            <td>One row per server process, showing process PID,
+            database, user, and current query. The current query
+            column is only available to superusers; for others it
+            reads as NULL. (Note that because of the collector's
+            reporting delay, current query will only be up-to-date
+            for long-running queries.)</td>
+          </tr>
+
+          <tr>
+            <td><tt class="STRUCTNAME">pg_stat_database</tt></td>
+
+            <td>One row per database, showing number of active
+            backends, total transactions committed and total rolled
+            back in that database, total disk blocks read, and
+            total number of buffer hits (ie, block read requests
+            avoided by finding the block already in buffer
+            cache).</td>
+          </tr>
+
+          <tr>
+            <td><tt class="STRUCTNAME">pg_stat_all_tables</tt></td>
+
+            <td>For each table in the current database, total
+            numbers of sequential and index scans, total numbers of
+            tuples returned by each type of scan, and totals of
+            tuple insertions, updates, and deletes.</td>
+          </tr>
+
+          <tr>
+            <td><tt class="STRUCTNAME">pg_stat_sys_tables</tt></td>
+
+            <td>Same as pg_stat_all_tables, except that only system
+            tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_stat_user_tables</tt></td>
+
+            <td>Same as pg_stat_all_tables, except that only user
+            tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_stat_all_indexes</tt></td>
+
+            <td>For each index in the current database, the total
+            number of index scans that have used that index, the
+            number of index tuples read, and the number of
+            successfully fetched heap tuples (this may be less when
+            there are index entries pointing to expired heap
+            tuples).</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_stat_sys_indexes</tt></td>
+
+            <td>Same as pg_stat_all_indexes, except that only
+            indexes on system tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_stat_user_indexes</tt></td>
+
+            <td>Same as pg_stat_all_indexes, except that only
+            indexes on user tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_all_tables</tt></td>
+
+            <td>For each table in the current database, the total
+            number of disk blocks read from that table, the number
+            of buffer hits, the numbers of disk blocks read and
+            buffer hits in all the indexes of that table, the
+            numbers of disk blocks read and buffer hits from the
+            table's auxiliary TOAST table (if any), and the numbers
+            of disk blocks read and buffer hits for the TOAST
+            table's index.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_sys_tables</tt></td>
+
+            <td>Same as pg_statio_all_tables, except that only
+            system tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_user_tables</tt></td>
+
+            <td>Same as pg_statio_all_tables, except that only user
+            tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_all_indexes</tt></td>
+
+            <td>For each index in the current database, the numbers
+            of disk blocks read and buffer hits in that index.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_sys_indexes</tt></td>
+
+            <td>Same as pg_statio_all_indexes, except that only
+            indexes on system tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_user_indexes</tt></td>
+
+            <td>Same as pg_statio_all_indexes, except that only
+            indexes on user tables are shown.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_all_sequences</tt></td>
+
+            <td>For each sequence object in the current database,
+            the numbers of disk blocks read and buffer hits in that
+            sequence.</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_sys_sequences</tt></td>
+
+            <td>Same as pg_statio_all_sequences, except that only
+            system sequences are shown. (Presently, no system
+            sequences are defined, so this view is always
+            empty.)</td>
+          </tr>
+
+          <tr>
+            <td><tt class=
+            "STRUCTNAME">pg_statio_user_sequences</tt></td>
+
+            <td>Same as pg_statio_all_sequences, except that only
+            user sequences are shown.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The per-index statistics are particularly useful to
+    determine which indexes are being used and how effective they
+    are.</p>
+
+    <p>The <tt class="STRUCTNAME">pg_statio_</tt> views are
+    primarily useful to determine the effectiveness of the buffer
+    cache. When the number of actual disk reads is much smaller
+    than the number of buffer hits, then the cache is satisfying
+    most read requests without invoking a kernel call.</p>
+
+    <p>Other ways of looking at the statistics can be set up by
+    writing queries that use the same underlying statistics access
+    functions as these standard views do. The per-database access
+    functions accept a database OID to identify which database to
+    report on. The per-table and per-index functions accept a table
+    or index OID (note that only tables and indexes in the current
+    database can be seen with these functions). The per-backend
+    access functions accept a backend ID number, which ranges from
+    one to the number of currently active backends.</p>
+
+    <div class="TABLE">
+      <a name="AEN18005" id="AEN18005"></a>
+
+      <p class="c2">Table 10-2. Statistics Access Functions</p>
+
+      <table border="1" class="CALSTABLE">
+        <col />
+        <col />
+        <col />
+
+        <thead>
+          <tr>
+            <th>Function</th>
+
+            <th>Return Type</th>
+
+            <th>Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_db_numbackends</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">integer</tt></td>
+
+            <td>Number of active backends in database</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_db_xact_commit</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Transactions committed in database</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_db_xact_rollback</code>(<tt class="TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Transactions rolled back in database</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_db_blocks_fetched</code>(<tt class="TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of disk block fetch requests for
+            database</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_db_blocks_hit</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of disk block requests found in cache for
+            database</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_numscans</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of sequential scans done when argument is a
+            table, or number of index scans done when argument is
+            an index</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_tuples_returned</code>(<tt class="TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of tuples read by sequential scans when
+            argument is a table, or number of index tuples read
+            when argument is an index</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_tuples_fetched</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of valid (unexpired) table tuples fetched by
+            sequential scans when argument is a table, or fetched
+            by index scans using this index when argument is an
+            index</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_tuples_inserted</code>(<tt class="TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of tuples inserted into table</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_tuples_updated</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of tuples updated in table</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_tuples_deleted</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of tuples deleted from table</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_blocks_fetched</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of disk block fetch requests for table or
+            index</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_blocks_hit</code>(<tt class=
+            "TYPE">oid</tt>)</td>
+
+            <td><tt class="TYPE">bigint</tt></td>
+
+            <td>Number of disk block requests found in cache for
+            table or index</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_backend_idset</code>()</td>
+
+            <td><tt class="TYPE">set of integer</tt></td>
+
+            <td>Set of currently active backend IDs (from 1 to N
+            where N is the number of active backends). See usage
+            example below.</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_backend_pid</code>(<tt class=
+            "TYPE">integer</tt>)</td>
+
+            <td><tt class="TYPE">integer</tt></td>
+
+            <td>PID of backend process</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_backend_dbid</code>(<tt class=
+            "TYPE">integer</tt>)</td>
+
+            <td><tt class="TYPE">oid</tt></td>
+
+            <td>Database ID of backend process</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_backend_userid</code>(<tt class=
+            "TYPE">integer</tt>)</td>
+
+            <td><tt class="TYPE">oid</tt></td>
+
+            <td>User ID of backend process</td>
+          </tr>
+
+          <tr>
+            <td><code class=
+            "FUNCTION">pg_stat_get_backend_activity</code>(<tt class="TYPE">integer</tt>)</td>
+
+            <td><tt class="TYPE">text</tt></td>
+
+            <td>Current query of backend process (NULL if caller is
+            not superuser)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Note: blocks_fetched minus blocks_hit gives the number of
+    kernel read() calls issued for the table, index, or database;
+    but the actual number of physical reads is usually lower due to
+    kernel-level buffering.</p>
+
+    <p>The function <code class=
+    "FUNCTION">pg_stat_get_backend_idset</code> provides a
+    convenient way to generate one row for each active backend. For
+    example, to show the PIDs and current queries of all
+    backends:</p>
+    <pre class="PROGRAMLISTING">
+SELECT pg_stat_get_backend_pid(S.backendid) AS procpid,
+       pg_stat_get_backend_activity(S.backendid) AS current_query
+FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS S;
+</pre>
+  </div>
+</div>
+
+<div class="NAVFOOTER">
+  <hr class="c1" width="100%" />
+
+  <table summary="Footer navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="33%" align="left" valign="top"><a href=
+      "monitoring.html" accesskey="P">Prev</a></td>
+
+      <td width="34%" align="center" valign="top"><a href=
+      "index.html" accesskey="H">Home</a></td>
+
+      <td width="33%" align="right" valign="top"><a href="wal.html"
+      accesskey="N">Next</a></td>
+    </tr>
+
+    <tr>
+      <td width="33%" align="left" valign="top">Monitoring Database
+      Activity</td>
+
+      <td width="34%" align="center" valign="top"><a href=
+      "monitoring.html" accesskey="U">Up</a></td>
+
+      <td width="33%" align="right" valign="top">Write-Ahead
+      Logging (<acronym class="ACRONYM">WAL</acronym>)</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?77152761"></script>
+
+  </body>
+</html>

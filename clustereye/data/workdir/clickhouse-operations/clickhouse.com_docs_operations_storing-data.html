@@ -1,0 +1,797 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page plugin-docs plugin-id-default docs-doc-id-operations/storing-data" data-has-hydrated=false><script>(function(){try{window.__cfbm=Object.freeze({"score":1,"verified":false,"category":"","bucket":"automated"});window.sessionStorage.setItem('__cfbm', JSON.stringify(window.__cfbm));}catch(e){}})();</script><meta charset=UTF-8><meta name=generator content="Docusaurus v3.7.0"><title data-rh=true>External disks for storing data | ClickHouse Docs</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"><meta data-rh=true name=twitter:card content=summary_large_image><meta data-rh=true property=og:image content=https://clickhouse.com/docs/img/docs_social_share.png><meta data-rh=true name=twitter:image content=https://clickhouse.com/docs/img/docs_social_share.png><meta data-rh=true property=og:url content=https://clickhouse.com/docs/operations/storing-data><meta data-rh=true property=og:locale content=en><meta data-rh=true property=og:locale:alternate content=jp><meta data-rh=true property=og:locale:alternate content=zh><meta data-rh=true property=og:locale:alternate content=ru><meta data-rh=true name=docusaurus_locale content=en><meta data-rh=true name=docsearch:language content=en><meta data-rh=true name=Accept-Language content="en-US,en;q=0.9"><meta data-rh=true name=docusaurus_version content=current><meta data-rh=true name=docusaurus_tag content=docs-default-current><meta data-rh=true name=docsearch:version content=current><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current><meta data-rh=true property=og:title content="External disks for storing data | ClickHouse Docs"><meta data-rh=true name=description content="Documentation for highlight-next-line"><meta data-rh=true property=og:description content="Documentation for highlight-next-line"><link data-rh=true rel=icon href=/docs/img/docs_favicon.ico><link data-rh=true rel=canonical href=https://clickhouse.com/docs/operations/storing-data><link data-rh=true rel=alternate href=https://clickhouse.com/docs/operations/storing-data hreflang=en><link data-rh=true rel=alternate href=https://clickhouse.com/docs/jp/operations/storing-data hreflang=jp><link data-rh=true rel=alternate href=https://clickhouse.com/docs/zh/operations/storing-data hreflang=zh><link data-rh=true rel=alternate href=https://clickhouse.com/docs/ru/operations/storing-data hreflang=ru><link data-rh=true rel=alternate href=https://clickhouse.com/docs/operations/storing-data hreflang=x-default><link data-rh=true rel=preconnect href=https://5H9UG7CX5W-dsn.algolia.net crossorigin=anonymous><link rel=alternate type=application/rss+xml href=/docs/knowledgebase/rss.xml title="ClickHouse Knowledge Base Feed RSS Feed"><link rel=alternate type=application/atom+xml href=/docs/knowledgebase/atom.xml title="ClickHouse Knowledge Base Feed Atom Feed"><link rel=alternate type=application/json href=/docs/knowledgebase/feed.json title="ClickHouse Knowledge Base Feed JSON Feed"><link rel=preconnect href=https://www.googletagmanager.com><script>window.dataLayer=window.dataLayer||[],function(e,t,a,n,r){e[n]=e[n]||[],e[n].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var d=t.getElementsByTagName(a)[0],g=t.createElement(a);g.async=!0,g.src="https://www.googletagmanager.com/gtm.js?id="+r+("dataLayer"!=n?"&l="+n:""),d.parentNode.insertBefore(g,d)}(window,document,"script","dataLayer","GTM-WTNTDT7W")</script><link rel=search type=application/opensearchdescription+xml title="ClickHouse Docs" href=/docs/opensearch.xml><link href=https://widget.kapa.ai rel=preconnect><link href=https://www.gstatic.com rel=preconnect crossorigin=use-credentials><link href=https://www.googletagmanager.com rel=preconnect><script src=/docs/js/kapa_config.js></script><script src=/docs/js/kapa_widget.js async defer></script><link rel=stylesheet href=/docs/assets/css/styles.eafcc97c.css><script src=/docs/assets/js/runtime~main.047e91c7.js defer></script><script src=/docs/assets/js/main.a75c5b65.js defer></script><body class=navigation-with-keyboard><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTNTDT7W" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
+
+
+<script>!function(){var t,e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t=null!==e?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark",document.documentElement.setAttribute("data-theme",t)}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="navbar navbar--fixed-top navBar_gvJn"><div class="navbarHeaderContainer_hXE4 navbar-header"><div class="navbar__inner navbarInner_AsTO"><div class=navbarLogo_UJMW><a href=https://clickhouse.com/ target=_blank rel="noopener noreferrer" class=navbar__brand><div class=navbar__logo><img src=/docs/img/ch_logo_docs.svg alt=ClickHouse class="themedComponent_mlkZ themedComponent--light_NVdE"><img src=/docs/img/ch_logo_docs_dark.svg alt=ClickHouse class="themedComponent_mlkZ themedComponent--dark_xIcU"></div></a></div><nav class="ch-nav-v2 ch-nav-v2-desktop-item"><div><ul><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Products</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-products ch-nav-v2-list"><li><a href=https://clickhouse.com/cloud class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=23 height=17 viewBox="0 0 23 17"><path fill=currentColor d="M14.5.25a8.25 8.25 0 0 1 .252 16.496l-.252.004H6.25a6 6 0 1 1 .601-11.97l.268.031.03-.06A8.25 8.25 0 0 1 14.248.254zm0 1.5A6.75 6.75 0 0 0 7.75 8.5a.75.75 0 0 1-1.5 0q.002-.951.206-1.841l.101-.399-.307-.01a4.5 4.5 0 0 0-.212 8.995l.212.005h8.25a6.75 6.75 0 1 0 0-13.5"/></svg></div><span>ClickHouse Cloud<div class=nav-with-icon__description>Best way to use ClickHouse.<br>Available on AWS, GCP, and Azure.</div></span></a><li><a href=https://clickhouse.com/cloud/bring-your-own-cloud class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=none viewBox="0 0 24 24"><path stroke=currentColor stroke-width=1.5 d="M2.106 11.782A5.24 5.24 0 0 1 6.742 8.99c.438 0 .875.053 1.301.159m-.552 2.837a7.49 7.49 0 1 1 7.49 7.49h-8.24a5.24 5.24 0 0 1-4.188-2.088"/><path fill=currentColor d="M12.76 13.8h-12v1.4h12z"/><path fill=currentColor fill-rule=evenodd d="m15.26 14.5-2.5 2.5v-5z" clip-rule=evenodd /></svg></div><span>BYOC (Bring Your Own Cloud)<div class=nav-with-icon__description>The fully managed ClickHouse Cloud service,<br>Can be deployed in your AWS account.</div></span></a><li><a href=https://clickhouse.com/clickhouse class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=16 height=17 viewBox="0 0 16 17"><path fill=currentColor d="M14.564 9.25c.75 0 1.324.615 1.39 1.36l.006.14v4.5c0 .758-.53 1.418-1.258 1.493l-.138.007H1.646c-.751 0-1.325-.615-1.39-1.36l-.006-.14v-4.5c0-.758.53-1.418 1.257-1.493l.139-.007zm-.104 1.5H1.75v4.5h12.71zm.104-10.5c.75 0 1.324.615 1.39 1.36l.006.14v4.5c0 .758-.53 1.418-1.258 1.493l-.138.007H1.646C.895 7.75.32 7.135.256 6.39L.25 6.25v-4.5C.25.992.78.332 1.507.257L1.646.25zm-.104 1.5H1.75v4.5h12.71z"/></svg></div><span>ClickHouse<div class=nav-with-icon__description>Set up a database with open-source ClickHouse.<br>ClickHouse</div></span></a><li class=ch-nav-v2-mobile-item><a href=https://clickhouse.com/integrations class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=21 height=21 viewBox="0 0 21 21"><path fill=currentColor d="m20.754 14.577.006.1v3.221a2.86 2.86 0 0 1-2.655 2.855l-.207.007-3.208.002c-.35.002-.704-.222-.756-.642l-.007-.109a1 1 0 0 1 .007-.102l.008-.047c.056-.28.05-.568-.018-.845l-.048-.164a1.86 1.86 0 0 0-1.311-1.203 1.895 1.895 0 0 0-2.327 2.213.75.75 0 0 1-.636.892l-.1.006h-3.22a2.86 2.86 0 0 1-2.856-2.693l-.005-.169-.001-2.426-.194-.018a3.4 3.4 0 0 1-2.13-1.127l-.133-.161a3.4 3.4 0 0 1-.608-2.918A3.36 3.36 0 0 1 3.19 8.73l.229-.022V6.283c0-.69.25-1.355.698-1.873l.14-.151a2.86 2.86 0 0 1 1.818-.83l.207-.008 2.425-.001.019-.194a3.4 3.4 0 0 1 1.127-2.13l.161-.133a3.4 3.4 0 0 1 2.919-.608 3.365 3.365 0 0 1 2.518 2.835l.021.23h2.426c.69 0 1.355.25 1.873.698l.151.14c.488.489.782 1.135.83 1.818l.008.207V9.49c.003.35-.22.704-.64.756l-.11.007a1 1 0 0 1-.102-.007l-.047-.009a1.95 1.95 0 0 0-.845.019l-.164.048a1.86 1.86 0 0 0-1.203 1.311 1.895 1.895 0 0 0 2.087 2.348l.192-.031.099-.005.046.003.108.016.068.02.112.048.064.038.073.056.047.043a.74.74 0 0 1 .188.327l.02.1Zm-9.82-12.43a1.89 1.89 0 0 0-.696 1.876.75.75 0 0 1-.635.891l-.1.007H6.282a1.36 1.36 0 0 0-1.354 1.208l-.008.154-.001 3.178.002.03c.003.35-.221.704-.641.756l-.11.007a1 1 0 0 1-.102-.007l-.046-.009a1.96 1.96 0 0 0-.845.019l-.164.048a1.86 1.86 0 0 0-1.204 1.311 1.895 1.895 0 0 0 2.214 2.327.75.75 0 0 1 .891.635l.007.1v3.221c0 .708.54 1.29 1.23 1.355l.132.006 2.424.001.019-.194a3.4 3.4 0 0 1 1.127-2.13l.161-.134a3.4 3.4 0 0 1 2.918-.607 3.36 3.36 0 0 1 2.519 2.835l.021.229h2.426c.31 0 .609-.105.849-.296l.114-.102c.22-.22.356-.505.39-.81l.009-.154-.001-2.426-.193-.018a3.4 3.4 0 0 1-2.13-1.127l-.134-.161a3.4 3.4 0 0 1-.607-2.918 3.36 3.36 0 0 1 2.835-2.519l.229-.022.001-2.433-.008-.145a1.36 1.36 0 0 0-.288-.695l-.102-.114a1.36 1.36 0 0 0-.81-.39l-.154-.01h-3.221a.75.75 0 0 1-.735-.898 1.94 1.94 0 0 0-.065-1.009 1.87 1.87 0 0 0-1.312-1.204 1.9 1.9 0 0 0-1.631.339Z"/></svg></div><span>Discover more than 100 integrations.</span></a></ul><a href=https://clickhouse.com/integrations style=padding-left:60px class="LinkWithArrow_gmJP ch-nav-v2-desktop-item ch-nav-v2-link-with-arrow">Discover more than 100 integrations.<!-- --> <span class=LinkWithArrow__Arrow_QCtL><span class=LinkWithArrow__ArrowGhost_fSw7><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span><span class=LinkWithArrow__ArrowVisible_ZvLF><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span></span></a></div></div></div><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Use cases</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-use-cases ch-nav-v2-list"><li><a href=https://clickhouse.com/use-cases/real-time-analytics class="ch-nav-v2-link  ">Real-time analytics</a><li><a href=https://clickhouse.com/use-cases/machine-learning-and-data-science class="ch-nav-v2-link  ">Machine Learning & Generative AI</a><li><a href=https://clickhouse.com/use-cases/data-warehousing class="ch-nav-v2-link  ">Business Intelligence</a><li><a href=https://clickhouse.com/use-cases/observability class="ch-nav-v2-link  ">Logs, Events, Traces</a><li class=ch-nav-v2-mobile-item><a href=https://clickhouse.com/use-cases class="ch-nav-v2-link  ">All use cases</a></ul><a href=https://clickhouse.com/use-cases class="LinkWithArrow_gmJP ch-nav-v2-desktop-item ch-nav-v2-link-with-arrow">All use cases<!-- --> <span class=LinkWithArrow__Arrow_QCtL><span class=LinkWithArrow__ArrowGhost_fSw7><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span><span class=LinkWithArrow__ArrowVisible_ZvLF><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span></span></a></div></div></div><li><div class="ch-nav-v2-item "><a href=https://clickhouse.com/docs class="ch-nav-v2-link    undefined "><span>Documentation</span></a></div><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Resources</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-resources ch-nav-v2-list"><li><a href=https://clickhouse.com/user-stories class="ch-nav-v2-link  ">User stories</a><li><a href=https://clickhouse.com/blog class="ch-nav-v2-link  ">Blog</a><li><a href=https://clickhouse.com/company/events class="ch-nav-v2-link  ">Events</a><li><a href=https://clickhouse.com/learn class="ch-nav-v2-link  ">Learning and certification</a><li><a href="" class="ch-nav-v2-link w-full items-center justify-between  "><span>Comparison</span><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right text-neutral-500"><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></a><ul class="ch-nav-v2-sub-nav ch-nav-v2-list "><li><a href=https://clickhouse.com/comparison/bigquery class="ch-nav-v2-link block w-full ">BigQuery</a><li><a href=https://clickhouse.com/comparison/postgresql class="ch-nav-v2-link block w-full ">PostgreSQL</a><li><a href=https://clickhouse.com/comparison/redshift class="ch-nav-v2-link block w-full ">Redshift</a><li><a href=https://clickhouse.com/comparison/rockset class="ch-nav-v2-link block w-full ">Rockset</a><li><a href=https://clickhouse.com/comparison/snowflake class="ch-nav-v2-link block w-full ">Snowflake</a></ul><li><a href=https://clickhouse.com/videos class="ch-nav-v2-link block w-full ">Video</a><li><a href=https://clickhouse.com/demos class="ch-nav-v2-link block w-full ">Demo</a></ul></div></div></div><li><div class="ch-nav-v2-item "><a href=/pricing class="ch-nav-v2-link    undefined "><span>Pricing</span></a></div><li><div class="ch-nav-v2-item "><a href="/company/contact?loc=nav" class="ch-nav-v2-link    undefined "><span>Contact</span></a></div></ul></div></nav><div class=navRight_Xotf><a href="https://github.com/ClickHouse/ClickHouse?utm_source=clickhouse&utm_medium=website&utm_campaign=website-nav" target=_blank class=githubStars_xKU0><div class=githubStarsContainer_fzg6><svg width=16 height=16 viewBox="0 0 16 16" fill=none xmlns=http://www.w3.org/2000/svg><path fill-rule=evenodd clip-rule=evenodd d="M8 1.75C4.27062 1.75 1.25 4.77062 1.25 8.5C1.25 11.4869 3.18219 14.0097 5.86531 14.9041C6.20281 14.9631 6.32937 14.7606 6.32937 14.5834C6.32937 14.4231 6.32094 13.8916 6.32094 13.3263C4.625 13.6384 4.18625 12.9128 4.05125 12.5331C3.97531 12.3391 3.64625 11.74 3.35938 11.5797C3.12312 11.4531 2.78562 11.1409 3.35094 11.1325C3.8825 11.1241 4.26219 11.6219 4.38875 11.8244C4.99625 12.8453 5.96656 12.5584 6.35469 12.3813C6.41375 11.9425 6.59094 11.6472 6.785 11.4784C5.28312 11.3097 3.71375 10.7275 3.71375 8.14563C3.71375 7.41156 3.97531 6.80406 4.40563 6.33156C4.33812 6.16281 4.10187 5.47094 4.47312 4.54281C4.47312 4.54281 5.03844 4.36563 6.32937 5.23469C6.86937 5.08281 7.44313 5.00687 8.01688 5.00687C8.59063 5.00687 9.16438 5.08281 9.70438 5.23469C10.9953 4.35719 11.5606 4.54281 11.5606 4.54281C11.9319 5.47094 11.6956 6.16281 11.6281 6.33156C12.0584 6.80406 12.32 7.40312 12.32 8.14563C12.32 10.7359 10.7422 11.3097 9.24031 11.4784C9.485 11.6894 9.69594 12.0944 9.69594 12.7272C9.69594 13.63 9.6875 14.3556 9.6875 14.5834C9.6875 14.7606 9.81406 14.9716 10.1516 14.9041C12.8178 14.0097 14.75 11.4784 14.75 8.5C14.75 4.77062 11.7294 1.75 8 1.75Z" fill=currentColor /></svg><span class=githubText_pqqB>46.0k</span></div></a><div class=mobileSearchBar_lGd9><a href=/docs/search class="DocSearch DocSearch-Button" aria-label=Search><span class=DocSearch-Button-Container><svg width=20 height=20 class=DocSearch-Search-Icon viewBox="0 0 20 20" aria-hidden=true><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke=currentColor fill=none fill-rule=evenodd stroke-linecap=round stroke-linejoin=round /></svg><span class=DocSearch-Button-Placeholder>Search</span></span><span class=DocSearch-Button-Keys><kbd class=DocSearch-Button-Key>Ctrl</kbd><kbd class=DocSearch-Button-Key>K</kbd></span></a></div><div class=signUp_pDjn><a href="https://console.clickhouse.cloud/signIn?loc=docs-nav-signIn-cta" class="sign-in navbar__link ch-menu signIn_n8kr">Sign in</a><a href="https://console.clickhouse.cloud/signUp?loc=docs-nav-signUp-cta" class=click-button-anchor><button class="click-button primary-btn">Get started</button></a></div><svg class=docsNavBurger_SkeB width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></div></div><div class="secondary-nav--items secondaryMenu_SZAs"><div class=dropdownCategoriesContainer_DwBX><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/introduction-clickhouse>Get started</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/cloud/overview>Cloud</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/updating-data>Manage data</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/guides/manage-and-deploy-index>Server admin</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/sql-reference>Reference</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/integrations>Integrations</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/use-cases/observability/clickstack/overview>ClickStack</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/chdb>chDB</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/about>About</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class=docsNavDropdownContainer_cADf><a class=docsNavDropdownToolbarTopLevelLink_lJY0 href=/docs/knowledgebase><span>Knowledge Base</span></a></div></div><div class="secondaryMenuRight_dXHH secondary-nav--items-right"><div class="navbar__item dropdown dropdown--hoverable"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_DSK9><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>English</a><ul class=dropdown__menu><li><a href=/docs/operations/storing-data target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=en>English</a><li><a href=/docs/jp/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=jp>日本語</a><li><a href=/docs/zh/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=zh>中文</a><li><a href=/docs/ru/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=ru>Русский</a></ul></div><button class="colorModeButton_EOjh navbar-color-toggle"><svg xmlns=http://www.w3.org/2000/svg fill=none width=31 height=31 viewBox="0 0 24 24" stroke-width=1.5 stroke=currentColor class="w-6 h-6" stroke-linecap=round stroke-linejoin=round><path stroke-linecap=round stroke-linejoin=round d="M18.3945 13.0269C18.7245 12.8719 19.0765 13.1969 18.9845 13.5499C18.6705 14.7519 18.0535 15.8959 17.1035 16.8459C14.2825 19.6669 9.76953 19.7259 7.02153 16.9779C4.27353 14.2299 4.33353 9.71589 7.15453 6.89489C8.10453 5.94489 9.24753 5.32789 10.4505 5.01389C10.8035 4.92189 11.1275 5.27389 10.9735 5.60389C9.97153 7.74289 10.3005 10.3049 11.9975 12.0019C13.6935 13.6999 16.2555 14.0289 18.3945 13.0269V13.0269Z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="main-wrapper mainWrapper_z2l0"><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="navbar navbar--fixed-top navBar_gvJn"><div class="navbarHeaderContainer_hXE4 navbar-header"><div class="navbar__inner navbarInner_AsTO"><div class=navbarLogo_UJMW><a href=https://clickhouse.com/ target=_blank rel="noopener noreferrer" class=navbar__brand><div class=navbar__logo><img src=/docs/img/ch_logo_docs.svg alt=ClickHouse class="themedComponent_mlkZ themedComponent--light_NVdE"><img src=/docs/img/ch_logo_docs_dark.svg alt=ClickHouse class="themedComponent_mlkZ themedComponent--dark_xIcU"></div></a></div><nav class="ch-nav-v2 ch-nav-v2-desktop-item"><div><ul><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Products</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-products ch-nav-v2-list"><li><a href=https://clickhouse.com/cloud class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=23 height=17 viewBox="0 0 23 17"><path fill=currentColor d="M14.5.25a8.25 8.25 0 0 1 .252 16.496l-.252.004H6.25a6 6 0 1 1 .601-11.97l.268.031.03-.06A8.25 8.25 0 0 1 14.248.254zm0 1.5A6.75 6.75 0 0 0 7.75 8.5a.75.75 0 0 1-1.5 0q.002-.951.206-1.841l.101-.399-.307-.01a4.5 4.5 0 0 0-.212 8.995l.212.005h8.25a6.75 6.75 0 1 0 0-13.5"/></svg></div><span>ClickHouse Cloud<div class=nav-with-icon__description>Best way to use ClickHouse.<br>Available on AWS, GCP, and Azure.</div></span></a><li><a href=https://clickhouse.com/cloud/bring-your-own-cloud class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=none viewBox="0 0 24 24"><path stroke=currentColor stroke-width=1.5 d="M2.106 11.782A5.24 5.24 0 0 1 6.742 8.99c.438 0 .875.053 1.301.159m-.552 2.837a7.49 7.49 0 1 1 7.49 7.49h-8.24a5.24 5.24 0 0 1-4.188-2.088"/><path fill=currentColor d="M12.76 13.8h-12v1.4h12z"/><path fill=currentColor fill-rule=evenodd d="m15.26 14.5-2.5 2.5v-5z" clip-rule=evenodd /></svg></div><span>BYOC (Bring Your Own Cloud)<div class=nav-with-icon__description>The fully managed ClickHouse Cloud service,<br>Can be deployed in your AWS account.</div></span></a><li><a href=https://clickhouse.com/clickhouse class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=16 height=17 viewBox="0 0 16 17"><path fill=currentColor d="M14.564 9.25c.75 0 1.324.615 1.39 1.36l.006.14v4.5c0 .758-.53 1.418-1.258 1.493l-.138.007H1.646c-.751 0-1.325-.615-1.39-1.36l-.006-.14v-4.5c0-.758.53-1.418 1.257-1.493l.139-.007zm-.104 1.5H1.75v4.5h12.71zm.104-10.5c.75 0 1.324.615 1.39 1.36l.006.14v4.5c0 .758-.53 1.418-1.258 1.493l-.138.007H1.646C.895 7.75.32 7.135.256 6.39L.25 6.25v-4.5C.25.992.78.332 1.507.257L1.646.25zm-.104 1.5H1.75v4.5h12.71z"/></svg></div><span>ClickHouse<div class=nav-with-icon__description>Set up a database with open-source ClickHouse.<br>ClickHouse</div></span></a><li class=ch-nav-v2-mobile-item><a href=https://clickhouse.com/integrations class="ch-nav-v2-link nav-with-icon "><div class=icon><svg xmlns=http://www.w3.org/2000/svg width=21 height=21 viewBox="0 0 21 21"><path fill=currentColor d="m20.754 14.577.006.1v3.221a2.86 2.86 0 0 1-2.655 2.855l-.207.007-3.208.002c-.35.002-.704-.222-.756-.642l-.007-.109a1 1 0 0 1 .007-.102l.008-.047c.056-.28.05-.568-.018-.845l-.048-.164a1.86 1.86 0 0 0-1.311-1.203 1.895 1.895 0 0 0-2.327 2.213.75.75 0 0 1-.636.892l-.1.006h-3.22a2.86 2.86 0 0 1-2.856-2.693l-.005-.169-.001-2.426-.194-.018a3.4 3.4 0 0 1-2.13-1.127l-.133-.161a3.4 3.4 0 0 1-.608-2.918A3.36 3.36 0 0 1 3.19 8.73l.229-.022V6.283c0-.69.25-1.355.698-1.873l.14-.151a2.86 2.86 0 0 1 1.818-.83l.207-.008 2.425-.001.019-.194a3.4 3.4 0 0 1 1.127-2.13l.161-.133a3.4 3.4 0 0 1 2.919-.608 3.365 3.365 0 0 1 2.518 2.835l.021.23h2.426c.69 0 1.355.25 1.873.698l.151.14c.488.489.782 1.135.83 1.818l.008.207V9.49c.003.35-.22.704-.64.756l-.11.007a1 1 0 0 1-.102-.007l-.047-.009a1.95 1.95 0 0 0-.845.019l-.164.048a1.86 1.86 0 0 0-1.203 1.311 1.895 1.895 0 0 0 2.087 2.348l.192-.031.099-.005.046.003.108.016.068.02.112.048.064.038.073.056.047.043a.74.74 0 0 1 .188.327l.02.1Zm-9.82-12.43a1.89 1.89 0 0 0-.696 1.876.75.75 0 0 1-.635.891l-.1.007H6.282a1.36 1.36 0 0 0-1.354 1.208l-.008.154-.001 3.178.002.03c.003.35-.221.704-.641.756l-.11.007a1 1 0 0 1-.102-.007l-.046-.009a1.96 1.96 0 0 0-.845.019l-.164.048a1.86 1.86 0 0 0-1.204 1.311 1.895 1.895 0 0 0 2.214 2.327.75.75 0 0 1 .891.635l.007.1v3.221c0 .708.54 1.29 1.23 1.355l.132.006 2.424.001.019-.194a3.4 3.4 0 0 1 1.127-2.13l.161-.134a3.4 3.4 0 0 1 2.918-.607 3.36 3.36 0 0 1 2.519 2.835l.021.229h2.426c.31 0 .609-.105.849-.296l.114-.102c.22-.22.356-.505.39-.81l.009-.154-.001-2.426-.193-.018a3.4 3.4 0 0 1-2.13-1.127l-.134-.161a3.4 3.4 0 0 1-.607-2.918 3.36 3.36 0 0 1 2.835-2.519l.229-.022.001-2.433-.008-.145a1.36 1.36 0 0 0-.288-.695l-.102-.114a1.36 1.36 0 0 0-.81-.39l-.154-.01h-3.221a.75.75 0 0 1-.735-.898 1.94 1.94 0 0 0-.065-1.009 1.87 1.87 0 0 0-1.312-1.204 1.9 1.9 0 0 0-1.631.339Z"/></svg></div><span>Discover more than 100 integrations.</span></a></ul><a href=https://clickhouse.com/integrations style=padding-left:60px class="LinkWithArrow_gmJP ch-nav-v2-desktop-item ch-nav-v2-link-with-arrow">Discover more than 100 integrations.<!-- --> <span class=LinkWithArrow__Arrow_QCtL><span class=LinkWithArrow__ArrowGhost_fSw7><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span><span class=LinkWithArrow__ArrowVisible_ZvLF><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span></span></a></div></div></div><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Use cases</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-use-cases ch-nav-v2-list"><li><a href=https://clickhouse.com/use-cases/real-time-analytics class="ch-nav-v2-link  ">Real-time analytics</a><li><a href=https://clickhouse.com/use-cases/machine-learning-and-data-science class="ch-nav-v2-link  ">Machine Learning & Generative AI</a><li><a href=https://clickhouse.com/use-cases/data-warehousing class="ch-nav-v2-link  ">Business Intelligence</a><li><a href=https://clickhouse.com/use-cases/observability class="ch-nav-v2-link  ">Logs, Events, Traces</a><li class=ch-nav-v2-mobile-item><a href=https://clickhouse.com/use-cases class="ch-nav-v2-link  ">All use cases</a></ul><a href=https://clickhouse.com/use-cases class="LinkWithArrow_gmJP ch-nav-v2-desktop-item ch-nav-v2-link-with-arrow">All use cases<!-- --> <span class=LinkWithArrow__Arrow_QCtL><span class=LinkWithArrow__ArrowGhost_fSw7><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span><span class=LinkWithArrow__ArrowVisible_ZvLF><svg xmlns=http://www.w3.org/2000/svg width=16 height=16 viewBox="0 0 16 16" class=LinkWithArrow__ArrowSvg_EHFy><path fill=currentColor fill-rule=nonzero d="m8.613.21.094.083 7 7c.029.028.055.059.08.09l-.08-.09a1.008 1.008 0 0 1 .292.675L16 8v.033l-.004.052L16 8a1.008 1.008 0 0 1-.22.625l-.073.082-7 7a1 1 0 0 1-1.497-1.32l.083-.094L12.585 9H1a1 1 0 0 1-.117-1.993L1 7h11.585L7.293 1.707A1 1 0 0 1 7.21.387l.083-.094A1 1 0 0 1 8.613.21Z"/></svg></span></span></a></div></div></div><li><div class="ch-nav-v2-item "><a href=https://clickhouse.com/docs class="ch-nav-v2-link    undefined "><span>Documentation</span></a></div><li><div class="ch-nav-v2-item "><a href="" class="ch-nav-v2-link  has-children  undefined "><span>Resources</span><span class=chevron><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right mobile-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron down desktop-chevron "><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></span></a><div class="ch-nav-v2-item__children "><div class=""><ul class="ch-nav-v2-sub-nav-resources ch-nav-v2-list"><li><a href=https://clickhouse.com/user-stories class="ch-nav-v2-link  ">User stories</a><li><a href=https://clickhouse.com/blog class="ch-nav-v2-link  ">Blog</a><li><a href=https://clickhouse.com/company/events class="ch-nav-v2-link  ">Events</a><li><a href=https://clickhouse.com/learn class="ch-nav-v2-link  ">Learning and certification</a><li><a href="" class="ch-nav-v2-link w-full items-center justify-between  "><span>Comparison</span><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 fill=none viewBox="0 0 6 10" class="ch-nav-v2-chevron right text-neutral-500"><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m1 9 4-4-4-4"/></svg></a><ul class="ch-nav-v2-sub-nav ch-nav-v2-list "><li><a href=https://clickhouse.com/comparison/bigquery class="ch-nav-v2-link block w-full ">BigQuery</a><li><a href=https://clickhouse.com/comparison/postgresql class="ch-nav-v2-link block w-full ">PostgreSQL</a><li><a href=https://clickhouse.com/comparison/redshift class="ch-nav-v2-link block w-full ">Redshift</a><li><a href=https://clickhouse.com/comparison/rockset class="ch-nav-v2-link block w-full ">Rockset</a><li><a href=https://clickhouse.com/comparison/snowflake class="ch-nav-v2-link block w-full ">Snowflake</a></ul><li><a href=https://clickhouse.com/videos class="ch-nav-v2-link block w-full ">Video</a><li><a href=https://clickhouse.com/demos class="ch-nav-v2-link block w-full ">Demo</a></ul></div></div></div><li><div class="ch-nav-v2-item "><a href=/pricing class="ch-nav-v2-link    undefined "><span>Pricing</span></a></div><li><div class="ch-nav-v2-item "><a href="/company/contact?loc=nav" class="ch-nav-v2-link    undefined "><span>Contact</span></a></div></ul></div></nav><div class=navRight_Xotf><a href="https://github.com/ClickHouse/ClickHouse?utm_source=clickhouse&utm_medium=website&utm_campaign=website-nav" target=_blank class=githubStars_xKU0><div class=githubStarsContainer_fzg6><svg width=16 height=16 viewBox="0 0 16 16" fill=none xmlns=http://www.w3.org/2000/svg><path fill-rule=evenodd clip-rule=evenodd d="M8 1.75C4.27062 1.75 1.25 4.77062 1.25 8.5C1.25 11.4869 3.18219 14.0097 5.86531 14.9041C6.20281 14.9631 6.32937 14.7606 6.32937 14.5834C6.32937 14.4231 6.32094 13.8916 6.32094 13.3263C4.625 13.6384 4.18625 12.9128 4.05125 12.5331C3.97531 12.3391 3.64625 11.74 3.35938 11.5797C3.12312 11.4531 2.78562 11.1409 3.35094 11.1325C3.8825 11.1241 4.26219 11.6219 4.38875 11.8244C4.99625 12.8453 5.96656 12.5584 6.35469 12.3813C6.41375 11.9425 6.59094 11.6472 6.785 11.4784C5.28312 11.3097 3.71375 10.7275 3.71375 8.14563C3.71375 7.41156 3.97531 6.80406 4.40563 6.33156C4.33812 6.16281 4.10187 5.47094 4.47312 4.54281C4.47312 4.54281 5.03844 4.36563 6.32937 5.23469C6.86937 5.08281 7.44313 5.00687 8.01688 5.00687C8.59063 5.00687 9.16438 5.08281 9.70438 5.23469C10.9953 4.35719 11.5606 4.54281 11.5606 4.54281C11.9319 5.47094 11.6956 6.16281 11.6281 6.33156C12.0584 6.80406 12.32 7.40312 12.32 8.14563C12.32 10.7359 10.7422 11.3097 9.24031 11.4784C9.485 11.6894 9.69594 12.0944 9.69594 12.7272C9.69594 13.63 9.6875 14.3556 9.6875 14.5834C9.6875 14.7606 9.81406 14.9716 10.1516 14.9041C12.8178 14.0097 14.75 11.4784 14.75 8.5C14.75 4.77062 11.7294 1.75 8 1.75Z" fill=currentColor /></svg><span class=githubText_pqqB>46.0k</span></div></a><div class=mobileSearchBar_lGd9><a href=/docs/search class="DocSearch DocSearch-Button" aria-label=Search><span class=DocSearch-Button-Container><svg width=20 height=20 class=DocSearch-Search-Icon viewBox="0 0 20 20" aria-hidden=true><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke=currentColor fill=none fill-rule=evenodd stroke-linecap=round stroke-linejoin=round /></svg><span class=DocSearch-Button-Placeholder>Search</span></span><span class=DocSearch-Button-Keys><kbd class=DocSearch-Button-Key>Ctrl</kbd><kbd class=DocSearch-Button-Key>K</kbd></span></a></div><div class=signUp_pDjn><a href="https://console.clickhouse.cloud/signIn?loc=docs-nav-signIn-cta" class="sign-in navbar__link ch-menu signIn_n8kr">Sign in</a><a href="https://console.clickhouse.cloud/signUp?loc=docs-nav-signUp-cta" class=click-button-anchor><button class="click-button primary-btn">Get started</button></a></div><svg class=docsNavBurger_SkeB width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></div></div><div class="secondary-nav--items secondaryMenu_SZAs"><div class=dropdownCategoriesContainer_DwBX><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/introduction-clickhouse>Get started</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/cloud/overview>Cloud</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/updating-data>Manage data</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 docsNavSelected_x6p7" href=/docs/guides/manage-and-deploy-index>Server admin</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/sql-reference>Reference</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/integrations>Integrations</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/use-cases/observability/clickstack/overview>ClickStack</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/chdb>chDB</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class="docsNavDropdownContainer_cADf hasDropdown_sqVj"><span class=docsNavDropdownToolbarLink_WLn0><a class="docsNavDropdownToolbarTopLevelLink_lJY0 " href=/docs/about>About</a> <span style=margin-left:8px><svg xmlns=http://www.w3.org/2000/svg width=6 height=10 viewBox="0 0 6 10" style=width:6px;height:10px;fill:none;color:#6B7280;transform:rotate(90deg)><path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="M1 9L5 5 1 1"/></svg></span></span></div><div class=docsNavDropdownContainer_cADf><a class=docsNavDropdownToolbarTopLevelLink_lJY0 href=/docs/knowledgebase><span>Knowledge Base</span></a></div></div><div class="secondaryMenuRight_dXHH secondary-nav--items-right"><div class="navbar__item dropdown dropdown--hoverable"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_DSK9><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>English</a><ul class=dropdown__menu><li><a href=/docs/operations/storing-data target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=en>English</a><li><a href=/docs/jp/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=jp>日本語</a><li><a href=/docs/zh/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=zh>中文</a><li><a href=/docs/ru/operations/storing-data target=_self rel="noopener noreferrer" class=dropdown__link lang=ru>Русский</a></ul></div><button class="colorModeButton_EOjh navbar-color-toggle"><svg xmlns=http://www.w3.org/2000/svg fill=none width=31 height=31 viewBox="0 0 24 24" stroke-width=1.5 stroke=currentColor class="w-6 h-6" stroke-linecap=round stroke-linejoin=round><path stroke-linecap=round stroke-linejoin=round d="M18.3945 13.0269C18.7245 12.8719 19.0765 13.1969 18.9845 13.5499C18.6705 14.7519 18.0535 15.8959 17.1035 16.8459C14.2825 19.6669 9.76953 19.7259 7.02153 16.9779C4.27353 14.2299 4.33353 9.71589 7.15453 6.89489C8.10453 5.94489 9.24753 5.32789 10.4505 5.01389C10.8035 4.92189 11.1275 5.27389 10.9735 5.60389C9.97153 7.74289 10.3005 10.3049 11.9975 12.0019C13.6935 13.6999 16.2555 14.0289 18.3945 13.0269V13.0269Z"/></svg></button></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="main-wrapper mainWrapper_z2l0 docsWrapper_bSxm"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docPage_F0g8><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_ktZT><div class=sidebarSearchContainer_qwgL><a href=/docs/search class="DocSearch DocSearch-Button" aria-label=Search><span class=DocSearch-Button-Container><svg width=20 height=20 class=DocSearch-Search-Icon viewBox="0 0 20 20" aria-hidden=true><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke=currentColor fill=none fill-rule=evenodd stroke-linecap=round stroke-linejoin=round /></svg><span class=DocSearch-Button-Placeholder>Search</span></span><span class=DocSearch-Button-Keys><kbd class=DocSearch-Button-Key>Ctrl</kbd><kbd class=DocSearch-Button-Key>K</kbd></span></a></div><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_qCLW" style=padding-top:1.75rem;margin-bottom:3.5rem;overflow-y:auto><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--active" href=/docs/guides/manage-and-deploy-index>Manage and deploy</a></div><ul style=display:block;overflow:visible;height:auto class=menu__list><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist" aria-expanded=false tabindex=0 href=/docs/deployment-guides/index>Deployment and scaling</a><button aria-label="Toggle the collapsible sidebar category 'Deployment and scaling'" type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded=false tabindex=0 href=/docs/clickhouse-operator/overview>ClickHouse Operator</a></div><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/guides/separation-storage-compute>Separation of storage and compute</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/guides/sre/keeper/clickhouse-keeper>Configuring ClickHouse Keeper</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/guides/sre/network-ports>Network ports</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/guides/sre/scaling-clusters>Rebalancing shards</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/faq/operations/multi-region-replication>Does ClickHouse support multi-region replication?</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/faq/operations/production>Which ClickHouse version to use in production?</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/cluster-discovery>Cluster discovery</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/monitoring>Monitoring</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/opentelemetry>Tracing ClickHouse with OpenTelemetry</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/quotas>Quotas</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/ssl-zookeeper>Secured Communication with Zookeeper</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/startup-scripts>Startup scripts</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/docs/operations/storing-data>External disks for storing data</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/allocation-profiling>Allocation profiling</a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded=false tabindex=0 href=/docs/operations/backup/overview>Backup/Restore</a></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist" aria-expanded=false tabindex=0 href=/docs/operations/allocation-profiling>Allocation profiling</a><button aria-label="Toggle the collapsible sidebar category 'Allocation profiling'" type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/caches>Caches</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/workload-scheduling>Workload scheduling</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/update>Self-managed Upgrade</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/guides/troubleshooting>Troubleshooting</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/tips>OSS usage recommendations</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/sql-reference/distributed-ddl>Distributed DDL</a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class=menu__link href=/docs/operations/settings>Settings</a></div><ul style=display:block;overflow:visible;height:auto class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/overview>Settings Overview</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/server-configuration-parameters/settings>Server Settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/settings>Session Settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/merge-tree-settings>MergeTree tables settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/formats>Format Settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/composable-protocols>Composable protocols</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/constraints-on-settings>Constraints on settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/memory-overcommit>Memory overcommit</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/permissions-for-queries>Permissions for queries</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/query-complexity>Restrictions on query complexity</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/server-overload>Server overload</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/query-level>Query-level Session Settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/settings-profiles>Settings profiles</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/settings-users>User Settings</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/named-collections>Named collections</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/configuration-files>Configuration Files</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/settings/tcp-connection-limits>TCP connection limits</a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist" aria-expanded=false href=/docs/operations/system-tables>System tables</a><button aria-label="Toggle the collapsible sidebar category 'System tables'" type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class=menu__link href=/docs/security-and-authentication>Security and authentication</a></div><ul style=display:block;overflow:visible;height:auto class=menu__list><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist" aria-expanded=false tabindex=0 href=/docs/guides/sre/tls>TLS</a><button aria-label="Toggle the collapsible sidebar category 'TLS'" type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/access-rights>Users and roles</a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class="menu__link menu__link--sublist" aria-expanded=false tabindex=0 href=/docs/operations/external-authenticators>External authenticators</a><button aria-label="Toggle the collapsible sidebar category 'External authenticators'" type=button class="clean-btn menu__caret"></button></div></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menuListItemCollapsed_i9wL menu__list-item-collapsible" data-link=true><a class=menu__link href=/docs/operations/utilities>Tools and utilities</a></div><ul style=display:block;overflow:visible;height:auto class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/backupview>clickhouse_backupview</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-benchmark>clickhouse-benchmark</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-compressor>clickhouse-compressor</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-disks>clickhouse-disks</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-format>clickhouse-format</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-keeper-client>clickhouse-keeper-client</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-local>clickhouse-local</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/clickhouse-obfuscator>clickhouse-obfuscator</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/odbc-bridge>clickhouse-odbc-bridge</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/operations/utilities/static-files-disk-uploader>clickhouse-static-files-disk-uploader</a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/docs/getting-started/playground>ClickHouse playground</a></ul></ul></nav></div></div></aside><main class=docMainContainer_Vlkt><div class="container padding-bottom--lg main-content-wrapper docItemWrapper_GJ0o"><div class=row style=flex-wrap:nowrap><div class="col docItemCol_PW1h"><div class=docItemContainer_F8S3><article><div class=docHeaderContainer_yf04><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Alpn" aria-label="Breadcrumb navigation"><ul class=breadcrumbs itemscope itemtype=https://schema.org/BreadcrumbList><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/docs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_xK9p><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li itemscope itemprop=itemListElement itemtype=https://schema.org/ListItem class=breadcrumbs__item><a class=breadcrumbs__link itemprop=item href=/docs/guides/manage-and-deploy-index><span itemprop=name>Manage and deploy</span></a><meta itemprop=position content=1><li itemscope itemprop=itemListElement itemtype=https://schema.org/ListItem class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link itemprop=name>External disks for storing data</span><meta itemprop=position content=2></ul></nav><a href=https://github.com/ClickHouse/ClickHouse/tree/master/docs/en/operations/storing-data.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="theme-doc-markdown markdown"><header><h1>External disks for storing data</h1></header><p>Data processed in ClickHouse is usually stored in the local file system of the
+machine on which ClickHouse server is running. That requires large-capacity disks,
+which can be expensive. To avoid storing data locally, various storage options are supported:</p>
+<ol class=custom-ol>
+<li class=custom-li><a href=https://aws.amazon.com/s3/ target=_blank rel="noopener noreferrer">Amazon S3</a> object storage.</li>
+<li class=custom-li><a href=https://azure.microsoft.com/en-us/products/storage/blobs target=_blank rel="noopener noreferrer">Azure Blob Storage</a>.</li>
+<li class=custom-li>Unsupported: The Hadoop Distributed File System (<a href=https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html target=_blank rel="noopener noreferrer">HDFS</a>)</li>
+</ol>
+<br>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Note</div><mdxadmonitiontitle></mdxadmonitiontitle><p>ClickHouse also has support for external table engines, which are different from
+the external storage option described on this page, as they allow reading data
+stored in some general file format (like Parquet). On this page we are describing
+storage configuration for the ClickHouse <code>MergeTree</code> family or <code>Log</code> family tables.<ol class=custom-ol>
+<li class=custom-li>to work with data stored on <code>Amazon S3</code> disks, use the <a href=/docs/engines/table-engines/integrations/s3>S3</a> table engine.</li>
+<li class=custom-li>to work with data stored in Azure Blob Storage, use the <a href=/docs/engines/table-engines/integrations/azureBlobStorage>AzureBlobStorage</a> table engine.</li>
+<li class=custom-li>to work with data in the Hadoop Distributed File System (unsupported), use the <a href=/docs/engines/table-engines/integrations/hdfs>HDFS</a> table engine.</li>
+</ol></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id=configuring-external-storage>Configure external storage<a href=#configuring-external-storage class=hash-link aria-label="Direct link to Configure external storage" title="Direct link to Configure external storage">​</a></h2>
+<p><a href=/docs/engines/table-engines/mergetree-family/mergetree><code>MergeTree</code></a> and <a href=/docs/engines/table-engines/log-family/log><code>Log</code></a>
+family table engines can store data to <code>S3</code>, <code>AzureBlobStorage</code>, <code>HDFS</code> (unsupported) using a disk with types <code>s3</code>,
+<code>azure_blob_storage</code>, <code>hdfs</code> (unsupported) respectively.</p>
+<p>Disk configuration requires:</p>
+<ol class=custom-ol>
+<li class=custom-li>A <code>type</code> section, equal to one of <code>s3</code>, <code>azure_blob_storage</code>, <code>hdfs</code> (unsupported), <code>local_blob_storage</code>, <code>web</code>.</li>
+<li class=custom-li>Configuration of a specific external storage type.</li>
+</ol>
+<p>Starting from 24.1 clickhouse version, it is possible to use a new configuration option.
+It requires specifying:</p>
+<ol class=custom-ol>
+<li class=custom-li>A <code>type</code> equal to <code>object_storage</code></li>
+<li class=custom-li><code>object_storage_type</code>, equal to one of <code>s3</code>, <code>azure_blob_storage</code> (or just <code>azure</code> from <code>24.3</code>), <code>hdfs</code> (unsupported), <code>local_blob_storage</code> (or just <code>local</code> from <code>24.3</code>), <code>web</code>.</li>
+</ol>
+<br>
+<p>Optionally, <code>metadata_type</code> can be specified (it is equal to <code>local</code> by default), but it can also be set to <code>plain</code>, <code>web</code> and, starting from <code>24.4</code>, <code>plain_rewritable</code>.
+Usage of <code>plain</code> metadata type is described in <a href=/docs/operations/storing-data#plain-storage>plain storage section</a>, <code>web</code> metadata type can be used only with <code>web</code> object storage type, <code>local</code> metadata type stores metadata files locally (each metadata files contains mapping to files in object storage and some additional meta information about them).</p>
+<p>For example:</p>
+<div class=wrapper_EBtA style=height:94.25px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3>
+    &lt;type>s3&lt;/type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>is equal to the following configuration (from version <code>24.1</code>):</p>
+<div class=wrapper_EBtA style=height:131.95000000000002px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3>
+    &lt;type>object_storage&lt;/type>
+    &lt;object_storage_type>s3&lt;/object_storage_type>
+    &lt;metadata_type>local&lt;/metadata_type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>The following configuration:</p>
+<div class=wrapper_EBtA style=height:94.25px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain>
+    &lt;type>s3_plain&lt;/type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>is equal to:</p>
+<div class=wrapper_EBtA style=height:131.95000000000002px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain>
+    &lt;type>object_storage&lt;/type>
+    &lt;object_storage_type>s3&lt;/object_storage_type>
+    &lt;metadata_type>plain&lt;/metadata_type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>An example of full storage configuration will look like:</p>
+<div class=wrapper_EBtA style=height:377px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;s3>
+                &lt;type>s3&lt;/type>
+                &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+                &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+            &lt;/s3>
+        &lt;/disks>
+        &lt;policies>
+            &lt;s3>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>s3&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/s3>
+        &lt;/policies>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>Starting with version 24.1, it can also look like:</p>
+<div class=wrapper_EBtA style=height:414.70000000000005px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;s3>
+                &lt;type>object_storage&lt;/type>
+                &lt;object_storage_type>s3&lt;/object_storage_type>
+                &lt;metadata_type>local&lt;/metadata_type>
+                &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+                &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+            &lt;/s3>
+        &lt;/disks>
+        &lt;policies>
+            &lt;s3>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>s3&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/s3>
+        &lt;/policies>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>To make a specific kind of storage a default option for all <code>MergeTree</code> tables,
+add the following section to the configuration file:</p>
+<div class=wrapper_EBtA style=height:94.25px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;merge_tree>
+        &lt;storage_policy>s3&lt;/storage_policy>
+    &lt;/merge_tree>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>If you want to configure a specific storage policy for a specific table,
+you can define it in settings while creating the table:</p>
+<div class=wrapper_EBtA style=height:56.550000000000004px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>CREATE TABLE test (a Int32, b String)
+ENGINE = MergeTree() ORDER BY a
+SETTINGS storage_policy = 's3';
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>You can also use <code>disk</code> instead of <code>storage_policy</code>. In this case it is not necessary
+to have the <code>storage_policy</code> section in the configuration file, and a <code>disk</code>
+section is enough.</p>
+<div class=wrapper_EBtA style=height:56.550000000000004px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>CREATE TABLE test (a Int32, b String)
+ENGINE = MergeTree() ORDER BY a
+SETTINGS disk = 's3';
+</code></pre></div><div class=activity_PoTP></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id=refresh-parts-interval-and-table-disk>refresh_parts_interval and table_disk<a href=#refresh-parts-interval-and-table-disk class=hash-link aria-label="Direct link to refresh_parts_interval and table_disk" title="Direct link to refresh_parts_interval and table_disk">​</a></h2>
+<p>This setting is intended for non-Replicated MergeTree tables where parts may be written externally and metadata discovery must be refreshed from storage.</p>
+<p>The MergeTree setting <code>refresh_parts_interval</code> enables periodic refresh of the list of data parts from the underlying storage (e.g. to pick up parts written externally). The important distinction is <strong>shared metadata across replicas</strong> vs <strong>replica-local metadata</strong> (e.g. S3 with local metadata per replica): only when metadata is shared will new parts be visible to all replicas. Using object storage alone does not imply shared metadata.</p>
+<ul class=custom-ul>
+<li class=custom-li>
+<p><strong>Object storage (e.g. <code>disk = 's3'</code>) does not imply shared metadata.</strong> When metadata is stored locally per replica (the default), each replica independently manages its pointers to blobs in object storage. Changes made on one replica are not visible to others. In that case, <code>refresh_parts_interval</code> does not make new parts visible across replicas, because the metadata each replica reads is replica-local.</p>
+</li>
+<li class=custom-li>
+<p><strong>Automatic part refreshing requires that the filesystem metadata be shared</strong> (or that the table use table-owned, readonly metadata so that refresh is applicable). Setting <code>table_disk = true</code> together with a table-local disk (e.g. <code>SETTINGS disk = disk(type=object_storage, ...), table_disk = true</code>) is one way to get the correct semantics: the table owns the metadata life cycle and the storage is treated as readonly, so <code>refresh_parts_interval</code> runs and externally added parts can be discovered.</p>
+</li>
+<li class=custom-li>
+<p><strong>With a globally defined disk</strong> (e.g. <code>disk = 's3'</code> in <code>storage_configuration</code>) and default local metadata, each replica has its own metadata state. Even though blobs may be in S3, the storage is not considered shared for the purpose of <code>refresh_parts_interval</code>, and new parts created outside ClickHouse or on another replica will not be detected.</p>
+</li>
+</ul>
+<p>For automatic part refreshing, ensure the metadata is shared or use a table-level disk with <code>table_disk = true</code> as above. Relying only on <code>refresh_parts_interval</code> with replica-local metadata will not refresh parts as expected.</p>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Note</div><p><code>refresh_parts_interval</code> is not used for ReplicatedMergeTree tables.
+Replicated tables already synchronize parts through the replication mechanism.
+This setting is only applicable to non-replicated MergeTree tables where parts are written externally and metadata refresh is required.</div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id=dynamic-configuration>Dynamic Configuration<a href=#dynamic-configuration class=hash-link aria-label="Direct link to Dynamic Configuration" title="Direct link to Dynamic Configuration">​</a></h2>
+<p>There is also a possibility to specify storage configuration without a predefined
+disk in configuration in a configuration file, but can be configured in the
+<code>CREATE</code>/<code>ATTACH</code> query settings.</p>
+<p>The following example query builds on the above dynamic disk configuration and
+shows how to use a local disk to cache data from a table stored at a URL.</p>
+<div class=wrapper_EBtA style=height:471.25000000000006px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>ATTACH TABLE uk_price_paid UUID 'cf712b4f-2ca8-435c-ac23-c4393efe52f7'
+(
+    price UInt32,
+    date Date,
+    postcode1 LowCardinality(String),
+    postcode2 LowCardinality(String),
+    type Enum8('other' = 0, 'terraced' = 1, 'semi-detached' = 2, 'detached' = 3, 'flat' = 4),
+    is_new UInt8,
+    duration Enum8('unknown' = 0, 'freehold' = 1, 'leasehold' = 2),
+    addr1 String,
+    addr2 String,
+    street LowCardinality(String),
+    locality LowCardinality(String),
+    town LowCardinality(String),
+    district LowCardinality(String),
+    county LowCardinality(String)
+)
+ENGINE = MergeTree
+ORDER BY (postcode1, postcode2, addr1, addr2)
+  -- highlight-start
+  SETTINGS disk = disk(
+    type=web,
+    endpoint='https://raw.githubusercontent.com/ClickHouse/web-tables-demo/main/web/'
+  );
+  -- highlight-end
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>The example below adds a cache to external storage.</p>
+<div class=wrapper_EBtA style=height:565.5px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>ATTACH TABLE uk_price_paid UUID 'cf712b4f-2ca8-435c-ac23-c4393efe52f7'
+(
+    price UInt32,
+    date Date,
+    postcode1 LowCardinality(String),
+    postcode2 LowCardinality(String),
+    type Enum8('other' = 0, 'terraced' = 1, 'semi-detached' = 2, 'detached' = 3, 'flat' = 4),
+    is_new UInt8,
+    duration Enum8('unknown' = 0, 'freehold' = 1, 'leasehold' = 2),
+    addr1 String,
+    addr2 String,
+    street LowCardinality(String),
+    locality LowCardinality(String),
+    town LowCardinality(String),
+    district LowCardinality(String),
+    county LowCardinality(String)
+)
+ENGINE = MergeTree
+ORDER BY (postcode1, postcode2, addr1, addr2)
+-- highlight-start
+  SETTINGS disk = disk(
+    type=cache,
+    max_size='1Gi',
+    path='/var/lib/clickhouse/custom_disk_cache/',
+    disk=disk(
+      type=web,
+      endpoint='https://raw.githubusercontent.com/ClickHouse/web-tables-demo/main/web/'
+      )
+  );
+-- highlight-end
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>In the settings highlighted below notice that the disk of <code>type=web</code> is nested within
+the disk of <code>type=cache</code>.</p>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Note</div><p>The example uses <code>type=web</code>, but any disk type can be configured as dynamic,
+including local disk. Local disks require a path argument to be inside the
+server config parameter <code>custom_local_disks_base_directory</code>, which has no
+default, so set that also when using local disk.</div></div>
+<p>A combination of config-based configuration and sql-defined configuration is
+also possible:</p>
+<div class=wrapper_EBtA style=height:565.5px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>ATTACH TABLE uk_price_paid UUID 'cf712b4f-2ca8-435c-ac23-c4393efe52f7'
+(
+    price UInt32,
+    date Date,
+    postcode1 LowCardinality(String),
+    postcode2 LowCardinality(String),
+    type Enum8('other' = 0, 'terraced' = 1, 'semi-detached' = 2, 'detached' = 3, 'flat' = 4),
+    is_new UInt8,
+    duration Enum8('unknown' = 0, 'freehold' = 1, 'leasehold' = 2),
+    addr1 String,
+    addr2 String,
+    street LowCardinality(String),
+    locality LowCardinality(String),
+    town LowCardinality(String),
+    district LowCardinality(String),
+    county LowCardinality(String)
+)
+ENGINE = MergeTree
+ORDER BY (postcode1, postcode2, addr1, addr2)
+  -- highlight-start
+  SETTINGS disk = disk(
+    type=cache,
+    max_size='1Gi',
+    path='/var/lib/clickhouse/custom_disk_cache/',
+    disk=disk(
+      type=web,
+      endpoint='https://raw.githubusercontent.com/ClickHouse/web-tables-demo/main/web/'
+      )
+  );
+  -- highlight-end
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>where <code>web</code> is from the server configuration file:</p>
+<div class=wrapper_EBtA style=height:150.8px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;storage_configuration>
+    &lt;disks>
+        &lt;web>
+            &lt;type>web&lt;/type>
+            &lt;endpoint>'https://raw.githubusercontent.com/ClickHouse/web-tables-demo/main/web/'&lt;/endpoint>
+        &lt;/web>
+    &lt;/disks>
+&lt;/storage_configuration>
+</code></pre></div><div class=activity_PoTP></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=s3-storage>Using S3 Storage<a href=#s3-storage class=hash-link aria-label="Direct link to Using S3 Storage" title="Direct link to Using S3 Storage">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=required-parameters-s3>Required parameters<a href=#required-parameters-s3 class=hash-link aria-label="Direct link to Required parameters" title="Direct link to Required parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<tbody><tr><td><code>endpoint</code><td>S3 endpoint URL in <code>path</code> or <code>virtual hosted</code> <a href=https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html target=_blank rel="noopener noreferrer">styles</a>. Should include the bucket and root path for data storage.<tr><td><code>access_key_id</code><td>S3 access key ID used for authentication.<tr><td><code>secret_access_key</code><td>S3 secret access key used for authentication.</table>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=optional-parameters-s3>Optional parameters<a href=#optional-parameters-s3 class=hash-link aria-label="Direct link to Optional parameters" title="Direct link to Optional parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<th>Default Value<tbody><tr><td><code>region</code><td>S3 region name.<td>-<tr><td><code>support_batch_delete</code><td>Controls whether to check for batch delete support. Set to <code>false</code> when using Google Cloud Storage (GCS) as GCS doesn't support batch deletes.<td><code>true</code><tr><td><code>use_environment_credentials</code><td>Reads AWS credentials from environment variables: <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, and <code>AWS_SESSION_TOKEN</code> if they exist.<td><code>false</code><tr><td><code>use_insecure_imds_request</code><td>If <code>true</code>, uses insecure IMDS request when obtaining credentials from Amazon EC2 metadata.<td><code>false</code><tr><td><code>expiration_window_seconds</code><td>Grace period (in seconds) for checking if expiration-based credentials have expired.<td><code>120</code><tr><td><code>proxy</code><td>Proxy configuration for S3 endpoint. Each <code>uri</code> element inside <code>proxy</code> block should contain a proxy URL.<td>-<tr><td><code>connect_timeout_ms</code><td>Socket connect timeout in milliseconds.<td><code>10000</code> (10 seconds)<tr><td><code>request_timeout_ms</code><td>Request timeout in milliseconds.<td><code>5000</code> (5 seconds)<tr><td><code>retry_attempts</code><td>Number of retry attempts for failed requests.<td><code>10</code><tr><td><code>single_read_retries</code><td>Number of retry attempts for connection drops during read.<td><code>4</code><tr><td><code>min_bytes_for_seek</code><td>Minimum number of bytes to use seek operation instead of sequential read.<td><code>1 MB</code><tr><td><code>metadata_path</code><td>Local filesystem path to store S3 metadata files.<td><code>/var/lib/clickhouse/disks/&lt;disk_name>/</code><tr><td><code>skip_access_check</code><td>If <code>true</code>, skips disk access checks during startup.<td><code>false</code><tr><td><code>header</code><td>Adds specified HTTP header to requests. Can be specified multiple times.<td>-<tr><td><code>server_side_encryption_customer_key_base64</code><td>Required headers for accessing S3 objects with SSE-C encryption.<td>-<tr><td><code>server_side_encryption_kms_key_id</code><td>Required headers for accessing S3 objects with <a href=https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html target=_blank rel="noopener noreferrer">SSE-KMS encryption</a>. Empty string uses AWS managed S3 key.<td>-<tr><td><code>server_side_encryption_kms_encryption_context</code><td>Encryption context header for SSE-KMS (used with <code>server_side_encryption_kms_key_id</code>).<td>-<tr><td><code>server_side_encryption_kms_bucket_key_enabled</code><td>Enables S3 bucket keys for SSE-KMS (used with <code>server_side_encryption_kms_key_id</code>).<td>Matches bucket-level setting<tr><td><code>s3_max_put_rps</code><td>Maximum PUT requests per second before throttling.<td><code>0</code> (unlimited)<tr><td><code>s3_max_put_burst</code><td>Maximum concurrent PUT requests before hitting RPS limit.<td>Same as <code>s3_max_put_rps</code><tr><td><code>s3_max_get_rps</code><td>Maximum GET requests per second before throttling.<td><code>0</code> (unlimited)<tr><td><code>s3_max_get_burst</code><td>Maximum concurrent GET requests before hitting RPS limit.<td>Same as <code>s3_max_get_rps</code><tr><td><code>read_resource</code><td>Resource name for <a href=/docs/operations/workload-scheduling>scheduling</a> read requests.<td>Empty string (disabled)<tr><td><code>write_resource</code><td>Resource name for <a href=/docs/operations/workload-scheduling>scheduling</a> write requests.<td>Empty string (disabled)<tr><td><code>key_template</code><td>Defines object key generation format using <a href=https://github.com/google/re2/wiki/Syntax target=_blank rel="noopener noreferrer">re2</a> syntax. Requires <code>storage_metadata_write_full_object_key</code> flag. Incompatible with <code>root path</code> in <code>endpoint</code>. Requires <code>key_compatibility_prefix</code>.<td>-<tr><td><code>key_compatibility_prefix</code><td>Required with <code>key_template</code>. Specifies the previous <code>root path</code> from <code>endpoint</code> for reading older metadata versions.<td>-<tr><td><code>read_only</code><td>Only allowing reading from the disk.<td>-</table>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Note</div><p>Google Cloud Storage (GCS) is also supported using the type <code>s3</code>. See <a href=/docs/integrations/gcs>GCS backed MergeTree</a>.</div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=plain-storage>Using Plain Storage<a href=#plain-storage class=hash-link aria-label="Direct link to Using Plain Storage" title="Direct link to Using Plain Storage">​</a></h3>
+<p>In <code>22.10</code> a new disk type <code>s3_plain</code> was introduced, which provides a write-once storage.
+Configuration parameters for it are the same as for the <code>s3</code> disk type.
+Unlike the <code>s3</code> disk type, it stores data as is. In other words,
+instead of having randomly generated blob names, it uses normal file names
+(the same way as ClickHouse stores files on local disk) and does not store any
+metadata locally. For example, it is derived from data on <code>s3</code>.</p>
+<p>This disk type allows keeping a static version of the table, as it does not
+allow executing merges on the existing data and does not allow inserting of new
+data. A use case for this disk type is to create backups on it, which can be done
+via <code>BACKUP TABLE data TO Disk('plain_disk_name', 'backup_name')</code>. Afterward,
+you can do <code>RESTORE TABLE data AS data_restored FROM Disk('plain_disk_name', 'backup_name')</code>
+or use <code>ATTACH TABLE data (...) ENGINE = MergeTree() SETTINGS disk = 'plain_disk_name'</code>.</p>
+<p>Configuration:</p>
+<div class=wrapper_EBtA style=height:94.25px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain>
+    &lt;type>s3_plain&lt;/type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>Starting from <code>24.1</code> it is possible configure any object storage disk (<code>s3</code>, <code>azure</code>, <code>hdfs</code> (unsupported), <code>local</code>) using
+the <code>plain</code> metadata type.</p>
+<p>Configuration:</p>
+<div class=wrapper_EBtA style=height:131.95000000000002px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain>
+    &lt;type>object_storage&lt;/type>
+    &lt;object_storage_type>azure&lt;/object_storage_type>
+    &lt;metadata_type>plain&lt;/metadata_type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain>
+</code></pre></div><div class=activity_PoTP></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=s3-plain-rewritable-storage>Using S3 Plain Rewritable Storage<a href=#s3-plain-rewritable-storage class=hash-link aria-label="Direct link to Using S3 Plain Rewritable Storage" title="Direct link to Using S3 Plain Rewritable Storage">​</a></h3>
+<p>A new disk type <code>s3_plain_rewritable</code> was introduced in <code>24.4</code>.
+Similar to the <code>s3_plain</code> disk type, it does not require additional storage for
+metadata files. Instead, metadata is stored in S3.
+Unlike the <code>s3_plain</code> disk type, <code>s3_plain_rewritable</code> allows executing merges
+and supports <code>INSERT</code> operations.
+<a href=/docs/sql-reference/statements/alter#mutations>Mutations</a> and replication of tables are not supported.</p>
+<p>A use case for this disk type is for non-replicated <code>MergeTree</code> tables. Although
+the <code>s3</code> disk type is suitable for non-replicated <code>MergeTree</code> tables, you may opt
+for the <code>s3_plain_rewritable</code> disk type if you do not require local metadata
+for the table and are willing to accept a limited set of operations. This could
+be useful, for example, for system tables.</p>
+<p>Configuration:</p>
+<div class=wrapper_EBtA style=height:94.25px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain_rewritable>
+    &lt;type>s3_plain_rewritable&lt;/type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain_rewritable>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>is equal to</p>
+<div class=wrapper_EBtA style=height:131.95000000000002px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;s3_plain_rewritable>
+    &lt;type>object_storage&lt;/type>
+    &lt;object_storage_type>s3&lt;/object_storage_type>
+    &lt;metadata_type>plain_rewritable&lt;/metadata_type>
+    &lt;endpoint>https://s3.eu-west-1.amazonaws.com/clickhouse-eu-west-1.clickhouse.com/data/&lt;/endpoint>
+    &lt;use_environment_credentials>1&lt;/use_environment_credentials>
+&lt;/s3_plain_rewritable>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>Starting from <code>24.5</code> it is possible to configure any object storage disk
+(<code>s3</code>, <code>azure</code>, <code>local</code>) using the <code>plain_rewritable</code> metadata type.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=azure-blob-storage>Using Azure Blob Storage<a href=#azure-blob-storage class=hash-link aria-label="Direct link to Using Azure Blob Storage" title="Direct link to Using Azure Blob Storage">​</a></h3>
+<p><code>MergeTree</code> family table engines can store data to <a href=https://azure.microsoft.com/en-us/services/storage/blobs/ target=_blank rel="noopener noreferrer">Azure Blob Storage</a>
+using a disk with type <code>azure_blob_storage</code>.</p>
+<p>Configuration markup:</p>
+<div class=wrapper_EBtA style=height:301.6px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;storage_configuration>
+    ...
+    &lt;disks>
+        &lt;blob_storage_disk>
+            &lt;type>azure_blob_storage&lt;/type>
+            &lt;storage_account_url>http://account.blob.core.windows.net&lt;/storage_account_url>
+            &lt;container_name>container&lt;/container_name>
+            &lt;account_name>account&lt;/account_name>
+            &lt;account_key>pass123&lt;/account_key>
+            &lt;metadata_path>/var/lib/clickhouse/disks/blob_storage_disk/&lt;/metadata_path>
+            &lt;cache_path>/var/lib/clickhouse/disks/blob_storage_disk/cache/&lt;/cache_path>
+            &lt;skip_access_check>false&lt;/skip_access_check>
+        &lt;/blob_storage_disk>
+    &lt;/disks>
+    ...
+&lt;/storage_configuration>
+</code></pre></div><div class=activity_PoTP></div></div>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=azure-blob-storage-connection-parameters>Connection parameters<a href=#azure-blob-storage-connection-parameters class=hash-link aria-label="Direct link to Connection parameters" title="Direct link to Connection parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<th>Default Value<tbody><tr><td><code>storage_account_url</code> (Required)<td>Azure Blob Storage account URL. Examples: <code>http://account.blob.core.windows.net</code> or <code>http://azurite1:10000/devstoreaccount1</code>.<td>-<tr><td><code>container_name</code><td>Target container name.<td><code>default-container</code><tr><td><code>container_already_exists</code><td>Controls container creation behavior: <br>- <code>false</code>: Creates a new container <br>- <code>true</code>: Connects directly to existing container <br>- Unset: Checks if container exists, creates if needed<td>-</table>
+<p>Authentication parameters (the disk will try all available methods <strong>and</strong> Managed Identity Credential):</p>
+<table><thead><tr><th>Parameter<th>Description<tbody><tr><td><code>connection_string</code><td>For authentication using a connection string.<tr><td><code>account_name</code><td>For authentication using Shared Key (used with <code>account_key</code>).<tr><td><code>account_key</code><td>For authentication using Shared Key (used with <code>account_name</code>).</table>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=azure-blob-storage-limit-parameters>Limit parameters<a href=#azure-blob-storage-limit-parameters class=hash-link aria-label="Direct link to Limit parameters" title="Direct link to Limit parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<tbody><tr><td><code>s3_max_single_part_upload_size</code><td>Maximum size of a single block upload to Blob Storage.<tr><td><code>min_bytes_for_seek</code><td>Minimum size of a seekable region.<tr><td><code>max_single_read_retries</code><td>Maximum number of attempts to read a chunk of data from Blob Storage.<tr><td><code>max_single_download_retries</code><td>Maximum number of attempts to download a readable buffer from Blob Storage.<tr><td><code>thread_pool_size</code><td>Maximum number of threads for <code>IDiskRemote</code> instantiation.<tr><td><code>s3_max_inflight_parts_for_one_file</code><td>Maximum number of concurrent put requests for a single object.</table>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=azure-blob-storage-other-parameters>Other parameters<a href=#azure-blob-storage-other-parameters class=hash-link aria-label="Direct link to Other parameters" title="Direct link to Other parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<th>Default Value<tbody><tr><td><code>metadata_path</code><td>Local filesystem path to store metadata files for Blob Storage.<td><code>/var/lib/clickhouse/disks/&lt;disk_name>/</code><tr><td><code>skip_access_check</code><td>If <code>true</code>, skips disk access checks during startup.<td><code>false</code><tr><td><code>read_resource</code><td>Resource name for <a href=/docs/operations/workload-scheduling>scheduling</a> read requests.<td>Empty string (disabled)<tr><td><code>write_resource</code><td>Resource name for <a href=/docs/operations/workload-scheduling>scheduling</a> write requests.<td>Empty string (disabled)<tr><td><code>metadata_keep_free_space_bytes</code><td>Amount of free metadata disk space to reserve.<td>-</table>
+<p>Examples of working configurations can be found in integration tests directory (see e.g. <a href=https://github.com/ClickHouse/ClickHouse/blob/master/tests/integration/test_merge_tree_azure_blob_storage/configs/config.d/storage_conf.xml target=_blank rel="noopener noreferrer">test_merge_tree_azure_blob_storage</a> or <a href=https://github.com/ClickHouse/ClickHouse/blob/master/tests/integration/test_azure_blob_storage_zero_copy_replication/configs/config.d/storage_conf.xml target=_blank rel="noopener noreferrer">test_azure_blob_storage_zero_copy_replication</a>).</p>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Zero-copy replication is not ready for production</div><p>Zero-copy replication is disabled by default in ClickHouse version 22.8 and higher.  This feature is not recommended for production use.</div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id=using-hdfs-storage-unsupported>Using HDFS storage (Unsupported)<a href=#using-hdfs-storage-unsupported class=hash-link aria-label="Direct link to Using HDFS storage (Unsupported)" title="Direct link to Using HDFS storage (Unsupported)">​</a></h2>
+<p>In this sample configuration:</p>
+<ul class=custom-ul>
+<li class=custom-li>the disk is of type <code>hdfs</code> (unsupported)</li>
+<li class=custom-li>the data is hosted at <code>hdfs://hdfs1:9000/clickhouse/</code></li>
+</ul>
+<p>By the way, HDFS is unsupported and therefore there might be issues when using it. Feel free to make a pull request with the fix if any issue arises.</p>
+<div class=wrapper_EBtA style=height:508.95000000000005px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;hdfs>
+                &lt;type>hdfs&lt;/type>
+                &lt;endpoint>hdfs://hdfs1:9000/clickhouse/&lt;/endpoint>
+                &lt;skip_access_check>true&lt;/skip_access_check>
+            &lt;/hdfs>
+            &lt;hdd>
+                &lt;type>local&lt;/type>
+                &lt;path>/&lt;/path>
+            &lt;/hdd>
+        &lt;/disks>
+        &lt;policies>
+            &lt;hdfs>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>hdfs&lt;/disk>
+                    &lt;/main>
+                    &lt;external>
+                        &lt;disk>hdd&lt;/disk>
+                    &lt;/external>
+                &lt;/volumes>
+            &lt;/hdfs>
+        &lt;/policies>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>Keep in mind that HDFS may not work in corner cases.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=encrypted-virtual-file-system>Using Data Encryption<a href=#encrypted-virtual-file-system class=hash-link aria-label="Direct link to Using Data Encryption" title="Direct link to Using Data Encryption">​</a></h3>
+<p>You can encrypt the data stored on <a href=/docs/engines/table-engines/mergetree-family/mergetree#table_engine-mergetree-s3>S3</a>, or <a href=#using-hdfs-storage-unsupported>HDFS</a> (unsupported) external disks, or on a local disk. To turn on the encryption mode, in the configuration file you must define a disk with the type <code>encrypted</code> and choose a disk on which the data will be saved. An <code>encrypted</code> disk ciphers all written files on the fly, and when you read files from an <code>encrypted</code> disk it deciphers them automatically. So you can work with an <code>encrypted</code> disk like with a normal one.</p>
+<p>Example of disk configuration:</p>
+<div class=wrapper_EBtA style=height:226.20000000000002px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;disks>
+  &lt;disk1>
+    &lt;type>local&lt;/type>
+    &lt;path>/path1/&lt;/path>
+  &lt;/disk1>
+  &lt;disk2>
+    &lt;type>encrypted&lt;/type>
+    &lt;disk>disk1&lt;/disk>
+    &lt;path>path2/&lt;/path>
+    &lt;key>_16_ascii_chars_&lt;/key>
+  &lt;/disk2>
+&lt;/disks>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>For example, when ClickHouse writes data from some table to a file <code>store/all_1_1_0/data.bin</code> to <code>disk1</code>, then in fact this file will be written to the physical disk along the path <code>/path1/store/all_1_1_0/data.bin</code>.</p>
+<p>When writing the same file to <code>disk2</code>, it will actually be written to the physical disk at the path <code>/path1/path2/store/all_1_1_0/data.bin</code> in encrypted mode.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=required-parameters-encrypted-disk>Required Parameters<a href=#required-parameters-encrypted-disk class=hash-link aria-label="Direct link to Required Parameters" title="Direct link to Required Parameters">​</a></h3>
+<table><thead><tr><th>Parameter<th>Type<th>Description<tbody><tr><td><code>type</code><td>String<td>Must be set to <code>encrypted</code> to create an encrypted disk.<tr><td><code>disk</code><td>String<td>Type of disk to use for underlying storage.<tr><td><code>key</code><td>Uint64<td>Key for encryption and decryption. Can be specified in hexadecimal using <code>key_hex</code>. Multiple keys can be specified using the <code>id</code> attribute.</table>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=optional-parameters-encrypted-disk>Optional Parameters<a href=#optional-parameters-encrypted-disk class=hash-link aria-label="Direct link to Optional Parameters" title="Direct link to Optional Parameters">​</a></h3>
+<table><thead><tr><th>Parameter<th>Type<th>Default<th>Description<tbody><tr><td><code>path</code><td>String<td>Root directory<td>Location on the disk where data will be saved.<tr><td><code>current_key_id</code><td>String<td>-<td>The key ID used for encryption. All specified keys can be used for decryption.<tr><td><code>algorithm</code><td>Enum<td><code>AES_128_CTR</code><td>Encryption algorithm. Options: <br>- <code>AES_128_CTR</code> (16-byte key) <br>- <code>AES_192_CTR</code> (24-byte key) <br>- <code>AES_256_CTR</code> (32-byte key)</table>
+<p>Example of disk configuration:</p>
+<div class=wrapper_EBtA style=height:339.3px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;disk_s3>
+                &lt;type>s3&lt;/type>
+                &lt;endpoint>...
+            &lt;/disk_s3>
+            &lt;disk_s3_encrypted>
+                &lt;type>encrypted&lt;/type>
+                &lt;disk>disk_s3&lt;/disk>
+                &lt;algorithm>AES_128_CTR&lt;/algorithm>
+                &lt;key_hex id="0">00112233445566778899aabbccddeeff&lt;/key_hex>
+                &lt;key_hex id="1">ffeeddccbbaa99887766554433221100&lt;/key_hex>
+                &lt;current_key_id>1&lt;/current_key_id>
+            &lt;/disk_s3_encrypted>
+        &lt;/disks>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=using-local-cache>Using local cache<a href=#using-local-cache class=hash-link aria-label="Direct link to Using local cache" title="Direct link to Using local cache">​</a></h3>
+<p>It is possible to configure local cache over disks in storage configuration starting from version 22.3.
+For versions 22.3 - 22.7 cache is supported only for <code>s3</code> disk type. For versions >= 22.8 cache is supported for any disk type: S3, Azure, Local, Encrypted, etc.
+For versions >= 23.5 cache is supported only for remote disk types: S3, Azure, HDFS (unsupported).
+Cache uses <code>LRU</code> cache policy.</p>
+<p>Example of configuration for versions later or equal to 22.8:</p>
+<div class=wrapper_EBtA style=height:471.25000000000006px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;s3>
+                &lt;type>s3&lt;/type>
+                &lt;endpoint>...&lt;/endpoint>
+                ... s3 configuration ...
+            &lt;/s3>
+            &lt;cache>
+                &lt;type>cache&lt;/type>
+                &lt;disk>s3&lt;/disk>
+                &lt;path>/s3_cache/&lt;/path>
+                &lt;max_size>10Gi&lt;/max_size>
+            &lt;/cache>
+        &lt;/disks>
+        &lt;policies>
+            &lt;s3_cache>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>cache&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/s3_cache>
+        &lt;policies>
+    &lt;/storage_configuration>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>Example of configuration for versions earlier than 22.8:</p>
+<div class=wrapper_EBtA style=height:395.85px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;s3>
+                &lt;type>s3&lt;/type>
+                &lt;endpoint>...&lt;/endpoint>
+                ... s3 configuration ...
+                &lt;data_cache_enabled>1&lt;/data_cache_enabled>
+                &lt;data_cache_max_size>10737418240&lt;/data_cache_max_size>
+            &lt;/s3>
+        &lt;/disks>
+        &lt;policies>
+            &lt;s3_cache>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>s3&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/s3_cache>
+        &lt;policies>
+    &lt;/storage_configuration>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>File Cache <strong>disk configuration settings</strong>:</p>
+<p>These settings should be defined in the disk configuration section.</p>
+<table><thead><tr><th>Parameter<th>Type<th>Default<th>Description<tbody><tr><td><code>path</code><td>String<td>-<td><strong>Required</strong>. Path to the directory where cache will be stored.<tr><td><code>max_size</code><td>Size<td>-<td><strong>Required</strong>. Maximum cache size in bytes or readable format (e.g., <code>10Gi</code>). Files are evicted using LRU policy when the limit is reached. Supports <code>ki</code>, <code>Mi</code>, <code>Gi</code> formats (since v22.10).<tr><td><code>cache_on_write_operations</code><td>Boolean<td><code>false</code><td>Enables write-through cache for <code>INSERT</code> queries and background merges. Can be overridden per query with <code>enable_filesystem_cache_on_write_operations</code>.<tr><td><code>enable_filesystem_query_cache_limit</code><td>Boolean<td><code>false</code><td>Enables per-query cache size limits based on <code>max_query_cache_size</code>.<tr><td><code>enable_cache_hits_threshold</code><td>Boolean<td><code>false</code><td>When enabled, data is cached only after being read multiple times.<tr><td><code>cache_hits_threshold</code><td>Integer<td><code>0</code><td>Number of reads required before data is cached (requires <code>enable_cache_hits_threshold</code>).<tr><td><code>enable_bypass_cache_with_threshold</code><td>Boolean<td><code>false</code><td>Skips cache for large read ranges.<tr><td><code>bypass_cache_threshold</code><td>Size<td><code>256Mi</code><td>Read range size that triggers cache bypass (requires <code>enable_bypass_cache_with_threshold</code>).<tr><td><code>max_file_segment_size</code><td>Size<td><code>8Mi</code><td>Maximum size of a single cache file in bytes or readable format.<tr><td><code>max_elements</code><td>Integer<td><code>10000000</code><td>Maximum number of cache files.<tr><td><code>load_metadata_threads</code><td>Integer<td><code>16</code><td>Number of threads for loading cache metadata at startup.<tr><td><code>use_split_cache</code><td>Boolean<td><code>false</code><td>Use separation of files to system/data.<tr><td><code>split_cache_ratio</code><td>Double<td><code>0.1</code><td>Ratio of system segment to total size of cache for split_cache.</table>
+<blockquote>
+<p><strong>Note</strong>: Size values support units like <code>ki</code>, <code>Mi</code>, <code>Gi</code>, etc. (e.g., <code>10Gi</code>).</p>
+</blockquote>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id=file-cache-query-profile-settings>File Cache Query/Profile Settings<a href=#file-cache-query-profile-settings class=hash-link aria-label="Direct link to File Cache Query/Profile Settings" title="Direct link to File Cache Query/Profile Settings">​</a></h2>
+<table><thead><tr><th>Setting<th>Type<th>Default<th>Description<tbody><tr><td><code>enable_filesystem_cache</code><td>Boolean<td><code>true</code><td>Enables/disables cache usage per query, even when using a <code>cache</code> disk type.<tr><td><code>read_from_filesystem_cache_if_exists_otherwise_bypass_cache</code><td>Boolean<td><code>false</code><td>When enabled, uses cache only if data exists; new data won't be cached.<tr><td><code>enable_filesystem_cache_on_write_operations</code><td>Boolean<td><code>false</code> (Cloud: <code>true</code>)<td>Enables write-through cache. Requires <code>cache_on_write_operations</code> in cache config.<tr><td><code>enable_filesystem_cache_log</code><td>Boolean<td><code>false</code><td>Enables detailed cache usage logging to <code>system.filesystem_cache_log</code>.<tr><td><code>filesystem_cache_allow_background_download</code><td>Boolean<td><code>true</code><td>Allows partially downloaded segments to be finished in the background. Disable to keep downloads in the foreground for the current query/session.<tr><td><code>max_query_cache_size</code><td>Size<td><code>false</code><td>Maximum cache size per query. Requires <code>enable_filesystem_query_cache_limit</code> in cache config.<tr><td><code>filesystem_cache_skip_download_if_exceeds_per_query_cache_write_limit</code><td>Boolean<td><code>true</code><td>Controls behavior when <code>max_query_cache_size</code> is reached: <br>- <code>true</code>: Stops downloading new data <br>- <code>false</code>: Evicts old data to make space for new data</table>
+<div class="theme-admonition theme-admonition-warning alert alert--warning admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 16 16"><path fill-rule=evenodd d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Note</div><p>Cache configuration settings and cache query settings correspond to the latest ClickHouse version,
+for earlier versions something might not be supported.</div></div>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=cache-system-tables-file-cache>Cache system tables<a href=#cache-system-tables-file-cache class=hash-link aria-label="Direct link to Cache system tables" title="Direct link to Cache system tables">​</a></h4>
+<table><thead><tr><th>Table Name<th>Description<th>Requirements<tbody><tr><td><code>system.filesystem_cache</code><td>Displays the current state of the filesystem cache.<td>None<tr><td><code>system.filesystem_cache_log</code><td>Provides detailed cache usage statistics per query.<td>Requires <code>enable_filesystem_cache_log = true</code></table>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=cache-commands-file-cache>Cache commands<a href=#cache-commands-file-cache class=hash-link aria-label="Direct link to Cache commands" title="Direct link to Cache commands">​</a></h4>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id=system-clear-filesystem-cache-on-cluster><code>SYSTEM CLEAR|DROP FILESYSTEM CACHE (&lt;cache_name>) (ON CLUSTER)</code> -- <code>ON CLUSTER</code><a href=#system-clear-filesystem-cache-on-cluster class=hash-link aria-label="Direct link to system-clear-filesystem-cache-on-cluster" title="Direct link to system-clear-filesystem-cache-on-cluster">​</a></h5>
+<p>This command is only supported when no <code>&lt;cache_name></code> is provided</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id=show-filesystem-caches><code>SHOW FILESYSTEM CACHES</code><a href=#show-filesystem-caches class=hash-link aria-label="Direct link to show-filesystem-caches" title="Direct link to show-filesystem-caches">​</a></h5>
+<p>Show a list of filesystem caches which were configured on the server.
+(For versions less than or equal to <code>22.8</code> the command is named <code>SHOW CACHES</code>)</p>
+<div class=wrapper_EBtA style=height:18.85px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>SHOW FILESYSTEM CACHES
+</code></pre></div><div class=activity_PoTP></div></div>
+<div class=wrapper_EBtA style=height:56.550000000000004px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-text><code class=language-text>┌─Caches────┐
+│ s3_cache  │
+└───────────┘
+</code></pre></div><div class=activity_PoTP></div></div>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id=describe-filesystem-cache><code>DESCRIBE FILESYSTEM CACHE '&lt;cache_name>'</code><a href=#describe-filesystem-cache class=hash-link aria-label="Direct link to describe-filesystem-cache" title="Direct link to describe-filesystem-cache">​</a></h5>
+<p>Show cache configuration and some general statistics for a specific cache.
+Cache name can be taken from <code>SHOW FILESYSTEM CACHES</code> command. (For versions less
+than or equal to <code>22.8</code> the command is named <code>DESCRIBE CACHE</code>)</p>
+<div class=wrapper_EBtA style=height:18.85px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>DESCRIBE FILESYSTEM CACHE 's3_cache'
+</code></pre></div><div class=activity_PoTP></div></div>
+<div class=wrapper_EBtA style=height:56.550000000000004px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-text><code class=language-text>┌────max_size─┬─max_elements─┬─max_file_segment_size─┬─boundary_alignment─┬─cache_on_write_operations─┬─cache_hits_threshold─┬─current_size─┬─current_elements─┬─path───────┬─background_download_threads─┬─enable_bypass_cache_with_threshold─┐
+│ 10000000000 │      1048576 │             104857600 │            4194304 │                         1 │                    0 │         3276 │               54 │ /s3_cache/ │                           2 │                                  0 │
+└─────────────┴──────────────┴───────────────────────┴────────────────────┴───────────────────────────┴──────────────────────┴──────────────┴──────────────────┴────────────┴─────────────────────────────┴────────────────────────────────────┘
+</code></pre></div><div class=activity_PoTP></div></div>
+<table><thead><tr><th>Cache current metrics<th>Cache asynchronous metrics<th>Cache profile events<tbody><tr><td><code>FilesystemCacheSize</code><td><code>FilesystemCacheBytes</code><td><code>CachedReadBufferReadFromSourceBytes</code>, <code>CachedReadBufferReadFromCacheBytes</code><tr><td><code>FilesystemCacheElements</code><td><code>FilesystemCacheFiles</code><td><code>CachedReadBufferReadFromSourceMicroseconds</code>, <code>CachedReadBufferReadFromCacheMicroseconds</code><tr><td><td><td><code>CachedReadBufferCacheWriteBytes</code>, <code>CachedReadBufferCacheWriteMicroseconds</code><tr><td><td><td><code>CachedWriteBufferCacheWriteBytes</code>, <code>CachedWriteBufferCacheWriteMicroseconds</code></table>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=web-storage>Using static Web storage (read-only)<a href=#web-storage class=hash-link aria-label="Direct link to Using static Web storage (read-only)" title="Direct link to Using static Web storage (read-only)">​</a></h3>
+<p>This is a read-only disk. Its data is only read and never modified. A new table
+is loaded to this disk via <code>ATTACH TABLE</code> query (see example below). Local disk
+is not actually used, each <code>SELECT</code> query will result in a <code>http</code> request to
+fetch required data. All modification of the table data will result in an
+exception, i.e. the following types of queries are not allowed: <a href=/docs/sql-reference/statements/create/table><code>CREATE TABLE</code></a>,
+<a href=/docs/sql-reference/statements/alter><code>ALTER TABLE</code></a>, <a href=/docs/sql-reference/statements/rename#rename-table><code>RENAME TABLE</code></a>,
+<a href=/docs/sql-reference/statements/detach><code>DETACH TABLE</code></a> and <a href=/docs/sql-reference/statements/truncate><code>TRUNCATE TABLE</code></a>.
+Web storage can be used for read-only purposes. An example use is for hosting
+sample data, or for migrating data. There is a tool <code>clickhouse-static-files-uploader</code>,
+which prepares a data directory for a given table (<code>SELECT data_paths FROM system.tables WHERE name = 'table_name'</code>).
+For each table you need, you get a directory of files. These files can be uploaded
+to, for example, a web server with static files. After this preparation,
+you can load this table into any ClickHouse server via <code>DiskWeb</code>.</p>
+<p>In this sample configuration:</p>
+<ul class=custom-ul>
+<li class=custom-li>the disk is of type <code>web</code></li>
+<li class=custom-li>the data is hosted at <code>http://nginx:80/test1/</code></li>
+<li class=custom-li>a cache on local storage is used</li>
+</ul>
+<div class=wrapper_EBtA style=height:603.2px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;web>
+                &lt;type>web&lt;/type>
+                &lt;endpoint>http://nginx:80/test1/&lt;/endpoint>
+            &lt;/web>
+            &lt;cached_web>
+                &lt;type>cache&lt;/type>
+                &lt;disk>web&lt;/disk>
+                &lt;path>cached_web_cache/&lt;/path>
+                &lt;max_size>100000000&lt;/max_size>
+            &lt;/cached_web>
+        &lt;/disks>
+        &lt;policies>
+            &lt;web>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>web&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/web>
+            &lt;cached_web>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>cached_web&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/cached_web>
+        &lt;/policies>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<div class="theme-admonition theme-admonition-tip alert alert--success admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 12 16"><path fill-rule=evenodd d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Tip</div><p>Storage can also be configured temporarily within a query, if a web dataset is
+not expected to be used routinely, see <a href=#dynamic-configuration>dynamic configuration</a> and skip
+editing the configuration file.<p>A <a href=https://github.com/ClickHouse/web-tables-demo target=_blank rel="noopener noreferrer">demo dataset</a> is hosted in GitHub.  To prepare your own tables for web
+storage see the tool <a href=/docs/operations/utilities/static-files-disk-uploader>clickhouse-static-files-uploader</a></div></div>
+<p>In this <code>ATTACH TABLE</code> query the <code>UUID</code> provided matches the directory name of the data, and the endpoint is the URL for the raw GitHub content.</p>
+<div class=wrapper_EBtA style=height:490.1px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>-- highlight-next-line
+ATTACH TABLE uk_price_paid UUID 'cf712b4f-2ca8-435c-ac23-c4393efe52f7'
+(
+    price UInt32,
+    date Date,
+    postcode1 LowCardinality(String),
+    postcode2 LowCardinality(String),
+    type Enum8('other' = 0, 'terraced' = 1, 'semi-detached' = 2, 'detached' = 3, 'flat' = 4),
+    is_new UInt8,
+    duration Enum8('unknown' = 0, 'freehold' = 1, 'leasehold' = 2),
+    addr1 String,
+    addr2 String,
+    street LowCardinality(String),
+    locality LowCardinality(String),
+    town LowCardinality(String),
+    district LowCardinality(String),
+    county LowCardinality(String)
+)
+ENGINE = MergeTree
+ORDER BY (postcode1, postcode2, addr1, addr2)
+  -- highlight-start
+  SETTINGS disk = disk(
+      type=web,
+      endpoint='https://raw.githubusercontent.com/ClickHouse/web-tables-demo/main/web/'
+      );
+  -- highlight-end
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>A ready test case. You need to add this configuration to config:</p>
+<div class=wrapper_EBtA style=height:358.15000000000003px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-xml><code class=language-xml>&lt;clickhouse>
+    &lt;storage_configuration>
+        &lt;disks>
+            &lt;web>
+                &lt;type>web&lt;/type>
+                &lt;endpoint>https://clickhouse-datasets.s3.yandex.net/disk-with-static-files-tests/test-hits/&lt;/endpoint>
+            &lt;/web>
+        &lt;/disks>
+        &lt;policies>
+            &lt;web>
+                &lt;volumes>
+                    &lt;main>
+                        &lt;disk>web&lt;/disk>
+                    &lt;/main>
+                &lt;/volumes>
+            &lt;/web>
+        &lt;/policies>
+    &lt;/storage_configuration>
+&lt;/clickhouse>
+</code></pre></div><div class=activity_PoTP></div></div>
+<p>And then execute this query:</p>
+<div class=wrapper_EBtA style=height:2676.7000000000003px><div style=position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden><pre class=language-sql><code class=language-sql>ATTACH TABLE test_hits UUID '1ae36516-d62d-4218-9ae3-6516d62da218'
+(
+    WatchID UInt64,
+    JavaEnable UInt8,
+    Title String,
+    GoodEvent Int16,
+    EventTime DateTime,
+    EventDate Date,
+    CounterID UInt32,
+    ClientIP UInt32,
+    ClientIP6 FixedString(16),
+    RegionID UInt32,
+    UserID UInt64,
+    CounterClass Int8,
+    OS UInt8,
+    UserAgent UInt8,
+    URL String,
+    Referer String,
+    URLDomain String,
+    RefererDomain String,
+    Refresh UInt8,
+    IsRobot UInt8,
+    RefererCategories Array(UInt16),
+    URLCategories Array(UInt16),
+    URLRegions Array(UInt32),
+    RefererRegions Array(UInt32),
+    ResolutionWidth UInt16,
+    ResolutionHeight UInt16,
+    ResolutionDepth UInt8,
+    FlashMajor UInt8,
+    FlashMinor UInt8,
+    FlashMinor2 String,
+    NetMajor UInt8,
+    NetMinor UInt8,
+    UserAgentMajor UInt16,
+    UserAgentMinor FixedString(2),
+    CookieEnable UInt8,
+    JavascriptEnable UInt8,
+    IsMobile UInt8,
+    MobilePhone UInt8,
+    MobilePhoneModel String,
+    Params String,
+    IPNetworkID UInt32,
+    TraficSourceID Int8,
+    SearchEngineID UInt16,
+    SearchPhrase String,
+    AdvEngineID UInt8,
+    IsArtifical UInt8,
+    WindowClientWidth UInt16,
+    WindowClientHeight UInt16,
+    ClientTimeZone Int16,
+    ClientEventTime DateTime,
+    SilverlightVersion1 UInt8,
+    SilverlightVersion2 UInt8,
+    SilverlightVersion3 UInt32,
+    SilverlightVersion4 UInt16,
+    PageCharset String,
+    CodeVersion UInt32,
+    IsLink UInt8,
+    IsDownload UInt8,
+    IsNotBounce UInt8,
+    FUniqID UInt64,
+    HID UInt32,
+    IsOldCounter UInt8,
+    IsEvent UInt8,
+    IsParameter UInt8,
+    DontCountHits UInt8,
+    WithHash UInt8,
+    HitColor FixedString(1),
+    UTCEventTime DateTime,
+    Age UInt8,
+    Sex UInt8,
+    Income UInt8,
+    Interests UInt16,
+    Robotness UInt8,
+    GeneralInterests Array(UInt16),
+    RemoteIP UInt32,
+    RemoteIP6 FixedString(16),
+    WindowName Int32,
+    OpenerName Int32,
+    HistoryLength Int16,
+    BrowserLanguage FixedString(2),
+    BrowserCountry FixedString(2),
+    SocialNetwork String,
+    SocialAction String,
+    HTTPError UInt16,
+    SendTiming Int32,
+    DNSTiming Int32,
+    ConnectTiming Int32,
+    ResponseStartTiming Int32,
+    ResponseEndTiming Int32,
+    FetchTiming Int32,
+    RedirectTiming Int32,
+    DOMInteractiveTiming Int32,
+    DOMContentLoadedTiming Int32,
+    DOMCompleteTiming Int32,
+    LoadEventStartTiming Int32,
+    LoadEventEndTiming Int32,
+    NSToDOMContentLoadedTiming Int32,
+    FirstPaintTiming Int32,
+    RedirectCount Int8,
+    SocialSourceNetworkID UInt8,
+    SocialSourcePage String,
+    ParamPrice Int64,
+    ParamOrderID String,
+    ParamCurrency FixedString(3),
+    ParamCurrencyID UInt16,
+    GoalsReached Array(UInt32),
+    OpenstatServiceName String,
+    OpenstatCampaignID String,
+    OpenstatAdID String,
+    OpenstatSourceID String,
+    UTMSource String,
+    UTMMedium String,
+    UTMCampaign String,
+    UTMContent String,
+    UTMTerm String,
+    FromTag String,
+    HasGCLID UInt8,
+    RefererHash UInt64,
+    URLHash UInt64,
+    CLID UInt32,
+    YCLID UInt64,
+    ShareService String,
+    ShareURL String,
+    ShareTitle String,
+    ParsedParams Nested(
+        Key1 String,
+        Key2 String,
+        Key3 String,
+        Key4 String,
+        Key5 String,
+        ValueDouble Float64),
+    IslandID FixedString(16),
+    RequestNum UInt32,
+    RequestTry UInt8
+)
+ENGINE = MergeTree()
+PARTITION BY toYYYYMM(EventDate)
+ORDER BY (CounterID, EventDate, intHash32(UserID))
+SAMPLE BY intHash32(UserID)
+SETTINGS storage_policy='web';
+</code></pre></div><div class=activity_PoTP></div></div>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=static-web-storage-required-parameters>Required parameters<a href=#static-web-storage-required-parameters class=hash-link aria-label="Direct link to Required parameters" title="Direct link to Required parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<tbody><tr><td><code>type</code><td><code>web</code>. Otherwise the disk is not created.<tr><td><code>endpoint</code><td>The endpoint URL in <code>path</code> format. Endpoint URL must contain a root path to store data, where they were uploaded.</table>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id=optional-parameters-web>Optional parameters<a href=#optional-parameters-web class=hash-link aria-label="Direct link to Optional parameters" title="Direct link to Optional parameters">​</a></h4>
+<table><thead><tr><th>Parameter<th>Description<th>Default Value<tbody><tr><td><code>min_bytes_for_seek</code><td>The minimal number of bytes to use seek operation instead of sequential read<td><code>1</code> MB<tr><td><code>remote_fs_read_backoff_threashold</code><td>The maximum wait time when trying to read data for remote disk<td><code>10000</code> seconds<tr><td><code>remote_fs_read_backoff_max_tries</code><td>The maximum number of attempts to read with backoff<td><code>5</code></table>
+<p>If a query fails with an exception <code>DB:Exception Unreachable URL</code>, then you can try to adjust the settings: <a href=/docs/operations/settings/settings#http_connection_timeout>http_connection_timeout</a>, <a href=/docs/operations/settings/settings#http_receive_timeout>http_receive_timeout</a>, <a href=/docs/operations/server-configuration-parameters/settings#keep_alive_timeout>keep_alive_timeout</a>.</p>
+<p>To get files for upload run:
+<code>clickhouse static-files-disk-uploader --metadata-path &lt;path> --output-dir &lt;dir></code> (<code>--metadata-path</code> can be found in query <code>SELECT data_paths FROM system.tables WHERE name = 'table_name'</code>).</p>
+<p>When loading files by <code>endpoint</code>, they must be loaded into <code>&lt;endpoint>/store/</code> path, but config must contain only <code>endpoint</code>.</p>
+<p>If URL is not reachable on disk load when the server is starting up tables, then all errors are caught. If in this case there were errors, tables can be reloaded (become visible) via <code>DETACH TABLE table_name</code> -> <code>ATTACH TABLE table_name</code>. If metadata was successfully loaded at server startup, then tables are available straight away.</p>
+<p>Use <a href=/docs/operations/storing-data#web-storage>http_max_single_read_retries</a> setting to limit the maximum number of retries during a single HTTP read.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id=zero-copy>Zero-copy Replication (not ready for production)<a href=#zero-copy class=hash-link aria-label="Direct link to Zero-copy Replication (not ready for production)" title="Direct link to Zero-copy Replication (not ready for production)">​</a></h3>
+<p>Zero-copy replication is possible, but not recommended, with  <code>S3</code> and <code>HDFS</code> (unsupported) disks. Zero-copy replication means that if the data is stored remotely on several machines and needs to be synchronized, then only the metadata is replicated (paths to the data parts), but not the data itself.</p>
+<div class="theme-admonition theme-admonition-note alert alert--secondary admonition_WoCw"><div class="alert-icon admonitionIcon_Ibzs"><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></div><div class="alert-content admonitionContent_vXIg"><div class=admonitionHeading_TMsN>Zero-copy replication is not ready for production</div><p>Zero-copy replication is disabled by default in ClickHouse version 22.8 and higher.  This feature is not recommended for production use.</div></div></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev paginationNavLink_UdUv" href=/docs/operations/startup-scripts><svg width=24 height=25 viewBox="0 0 24 25" fill=none xmlns=http://www.w3.org/2000/svg><path d="M9.2751 19.175L10.3251 18.125L5.4501 13.25H21.6001V11.75H5.4501L10.3251 6.87501L9.2751 5.82501L2.5751 12.5L9.2751 19.175Z" fill=currentColor /></svg><div class=paginationNavContent__3xr><div class=pagination-nav__sublabel>Previous</div><div class="paginationNavLabel_YPzM pagination-nav__label">Startup scripts</div></div></a><a class="pagination-nav__link pagination-nav__link--next paginationNavLink_UdUv" href=/docs/operations/allocation-profiling><div class=paginationNavContent__3xr><div class=pagination-nav__sublabel>Next</div><div class="paginationNavLabel_YPzM pagination-nav__label">Allocation profiling</div></div><svg width=24 height=25 viewBox="0 0 24 25" fill=none xmlns=http://www.w3.org/2000/svg><path d="M14.7249 19.175L13.6749 18.125L18.5499 13.25H2.3999V11.75H18.5499L13.6749 6.87501L14.7249 5.82501L21.4249 12.5L14.7249 19.175Z" fill=currentColor /></svg></a></nav></div></div><div class="tocSidebar_cg0C col col--3"><div class="docTOCContainer_yhWY theme-doc-toc-desktop-container"><div class="tableOfContents_bqdL thin-scrollbar docTOC_QrVz theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#configuring-external-storage class="table-of-contents__link toc-highlight">Configure external storage</a><li><a href=#refresh-parts-interval-and-table-disk class="table-of-contents__link toc-highlight">refresh_parts_interval and table_disk</a><li><a href=#dynamic-configuration class="table-of-contents__link toc-highlight">Dynamic Configuration</a><ul><li><a href=#s3-storage class="table-of-contents__link toc-highlight">Using S3 Storage</a><li><a href=#plain-storage class="table-of-contents__link toc-highlight">Using Plain Storage</a><li><a href=#s3-plain-rewritable-storage class="table-of-contents__link toc-highlight">Using S3 Plain Rewritable Storage</a><li><a href=#azure-blob-storage class="table-of-contents__link toc-highlight">Using Azure Blob Storage</a></ul><li><a href=#using-hdfs-storage-unsupported class="table-of-contents__link toc-highlight">Using HDFS storage (Unsupported)</a><ul><li><a href=#encrypted-virtual-file-system class="table-of-contents__link toc-highlight">Using Data Encryption</a><li><a href=#required-parameters-encrypted-disk class="table-of-contents__link toc-highlight">Required Parameters</a><li><a href=#optional-parameters-encrypted-disk class="table-of-contents__link toc-highlight">Optional Parameters</a><li><a href=#using-local-cache class="table-of-contents__link toc-highlight">Using local cache</a></ul><li><a href=#file-cache-query-profile-settings class="table-of-contents__link toc-highlight">File Cache Query/Profile Settings</a><ul><li><a href=#web-storage class="table-of-contents__link toc-highlight">Using static Web storage (read-only)</a><li><a href=#zero-copy class="table-of-contents__link toc-highlight">Zero-copy Replication (not ready for production)</a></ul></ul></div><div><div class=displayFeedback_Qo8B><div class="sc-1q78udp-0 gXLeMB"><div type=button aria-haspopup=dialog aria-expanded=false aria-controls=radix-:Rlalj5lb6h: data-state=closed class="sc-1dii14g-0 buBXLQ"><div><p class="sc-6r74pj-0 iPDoKp">Was this page helpful?</div><div class="mt-[6px] flex"><div class="Button_OQ45 dark_oAth"><svg width=12 height=12 viewBox="0 0 16 16" fill=none xmlns=http://www.w3.org/2000/svg role=img aria-label=thumbs-up style=display:block;margin:auto><g clip-path=url(#clip0_110_3987)><path d="M2 6.5H5V13H2C1.86739 13 1.74021 12.9473 1.64645 12.8536C1.55268 12.7598 1.5 12.6326 1.5 12.5V7C1.5 6.86739 1.55268 6.74021 1.64645 6.64645C1.74021 6.55268 1.86739 6.5 2 6.5Z" stroke=#B3B6BD stroke-linecap=round stroke-linejoin=round /><path d="M5 6.5L7.5 1.5C8.03043 1.5 8.53914 1.71071 8.91421 2.08579C9.28929 2.46086 9.5 2.96957 9.5 3.5V5H13.5C13.6419 5.00004 13.7821 5.03026 13.9113 5.08865C14.0406 5.14704 14.156 5.23227 14.2498 5.33867C14.3436 5.44507 14.4137 5.57021 14.4555 5.70579C14.4972 5.84136 14.5096 5.98426 14.4919 6.125L13.7419 12.125C13.7114 12.3666 13.5939 12.5888 13.4113 12.7499C13.2286 12.911 12.9935 12.9999 12.75 13H5" stroke=#B3B6BD stroke-linecap=round stroke-linejoin=round /></g><defs><clipPath id=clip0_110_3987><rect width=16 height=16 fill=white /></clipPath></defs></svg></div><div class="Button_OQ45 dark_oAth"><svg width=12 height=12 viewBox="0 0 16 16" fill=none xmlns=http://www.w3.org/2000/svg role=img aria-label=thumbs-down style=display:block;margin:auto><g clip-path=url(#clip0_110_3992)><path d="M2 3H5V9.5H2C1.86739 9.5 1.74021 9.44732 1.64645 9.35355C1.55268 9.25979 1.5 9.13261 1.5 9L1.5 3.5C1.5 3.36739 1.55268 3.24021 1.64645 3.14645C1.74021 3.05268 1.86739 3 2 3Z" stroke=#B3B6BD stroke-linecap=round stroke-linejoin=round /><path d="M5 9.5L7.5 14.5C8.03043 14.5 8.53914 14.2893 8.91421 13.9142C9.28929 13.5391 9.5 13.0304 9.5 12.5V11H13.5C13.6419 11 13.7821 10.9697 13.9113 10.9114C14.0406 10.853 14.156 10.7677 14.2498 10.6613C14.3436 10.5549 14.4137 10.4298 14.4555 10.2942C14.4972 10.1586 14.5096 10.0157 14.4919 9.875L13.7419 3.875C13.7114 3.63339 13.5939 3.41119 13.4113 3.25009C13.2286 3.08899 12.9935 3.00007 12.75 3L5 3" stroke=#B3B6BD stroke-linecap=round stroke-linejoin=round /></g><defs><clipPath id=clip0_110_3992><rect width=16 height=16 fill=white /></clipPath></defs></svg></div></div></div></div></div></div></div></div></div></div></main></div></div><footer class="footer footer_uuN5"><div class="container_gZiR container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>© 2016–2025 ClickHouse, Inc.</div></div><div><div class="footer__links text--center"><div class=footer__links><a href=https://clickhouse.com/legal/trademark-policy target=_blank rel="noopener noreferrer" class=footer__link-item>Trademark</a><span class=footer__link-separator>·</span><a href=https://clickhouse.com/legal/privacy-policy target=_blank rel="noopener noreferrer" class=footer__link-item>Privacy</a><span class=footer__link-separator>·</span><a href=https://trust.clickhouse.com/ target=_blank rel="noopener noreferrer" class=footer__link-item>Security</a><span class=footer__link-separator>·</span><a href=https://clickhouse.com/legal/agreements/terms-of-service target=_blank rel="noopener noreferrer" class=footer__link-item>Terms of Service</a></div></div></div></div></footer><img referrerpolicy=no-referrer-when-downgrade src="https://static.scarf.sh/a.png?x-pxid=e6377503-591b-4886-9398-e69c7fee0b91" alt="" height=0 width=0 style=height:0;width:0><div role=region aria-label="Notifications (F8)" tabindex=-1 style=pointer-events:none><ol tabindex=-1 class="sc-tmc8vl-6 bZUFYN"></ol></div></div><footer class="footer footer_uuN5"><div class="container_gZiR container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>© 2016–2025 ClickHouse, Inc.</div></div><div><div class="footer__links text--center"><div class=footer__links><a href=https://clickhouse.com/legal/trademark-policy target=_blank rel="noopener noreferrer" class=footer__link-item>Trademark</a><span class=footer__link-separator>·</span><a href=https://clickhouse.com/legal/privacy-policy target=_blank rel="noopener noreferrer" class=footer__link-item>Privacy</a><span class=footer__link-separator>·</span><a href=https://trust.clickhouse.com/ target=_blank rel="noopener noreferrer" class=footer__link-item>Security</a><span class=footer__link-separator>·</span><a href=https://clickhouse.com/legal/agreements/terms-of-service target=_blank rel="noopener noreferrer" class=footer__link-item>Terms of Service</a></div></div></div></div></footer><img referrerpolicy=no-referrer-when-downgrade src="https://static.scarf.sh/a.png?x-pxid=e6377503-591b-4886-9398-e69c7fee0b91" alt="" height=0 width=0 style=height:0;width:0></div>

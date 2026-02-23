@@ -1,0 +1,2156 @@
+ <!DOCTYPE html>
+		<html
+			class="layout layout-holy-grail   show-table-of-contents conceptual show-breadcrumb default-focus"
+			lang="en-us"
+			dir="ltr"
+			data-authenticated="false"
+			data-auth-status-determined="false"
+			data-target="docs"
+			x-ms-format-detection="none"
+		>
+			
+		<head>
+			<title>Advanced Performance Topics - EF Core | Microsoft Learn</title>
+			<meta charset="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta name="color-scheme" content="light dark" />
+
+			<meta name="description" content="Advanced performance topics for Entity Framework Core" />
+			<link rel="canonical" href="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics" /> 
+
+			<!-- Non-customizable open graph and sharing-related metadata -->
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:site" content="@MicrosoftLearn" />
+			<meta property="og:type" content="website" />
+			<meta property="og:image:alt" content="Microsoft Learn" />
+			<meta property="og:image" content="https://learn.microsoft.com/en-us/media/open-graph-image.png" />
+			<!-- Page specific open graph and sharing-related metadata -->
+			<meta property="og:title" content="Advanced Performance Topics - EF Core" />
+			<meta property="og:url" content="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics" />
+			<meta property="og:description" content="Advanced performance topics for Entity Framework Core" />
+			<meta name="platform_id" content="ada64a4c-83c3-6714-0fa4-d80a203f4349" /> <meta name="scope" content="Entity Framework" />
+			<meta name="locale" content="en-us" />
+			 <meta name="adobe-target" content="true" /> 
+			<meta name="uhfHeaderId" content="MSDocsHeader-DotNet" />
+
+			<meta name="page_type" content="conceptual" />
+
+			<!--page specific meta tags-->
+			
+
+			<!-- custom meta tags -->
+			
+		<meta name="ms.service" content="entity-framework" />
+	
+		<meta name="breadcrumb_path" content="/ef/breadcrumb/toc.json" />
+	
+		<meta name="ms.topic" content="conceptual" />
+	
+		<meta name="audience" content="developer" />
+	
+		<meta name="ms.tgt_pltfrm" content="dotnet" />
+	
+		<meta name="ms.devlang" content="dotnet" />
+	
+		<meta name="ms.author" content="sampatel" />
+	
+		<meta name="feedback_system" content="OpenSource" />
+	
+		<meta name="feedback_product_url" content="https://github.com/dotnet/efcore/issues/new/choose" />
+	
+		<meta name="ms.subservice" content="entity-framework-core" />
+	
+		<meta name="ms.update-cycle" content="3650-days" />
+	
+		<meta name="author" content="roji" />
+	
+		<meta name="ms.date" content="2025-11-21T00:00:00Z" />
+	
+		<meta name="uid" content="core/performance/advanced-performance-topics" />
+	
+		<meta name="ms.custom" content="sfi-ropc-nochange" />
+	
+		<meta name="document_id" content="e638463f-fec2-ca39-37a4-b3580fa874d8" />
+	
+		<meta name="document_version_independent_id" content="e96b453f-0256-8bc9-bd21-1343f2fe246c" />
+	
+		<meta name="updated_at" content="2026-01-21T23:02:00Z" />
+	
+		<meta name="original_content_git_url" content="https://github.com/dotnet/EntityFramework.Docs/blob/live/entity-framework/core/performance/advanced-performance-topics.md" />
+	
+		<meta name="gitcommit" content="https://github.com/dotnet/EntityFramework.Docs/blob/d424902466f387dd6cfa116365270bd8f0451348/entity-framework/core/performance/advanced-performance-topics.md" />
+	
+		<meta name="git_commit_id" content="d424902466f387dd6cfa116365270bd8f0451348" />
+	
+		<meta name="site_name" content="Docs" />
+	
+		<meta name="depot_name" content="MSDN.ef" />
+	
+		<meta name="schema" content="Conceptual" />
+	
+		<meta name="toc_rel" content="../../toc.json" />
+	
+		<meta name="pdf_url_template" content="https://learn.microsoft.com/pdfstore/en-us/MSDN.ef/{branchName}{pdfName}" />
+	
+		<meta name="feedback_help_link_type" content="" />
+	
+		<meta name="feedback_help_link_url" content="" />
+	
+		<meta name="word_count" content="3776" />
+	
+		<meta name="asset_id" content="core/performance/advanced-performance-topics" />
+	
+		<meta name="moniker_range_name" content="" />
+	
+		<meta name="item_type" content="Content" />
+	
+		<meta name="source_path" content="entity-framework/core/performance/advanced-performance-topics.md" />
+	
+		<meta name="previous_tlsh_hash" content="FB822892A60CA700FFC34E9B2D8BE5D495F0C408F6B01B98041A65B2E94A3D735F6D6DEBA77B631813319B9601D2770EA1E3D729E0E83325A5B6287DC26C21C6539D3BB6E5" />
+	
+		<meta name="github_feedback_content_git_url" content="https://github.com/dotnet/EntityFramework.Docs/blob/main/entity-framework/core/performance/advanced-performance-topics.md" />
+	
+		<meta name="markdown_url" content="https://learn.microsoft.com/en-us/ef/core/performance/advanced-performance-topics?accept=text/markdown" />
+	 
+		<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/56a03cf0-cabf-4e70-800b-dcb9ff39361c" data-source="generated" />
+	
+		<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/8b896464-3b7d-4e1f-84b0-9bb45aeb5f64" data-source="generated" />
+	
+		<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/cbe4ca68-43ac-4375-aba5-5945a6394c20" data-source="generated" />
+	
+		<meta name="spProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/1ca0db39-5d2f-4866-9e04-a7fe05b37dd8" data-source="generated" />
+	
+		<meta name="spProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/b1d2d671-9549-46e8-918c-24349120dbf5" data-source="generated" />
+	
+		<meta name="spProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/ced846cc-6a3c-4c8f-9dfb-3de0e90e2742" data-source="generated" />
+	
+
+			<!-- assets and js globals -->
+			
+			<link rel="stylesheet" href="/static/assets/0.4.03336.7510-899cc417/styles/site-ltr.css" />
+			
+			<link rel="preconnect" href="//mscom.demdex.net" crossorigin />
+						<link rel="dns-prefetch" href="//target.microsoft.com" />
+						<link rel="dns-prefetch" href="//microsoftmscompoc.tt.omtrdc.net" />
+						<link
+							rel="preload"
+							as="script"
+							href="/static/third-party/adobe-target/at-js/2.9.0/at.js"
+							integrity="sha384-l4AKhsU8cUWSht4SaJU5JWcHEWh1m4UTqL08s6b/hqBLAeIDxTNl+AMSxTLx6YMI"
+							crossorigin="anonymous"
+							id="adobe-target-script"
+							type="application/javascript"
+						/>
+			<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+			<script src="https://js.monitor.azure.com/scripts/c/ms.jsll-4.min.js"></script>
+			<script src="/_themes/docs.theme/master/en-us/_themes/global/deprecation.js"></script>
+
+			<!-- msdocs global object -->
+			<script id="msdocs-script">
+		var msDocs = {
+  "environment": {
+    "accessLevel": "online",
+    "azurePortalHostname": "portal.azure.com",
+    "reviewFeatures": false,
+    "supportLevel": "production",
+    "systemContent": true,
+    "siteName": "learn",
+    "legacyHosting": false
+  },
+  "data": {
+    "contentLocale": "en-us",
+    "contentDir": "ltr",
+    "userLocale": "en-us",
+    "userDir": "ltr",
+    "pageTemplate": "Conceptual",
+    "brand": "",
+    "context": {},
+    "standardFeedback": false,
+    "showFeedbackReport": false,
+    "feedbackHelpLinkType": "",
+    "feedbackHelpLinkUrl": "",
+    "feedbackSystem": "OpenSource",
+    "feedbackGitHubRepo": "dotnet/EntityFramework.Docs",
+    "feedbackProductUrl": "https://github.com/dotnet/efcore/issues/new/choose",
+    "extendBreadcrumb": false,
+    "isEditDisplayable": true,
+    "isPrivateUnauthorized": false,
+    "hideViewSource": false,
+    "isPermissioned": false,
+    "hasRecommendations": true,
+    "contributors": [
+      {
+        "name": "roji",
+        "url": "https://github.com/roji"
+      },
+      {
+        "name": "Dickson-Mwendia",
+        "url": "https://github.com/Dickson-Mwendia"
+      },
+      {
+        "name": "Copilot",
+        "url": "https://github.com/Copilot"
+      },
+      {
+        "name": "Youssef1313",
+        "url": "https://github.com/Youssef1313"
+      },
+      {
+        "name": "azarboon",
+        "url": "https://github.com/azarboon"
+      },
+      {
+        "name": "AndriySvyryd",
+        "url": "https://github.com/AndriySvyryd"
+      },
+      {
+        "name": "cincuranet",
+        "url": "https://github.com/cincuranet"
+      },
+      {
+        "name": "Raamyy",
+        "url": "https://github.com/Raamyy"
+      },
+      {
+        "name": "Tornhoof",
+        "url": "https://github.com/Tornhoof"
+      },
+      {
+        "name": "ismaeel-ch",
+        "url": "https://github.com/ismaeel-ch"
+      },
+      {
+        "name": "bricelam",
+        "url": "https://github.com/bricelam"
+      },
+      {
+        "name": "ekalb81",
+        "url": "https://github.com/ekalb81"
+      },
+      {
+        "name": "kaypee90",
+        "url": "https://github.com/kaypee90"
+      },
+      {
+        "name": "smitpatel",
+        "url": "https://github.com/smitpatel"
+      }
+    ],
+    "openSourceFeedbackIssueUrl": "https://github.com/dotnet/EntityFramework.Docs/issues/new?template=z-customer-feedback.yml",
+    "openSourceFeedbackIssueTitle": ""
+  },
+  "functions": {}
+};;
+	</script>
+
+			<!-- base scripts, msdocs global should be before this -->
+			<script src="/static/assets/0.4.03336.7510-899cc417/scripts/en-us/index-docs.js"></script>
+			
+
+			<!-- json-ld -->
+			
+		</head>
+	
+			<body
+				id="body"
+				data-bi-name="body"
+				class="layout-body "
+				lang="en-us"
+				dir="ltr"
+			>
+				<header class="layout-body-header">
+		<div class="header-holder has-default-focus">
+			
+		<a
+			href="#main"
+			
+			style="z-index: 1070"
+			class="outline-color-text visually-hidden-until-focused position-fixed inner-focus focus-visible top-0 left-0 right-0 padding-xs text-align-center background-color-body"
+			
+		>
+			Skip to main content
+		</a>
+	
+		<a
+			href="#"
+			data-skip-to-ask-learn
+			style="z-index: 1070"
+			class="outline-color-text visually-hidden-until-focused position-fixed inner-focus focus-visible top-0 left-0 right-0 padding-xs text-align-center background-color-body"
+			hidden
+		>
+			Skip to Ask Learn chat experience
+		</a>
+	
+
+			<div hidden id="cookie-consent-holder" data-test-id="cookie-consent-container"></div>
+			<!-- Unsupported browser warning -->
+			<div
+				id="unsupported-browser"
+				style="background-color: white; color: black; padding: 16px; border-bottom: 1px solid grey;"
+				hidden
+			>
+				<div style="max-width: 800px; margin: 0 auto;">
+					<p style="font-size: 24px">This browser is no longer supported.</p>
+					<p style="font-size: 16px; margin-top: 16px;">
+						Upgrade to Microsoft Edge to take advantage of the latest features, security updates, and technical support.
+					</p>
+					<div style="margin-top: 12px;">
+						<a
+							href="https://go.microsoft.com/fwlink/p/?LinkID=2092881 "
+							style="background-color: #0078d4; border: 1px solid #0078d4; color: white; padding: 6px 12px; border-radius: 2px; display: inline-block;"
+						>
+							Download Microsoft Edge
+						</a>
+						<a
+							href="https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-microsoft-edge"
+							style="background-color: white; padding: 6px 12px; border: 1px solid #505050; color: #171717; border-radius: 2px; display: inline-block;"
+						>
+							More info about Internet Explorer and Microsoft Edge
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- site header -->
+			<header
+				id="ms--site-header"
+				data-test-id="site-header-wrapper"
+				role="banner"
+				itemscope="itemscope"
+				itemtype="http://schema.org/Organization"
+			>
+				<div
+					id="ms--mobile-nav"
+					class="site-header display-none-tablet padding-inline-none gap-none"
+					data-bi-name="mobile-header"
+					data-test-id="mobile-header"
+				></div>
+				<div
+					id="ms--primary-nav"
+					class="site-header display-none display-flex-tablet"
+					data-bi-name="L1-header"
+					data-test-id="primary-header"
+				></div>
+				<div
+					id="ms--secondary-nav"
+					class="site-header display-none display-flex-tablet"
+					data-bi-name="L2-header"
+					data-test-id="secondary-header"
+					
+				></div>
+			</header>
+			
+		<!-- banner -->
+		<div data-banner>
+			<div id="disclaimer-holder"></div>
+			
+		</div>
+		<!-- banner end -->
+	
+		</div>
+	</header>
+				 <section
+					id="layout-body-menu"
+					class="layout-body-menu display-flex"
+					data-bi-name="menu"
+			  >
+					
+		<div
+			id="left-container"
+			class="left-container display-none display-block-tablet padding-inline-sm padding-bottom-sm width-full"
+			data-toc-container="true"
+		>
+			<!-- Regular TOC content (default) -->
+			<div id="ms--toc-content" class="height-full">
+				<nav
+					id="affixed-left-container"
+					class="margin-top-sm-tablet position-sticky display-flex flex-direction-column"
+					aria-label="Primary"
+					data-bi-name="left-toc"
+					role="navigation"
+				></nav>
+			</div>
+			<!-- Collapsible TOC content (hidden by default) -->
+			<div id="ms--toc-content-collapsible" class="height-full" hidden>
+				<nav
+					id="affixed-left-container"
+					class="margin-top-sm-tablet position-sticky display-flex flex-direction-column"
+					aria-label="Primary"
+					data-bi-name="left-toc"
+					role="navigation"
+				>
+					<div
+						id="ms--collapsible-toc-header"
+						class="display-flex flex-direction-row-reverse justify-content-space-between align-items-center margin-bottom-xxs"
+					>
+						<button
+							type="button"
+							class="button button-clear inner-focus"
+							data-collapsible-toc-toggle
+							aria-expanded="true"
+							aria-controls="ms--collapsible-toc-content"
+							aria-label="Table of contents"
+						>
+							<span class="icon font-size-h4" aria-hidden="true">
+								<span class="docon docon-panel-left-contract"></span>
+							</span>
+						</button>
+						<div id="ms--collapsible-toc-moniker-slot" class="flex-grow-1"></div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	
+			  </section>
+
+				<main
+					id="main"
+					role="main"
+					class="layout-body-main "
+					data-bi-name="content"
+					lang="en-us"
+					dir="ltr"
+				>
+					
+			<div
+		id="ms--content-header"
+		class="content-header default-focus border-bottom-none"
+		data-bi-name="content-header"
+	>
+		<div class="content-header-controls margin-xxs margin-inline-sm-tablet">
+			<button
+				type="button"
+				class="contents-button button button-sm margin-right-xxs"
+				data-bi-name="contents-expand"
+				aria-haspopup="true"
+				data-contents-button
+			>
+				<span class="icon" aria-hidden="true"><span class="docon docon-menu"></span></span>
+				<span class="contents-expand-title"> Table of contents </span>
+			</button>
+			<button
+				type="button"
+				class="ap-collapse-behavior ap-expanded button button-sm"
+				data-bi-name="ap-collapse"
+				aria-controls="action-panel"
+			>
+				<span class="icon" aria-hidden="true"><span class="docon docon-exit-mode"></span></span>
+				<span>Exit editor mode</span>
+			</button>
+		</div>
+	</div>
+			<div data-main-column class="padding-sm padding-top-none padding-top-sm-tablet">
+				<div>
+					
+		<div id="article-header" class="background-color-body margin-bottom-xs display-none-print">
+			<div class="display-flex align-items-center justify-content-space-between">
+				
+		<details
+			id="article-header-breadcrumbs-overflow-popover"
+			class="popover"
+			data-for="article-header-breadcrumbs"
+		>
+			<summary
+				class="button button-clear button-primary button-sm inner-focus"
+				aria-label="All breadcrumbs"
+			>
+				<span class="icon">
+					<span class="docon docon-more"></span>
+				</span>
+			</summary>
+			<div id="article-header-breadcrumbs-overflow" class="popover-content padding-none"></div>
+		</details>
+
+		<bread-crumbs
+			id="article-header-breadcrumbs"
+			role="group"
+			aria-label="Breadcrumbs"
+			data-test-id="article-header-breadcrumbs"
+			class="overflow-hidden flex-grow-1 margin-right-sm margin-right-md-tablet margin-right-lg-desktop margin-left-negative-xxs padding-left-xxs"
+		></bread-crumbs>
+	 
+		<div
+			id="article-header-page-actions"
+			class="opacity-none margin-left-auto display-flex flex-wrap-no-wrap align-items-stretch"
+		>
+			
+		<button
+			class="button button-sm border-none inner-focus display-none-tablet flex-shrink-0 "
+			data-bi-name="ask-learn-assistant-entry"
+			data-test-id="ask-learn-assistant-modal-entry-mobile"
+			data-ask-learn-modal-entry
+			
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-none display-inline-flex-tablet display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn "
+			data-bi-name="ask-learn-assistant-entry"
+			
+			data-test-id="ask-learn-assistant-modal-entry-tablet"
+			data-ask-learn-modal-entry
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn "
+			data-bi-name="ask-learn-assistant-entry"
+			
+			data-test-id="ask-learn-assistant-flyout-entry"
+			data-ask-learn-flyout-entry
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	 
+		<button
+			type="button"
+			id="ms--focus-mode-button"
+			data-focus-mode
+			data-bi-name="focus-mode-entry"
+			class="button button-sm flex-shrink-0 margin-right-xxs display-none display-inline-flex-desktop"
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-glasses"></span>
+			</span>
+			<span>Focus mode</span>
+		</button>
+	 
+
+			<details class="popover popover-right" id="article-header-page-actions-overflow">
+				<summary
+					class="justify-content-flex-start button button-clear button-sm button-primary inner-focus"
+					aria-label="More actions"
+					title="More actions"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-more-vertical"></span>
+					</span>
+				</summary>
+				<div class="popover-content">
+					
+		<button
+			data-page-action-item="overflow-mobile"
+			type="button"
+			class="button-block button-sm inner-focus button button-clear display-none-tablet justify-content-flex-start text-align-left"
+			data-bi-name="contents-expand"
+			data-contents-button
+			data-popover-close
+		>
+			<span class="icon">
+				<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+			</span>
+			<span class="contents-expand-title">Table of contents</span>
+		</button>
+	 
+		<a
+			id="lang-link-overflow"
+			class="button-sm inner-focus button button-clear button-block justify-content-flex-start text-align-left"
+			data-bi-name="language-toggle"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-read-in-link
+			href="#"
+			hidden
+		>
+			<span class="icon" aria-hidden="true" data-read-in-link-icon>
+				<span class="docon docon-locale-globe"></span>
+			</span>
+			<span data-read-in-link-text>Read in English</span>
+		</a>
+	 
+		<button
+			type="button"
+			class="collection button button-clear button-sm button-block justify-content-flex-start text-align-left inner-focus"
+			data-list-type="collection"
+			data-bi-name="collection"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-popover-close
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-circle-addition"></span>
+			</span>
+			<span class="collection-status">Add</span>
+		</button>
+	
+					
+		<button
+			type="button"
+			class="collection button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+			data-list-type="plan"
+			data-bi-name="plan"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-popover-close
+			hidden
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-circle-addition"></span>
+			</span>
+			<span class="plan-status">Add to plan</span>
+		</button>
+	  
+		<a
+			data-contenteditbtn
+			class="button button-clear button-block button-sm inner-focus justify-content-flex-start text-align-left text-decoration-none"
+			data-bi-name="edit"
+			
+			href="https://github.com/dotnet/EntityFramework.Docs/blob/main/entity-framework/core/performance/advanced-performance-topics.md"
+			data-original_content_git_url="https://github.com/dotnet/EntityFramework.Docs/blob/live/entity-framework/core/performance/advanced-performance-topics.md"
+			data-original_content_git_url_template="{repo}/blob/{branch}/entity-framework/core/performance/advanced-performance-topics.md"
+			data-pr_repo=""
+			data-pr_branch=""
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-edit-outline"></span>
+			</span>
+			<span>Edit</span>
+		</a>
+	
+					
+		<hr class="margin-block-xxs" />
+		<h4 class="font-size-sm padding-left-xxs">Share via</h4>
+		
+					<a
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-facebook"
+						data-bi-name="facebook"
+						data-page-action-item="overflow-all"
+						href="#"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-facebook-share"></span>
+						</span>
+						<span>Facebook</span>
+					</a>
+
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-twitter"
+						data-bi-name="twitter"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-text" aria-hidden="true">
+							<span class="docon docon-xlogo-share"></span>
+						</span>
+						<span>x.com</span>
+					</a>
+
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-linkedin"
+						data-bi-name="linkedin"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-linked-in-logo"></span>
+						</span>
+						<span>LinkedIn</span>
+					</a>
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-email"
+						data-bi-name="email"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-mail-message"></span>
+						</span>
+						<span>Email</span>
+					</a>
+			  
+	 
+		<hr class="margin-block-xxs" />
+		
+				<button
+					class="button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+					type="button"
+					data-bi-name="copy-markdown"
+					data-page-action-item="overflow-all"
+					data-copy-markdown
+					data-copy-state="idle"
+					data-check-hidden="true"
+				>
+					<span class="icon color-primary" aria-hidden="true">
+						<span data-show-when="idle" class="docon docon-code-lang"></span>
+						<span data-show-when="loading" class="loader" hidden></span>
+						<span data-show-when="success" class="docon docon-check-mark" hidden></span>
+					</span>
+					<span>Copy Markdown</span>
+				</button>
+		   
+				<button
+					class="button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+					type="button"
+					data-bi-name="print"
+					data-page-action-item="overflow-all"
+					data-popover-close
+					data-print-page
+					data-check-hidden="true"
+				>
+					<span class="icon color-primary" aria-hidden="true">
+						<span class="docon docon-print"></span>
+					</span>
+					<span>Print</span>
+				</button>
+		  
+	
+				</div>
+			</details>
+		</div>
+	
+			</div>
+		</div>
+	  
+		<!-- privateUnauthorizedTemplate is hidden by default -->
+		<div unauthorized-private-section data-bi-name="permission-content-unauthorized-private" hidden>
+			<hr class="hr margin-top-xs margin-bottom-sm" />
+			<div class="notification notification-info">
+				<div class="notification-content">
+					<p class="margin-top-none notification-title">
+						<span class="icon">
+							<span class="docon docon-exclamation-circle-solid" aria-hidden="true"></span>
+						</span>
+						<span>Note</span>
+					</p>
+					<p class="margin-top-none authentication-determined not-authenticated">
+						Access to this page requires authorization. You can try <a class="docs-sign-in" href="#" data-bi-name="permission-content-sign-in">signing in</a> or <a  class="docs-change-directory" data-bi-name="permisson-content-change-directory">changing directories</a>.
+					</p>
+					<p class="margin-top-none authentication-determined authenticated">
+						Access to this page requires authorization. You can try <a class="docs-change-directory" data-bi-name="permisson-content-change-directory">changing directories</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+	
+					<div class="content"><h1 id="advanced-performance-topics">Advanced Performance Topics</h1></div>
+					
+		<div
+			id="article-metadata"
+			data-bi-name="article-metadata"
+			data-test-id="article-metadata"
+			class="page-metadata-container display-flex gap-xxs justify-content-space-between align-items-center flex-wrap-wrap"
+		>
+			 
+				<div
+					id="user-feedback"
+					class="margin-block-xxs display-none display-none-print"
+					hidden
+					data-hide-on-archived
+				>
+					
+		<button
+			id="user-feedback-button"
+			data-test-id="conceptual-feedback-button"
+			class="button button-sm button-clear button-primary display-none"
+			type="button"
+			data-bi-name="user-feedback-button"
+			data-user-feedback-button
+			hidden
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-like"></span>
+			</span>
+			<span>Feedback</span>
+		</button>
+	
+				</div>
+		  
+		</div>
+	 
+		<div data-id="ai-summary" hidden>
+			<div id="ms--ai-summary-cta" class="margin-top-xs display-flex align-items-center">
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-sparkle-fill gradient-text-vivid"></span>
+				</span>
+				<button
+					id="ms--ai-summary"
+					type="button"
+					class="tag tag-sm tag-suggestion margin-left-xxs"
+					data-test-id="ai-summary-cta"
+					data-bi-name="ai-summary-cta"
+					data-an="ai-summary"
+				>
+					<span class="ai-summary-cta-text">
+						Summarize this article for me
+					</span>
+				</button>
+			</div>
+			<!-- Slot where the client will render the summary card after the user clicks the CTA -->
+			<div id="ms--ai-summary-header" class="margin-top-xs"></div>
+		</div>
+	 
+		<nav
+			id="center-doc-outline"
+			class="doc-outline is-hidden-desktop display-none-print margin-bottom-sm"
+			data-bi-name="intopic toc"
+			aria-label="In this article"
+		>
+			<h2 id="ms--in-this-article" class="title is-6 margin-block-xs">
+				In this article
+			</h2>
+		</nav>
+	
+					<div class="content"><h2 id="dbcontext-pooling">DbContext pooling</h2>
+<p>A <code>DbContext</code> is generally a light object: creating and disposing one doesn't involve a database operation, and most applications can do so without any noticeable impact on performance. However, each context instance does set up various internal services and objects necessary for performing its duties, and the overhead of continuously doing so may be significant in high-performance scenarios. For these cases, EF Core can <em>pool</em> your context instances: when you dispose your context, EF Core resets its state and stores it in an internal pool; when a new instance is next requested, that pooled instance is returned instead of setting up a new one. Context pooling allows you to pay context setup costs only once at program startup, rather than continuously.</p>
+<p>Note that context pooling is orthogonal to database connection pooling, which is managed at a lower level in the database driver.</p>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_with-di" role="tab" aria-controls="tabpanel_1_with-di" data-tab="with-di" tabindex="0" aria-selected="true" data-linktype="self-bookmark">With dependency injection</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_without-di" role="tab" aria-controls="tabpanel_1_without-di" data-tab="without-di" tabindex="-1" data-linktype="self-bookmark">Without dependency injection</a>
+</li>
+</ul>
+<section id="tabpanel_1_with-di" role="tabpanel" data-tab="with-di">
+
+<p>The typical pattern in an ASP.NET Core app using EF Core involves registering a custom <a href="/en-us/dotnet/api/microsoft.entityframeworkcore.dbcontext" class="no-loc" data-linktype="absolute-path">DbContext</a> type into the <a href="/en-us/aspnet/core/fundamentals/dependency-injection" data-linktype="absolute-path">dependency injection</a> container via <a href="/en-us/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext" class="no-loc" data-linktype="absolute-path">AddDbContext</a>. Then, instances of that type are obtained through constructor parameters in controllers or Razor Pages.</p>
+<p>To enable context pooling, simply replace <code>AddDbContext</code> with <a href="/en-us/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontextpool" class="no-loc" data-linktype="absolute-path">AddDbContextPool</a>:</p>
+<pre><code class="lang-csharp" name="Main">builder.Services.AddDbContextPool&lt;WeatherForecastContext&gt;(
+    o =&gt; o.UseSqlServer(builder.Configuration.GetConnectionString("WeatherForecastContext")));
+</code></pre>
+<p>The <code>poolSize</code> parameter of <a href="/en-us/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontextpool" class="no-loc" data-linktype="absolute-path">AddDbContextPool</a> sets the maximum number of instances retained by the pool (defaults to 1024). Once <code>poolSize</code> is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.</p>
+</section>
+<section id="tabpanel_1_without-di" role="tabpanel" data-tab="without-di" aria-hidden="true" hidden="hidden">
+
+<p>To use context pooling without dependency injection, initialize a <code>PooledDbContextFactory</code> and request context instances from it:</p>
+<pre><code class="lang-csharp" name="Main">var options = new DbContextOptionsBuilder&lt;PooledBloggingContext&gt;()
+    .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;ConnectRetryCount=0")
+    .Options;
+
+var factory = new PooledDbContextFactory&lt;PooledBloggingContext&gt;(options);
+
+using (var context = factory.CreateDbContext())
+{
+    var allPosts = await context.Posts.ToListAsync();
+}
+</code></pre>
+<p>The <code>poolSize</code> parameter of the <code>PooledDbContextFactory</code> constructor sets the maximum number of instances retained by the pool (defaults to 1024). Once <code>poolSize</code> is exceeded, new context instances are not cached and EF falls back to the non-pooling behavior of creating instances on demand.</p>
+</section>
+</div>
+<h3 id="benchmarks">Benchmarks</h3>
+<p>Following are the benchmark results for fetching a single row from a SQL Server database running locally on the same machine, with and without context pooling. As always, results will change with the number of rows, the latency to your database server and other factors. Importantly, this benchmarks single-threaded pooling performance, while a real-world contended scenario may have different results; benchmark on your platform before making any decisions. <a href="https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/ContextPooling.cs" data-linktype="external">The source code is available here</a>, feel free to use it as a basis for your own measurements.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>NumBlogs</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Gen 0</th>
+<th style="text-align: right;">Gen 1</th>
+<th style="text-align: right;">Gen 2</th>
+<th style="text-align: right;">Allocated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WithoutContextPooling</td>
+<td>1</td>
+<td style="text-align: right;">701.6 us</td>
+<td style="text-align: right;">26.62 us</td>
+<td style="text-align: right;">78.48 us</td>
+<td style="text-align: right;">11.7188</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">50.38 KB</td>
+</tr>
+<tr>
+<td>WithContextPooling</td>
+<td>1</td>
+<td style="text-align: right;">350.1 us</td>
+<td style="text-align: right;">6.80 us</td>
+<td style="text-align: right;">14.64 us</td>
+<td style="text-align: right;">0.9766</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">4.63 KB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="managing-state-in-pooled-contexts">Managing state in pooled contexts</h3>
+<p>Context pooling works by reusing the same context instance across requests; this means that it's effectively registered as a <a href="/en-us/aspnet/core/fundamentals/dependency-injection#service-lifetimes" data-linktype="absolute-path">Singleton</a>, and the same instance is reused across multiple requests (or DI scopes). This means that special care must be taken when the context involves any state that may change between requests. Crucially, the context's <code>OnConfiguring</code> is only invoked once - when the instance context is first created - and so cannot be used to set state which needs to vary (e.g. a tenant ID).</p>
+<p>A typical scenario involving context state would be a multi-tenant ASP.NET Core application, where the context instance has a <em>tenant ID</em> which is taken into account by queries (see <a href="../querying/filters" data-linktype="relative-path">Global Query Filters</a> for more details). Since the tenant ID needs to change with each web request, we need to go through some extra steps to make it all work with context pooling.</p>
+<p>Let's assume that your application registers a scoped <code>ITenant</code> service, which wraps the tenant ID and any other tenant-related information:</p>
+<pre><code class="lang-csharp" name="Main">// Below is a minimal tenant resolution strategy, which registers a scoped ITenant service in DI.
+// In this sample, we simply accept the tenant ID as a request query, which means that a client can impersonate any
+// tenant. In a real application, the tenant ID would be set based on secure authentication data.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped&lt;ITenant&gt;(sp =&gt;
+{
+    var tenantIdString = sp.GetRequiredService&lt;IHttpContextAccessor&gt;().HttpContext.Request.Query["TenantId"];
+
+    return tenantIdString != StringValues.Empty &amp;&amp; int.TryParse(tenantIdString, out var tenantId)
+        ? new Tenant(tenantId)
+        : null;
+});
+</code></pre>
+<p>As written above, pay special attention to where you get the tenant ID from - this is an important aspect of your application's security.</p>
+<p>Once we have our scoped <code>ITenant</code> service, register a pooling context factory as a Singleton service, as usual:</p>
+<pre><code class="lang-csharp" name="Main">builder.Services.AddPooledDbContextFactory&lt;WeatherForecastContext&gt;(
+    o =&gt; o.UseSqlServer(builder.Configuration.GetConnectionString("WeatherForecastContext")));
+</code></pre>
+<p>Next, write a custom context factory which gets a pooled context from the Singleton factory we registered, and injects the tenant ID into context instances it hands out:</p>
+<pre><code class="lang-csharp" name="Main">public class WeatherForecastScopedFactory : IDbContextFactory&lt;WeatherForecastContext&gt;
+{
+    private const int DefaultTenantId = -1;
+
+    private readonly IDbContextFactory&lt;WeatherForecastContext&gt; _pooledFactory;
+    private readonly int _tenantId;
+
+    public WeatherForecastScopedFactory(
+        IDbContextFactory&lt;WeatherForecastContext&gt; pooledFactory,
+        ITenant tenant)
+    {
+        _pooledFactory = pooledFactory;
+        _tenantId = tenant?.TenantId ?? DefaultTenantId;
+    }
+
+    public WeatherForecastContext CreateDbContext()
+    {
+        var context = _pooledFactory.CreateDbContext();
+        context.TenantId = _tenantId;
+        return context;
+    }
+}
+</code></pre>
+<p>Once we have our custom context factory, register it as a Scoped service:</p>
+<pre><code class="lang-csharp" name="Main">builder.Services.AddScoped&lt;WeatherForecastScopedFactory&gt;();
+</code></pre>
+<p>Finally, arrange for a context to get injected from our Scoped factory:</p>
+<pre><code class="lang-csharp" name="Main">builder.Services.AddScoped(
+    sp =&gt; sp.GetRequiredService&lt;WeatherForecastScopedFactory&gt;().CreateDbContext());
+</code></pre>
+<p>As this point, your controllers automatically get injected with a context instance that has the right tenant ID, without having to know anything about it.</p>
+<p>The full source code for this sample is available <a href="https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Performance/AspNetContextPoolingWithState" data-linktype="external">here</a>.</p>
+<div class="NOTE">
+<p>Note</p>
+<p>Although EF Core takes care of resetting internal state for <code>DbContext</code> and its related services, it generally does not reset state in the underlying database driver, which is outside of EF. For example, if you manually open and use a <code>DbConnection</code> or otherwise manipulate ADO.NET state, it's up to you to restore that state before returning the context instance to the pool, e.g. by closing the connection. Failure to do so may cause state to get leaked across unrelated requests.</p>
+</div>
+<h3 id="connection-pooling-considerations">Connection Pooling Considerations</h3>
+<p>With most databases, a long-lived connection is required for performing database operations, and such connections can be expensive to open and close. EF does not implement connection pooling itself, but relies on the underlying database driver (e.g. ADO.NET driver) for managing database connections. Connection pooling is a client-side mechanism that reuses existing database connections to reduce the overhead of opening and closing connections repeatedly. This mechanism is generally consistent across databases supported by EF, such as Azure SQL Database, PostgreSQL, and others., although factors specific to the database or environment, such as resource limits or service configurations, may affect pooling efficiency. Connection pooling is usually enabled by default, and any pooling configuration must be performed at the low-level driver level as documented by that driver; for example, when using ADO.NET, parameters such as minimum or maximum pool sizes are usually configured via the connection string.</p>
+<p>Connection pooling is completely orthogonal to EF's <code>DbContext</code> pooling, which is described above: while the low-level database driver pools database connections (to avoid the overhead of opening/closing connections), EF can pool context instances (to avoid context memory allocation and initialization overheads). Regardless of whether a context instance is pooled or not, EF generally opens connections just before each operation (e.g. query), and closes it right afterwards, causing it to be returned to the pool; this is done to avoid keeping connections out of the pool any longer than is necessary.</p>
+<h2 id="compiled-queries">Compiled queries</h2>
+<p>When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.</p>
+<p>However, EF must still perform certain tasks before it can make use of the internal query cache. For example, your query's expression tree must be recursively compared with the expression trees of cached queries, to find the correct cached query. The overhead for this initial processing is negligible in the majority of EF applications, especially when compared to other costs associated with query execution (network I/O, actual query processing and disk I/O at the database...). However, in certain high-performance scenarios it may be desirable to eliminate it.</p>
+<p>EF supports <em>compiled queries</em>, which allow the explicit compilation of a LINQ query into a .NET delegate. Once this delegate is acquired, it can be invoked directly to execute the query, without providing the LINQ expression tree. This technique bypasses the cache lookup, and provides the most optimized way to execute a query in EF Core. Following are some benchmark results comparing compiled and non-compiled query performance; benchmark on your platform before making any decisions. <a href="https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Benchmarks/CompiledQueries.cs" data-linktype="external">The source code is available here</a>, feel free to use it as a basis for your own measurements.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>NumBlogs</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Gen 0</th>
+<th style="text-align: right;">Allocated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WithCompiledQuery</td>
+<td>1</td>
+<td style="text-align: right;">564.2 us</td>
+<td style="text-align: right;">6.75 us</td>
+<td style="text-align: right;">5.99 us</td>
+<td style="text-align: right;">1.9531</td>
+<td style="text-align: right;">9 KB</td>
+</tr>
+<tr>
+<td>WithoutCompiledQuery</td>
+<td>1</td>
+<td style="text-align: right;">671.6 us</td>
+<td style="text-align: right;">12.72 us</td>
+<td style="text-align: right;">16.54 us</td>
+<td style="text-align: right;">2.9297</td>
+<td style="text-align: right;">13 KB</td>
+</tr>
+<tr>
+<td>WithCompiledQuery</td>
+<td>10</td>
+<td style="text-align: right;">645.3 us</td>
+<td style="text-align: right;">10.00 us</td>
+<td style="text-align: right;">9.35 us</td>
+<td style="text-align: right;">2.9297</td>
+<td style="text-align: right;">13 KB</td>
+</tr>
+<tr>
+<td>WithoutCompiledQuery</td>
+<td>10</td>
+<td style="text-align: right;">709.8 us</td>
+<td style="text-align: right;">25.20 us</td>
+<td style="text-align: right;">73.10 us</td>
+<td style="text-align: right;">3.9063</td>
+<td style="text-align: right;">18 KB</td>
+</tr>
+</tbody>
+</table>
+<p>To use compiled queries, first compile a query with <a href="/en-us/dotnet/api/microsoft.entityframeworkcore.ef.compileasyncquery" class="no-loc" data-linktype="absolute-path">EF.CompileAsyncQuery</a> as follows (use <a href="/en-us/dotnet/api/microsoft.entityframeworkcore.ef.compilequery" class="no-loc" data-linktype="absolute-path">EF.CompileQuery</a> for synchronous queries):</p>
+<pre><code class="lang-csharp" name="Main">private static readonly Func&lt;BloggingContext, int, IAsyncEnumerable&lt;Blog&gt;&gt; _compiledQuery
+    = EF.CompileAsyncQuery(
+        (BloggingContext context, int length) =&gt; context.Blogs.Where(b =&gt; b.Url.StartsWith("http://") &amp;&amp; b.Url.Length == length));
+</code></pre>
+<p>In this code sample, we provide EF with a lambda accepting a <code>DbContext</code> instance, and an arbitrary parameter to be passed to the query. You can now invoke that delegate whenever you wish to execute the query:</p>
+<pre><code class="lang-csharp" name="Main">await foreach (var blog in _compiledQuery(context, 8))
+{
+    // Do something with the results
+}
+</code></pre>
+<p>Note that the delegate is thread-safe, and can be invoked concurrently on different context instances.</p>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li>Compiled queries may only be used against a single EF Core model. Different context instances of the same type can sometimes be configured to use different models; running compiled queries in this scenario is not supported.</li>
+<li>When using parameters in compiled queries, use simple, scalar parameters. More complex parameter expressions - such as member/method accesses on instances - are not supported.</li>
+</ul>
+<h2 id="query-caching-and-parameterization">Query caching and parameterization</h2>
+<p>When EF receives a LINQ query tree for execution, it must first "compile" that tree, e.g. produce SQL from it. Because this task is a heavy process, EF caches queries by the query tree shape, so that queries with the same structure reuse internally-cached compilation outputs. This caching ensures that executing the same LINQ query multiple times is very fast, even if parameter values differ.</p>
+<p>Consider the following two queries:</p>
+<pre><code class="lang-csharp" name="Main">var post1 = await context.Posts.FirstOrDefaultAsync(p =&gt; p.Title == "post1");
+var post2 = await context.Posts.FirstOrDefaultAsync(p =&gt; p.Title == "post2");
+</code></pre>
+<p>Since the expression trees contains different constants, the expression tree differs and each of these queries will be compiled separately by EF Core. In addition, each query produces a slightly different SQL command:</p>
+<pre><code class="lang-sql">SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Posts] AS [b]
+WHERE [b].[Name] = N'post1'
+
+SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Posts] AS [b]
+WHERE [b].[Name] = N'post2'
+</code></pre>
+<p>Because the SQL differs, your database server will likely also need to produce a query plan for both queries, rather than reusing the same plan.</p>
+<p>A small modification to your queries can change things considerably:</p>
+<pre><code class="lang-csharp" name="Main">var postTitle = "post1";
+var post1 = await context.Posts.FirstOrDefaultAsync(p =&gt; p.Title == postTitle);
+postTitle = "post2";
+var post2 = await context.Posts.FirstOrDefaultAsync(p =&gt; p.Title == postTitle);
+</code></pre>
+<p>Since the blog name is now <em>parameterized</em>, both queries have the same tree shape, and EF only needs to be compiled once. The SQL produced is also parameterized, allowing the database to reuse the same query plan:</p>
+<pre><code class="lang-sql">SELECT TOP(1) [b].[Id], [b].[Name]
+FROM [Posts] AS [b]
+WHERE [b].[Name] = @__postTitle_0
+</code></pre>
+<p>Note that there is no need to parameterize each and every query: it's perfectly fine to have some queries with constants, and indeed, databases (and EF) can sometimes perform certain optimization around constants which aren't possible when the query is parameterized. See the section on <a href="#dynamically-constructed-queries" data-linktype="self-bookmark">dynamically-constructed queries</a> for an example where proper parameterization is crucial.</p>
+<div class="NOTE">
+<p>Note</p>
+<p>EF Core's <a href="../logging-events-diagnostics/metrics" data-linktype="relative-path">metrics</a> report the Query Cache Hit Rate. In a normal application, this metric reaches 100% soon after program startup, once most queries have executed at least once. If this metric remains stable below 100%, that is an indication that your application may be doing something which defeats the query cache - it's a good idea to investigate that.</p>
+</div>
+<div class="TIP">
+<p>Tip</p>
+<p>EF Core uses <code>IMemoryCache</code> for internal caching of compiled queries and models. You can configure the cache size limit if needed - see <a href="#memory-cache-integration" data-linktype="self-bookmark">Memory Cache Integration</a> for more information.</p>
+</div>
+<div class="NOTE">
+<p>Note</p>
+<p>How the database manages caches query plans is database-dependent. For example, SQL Server implicitly maintains an LRU query plan cache, whereas PostgreSQL does not (but prepared statements can produce a very similar end effect). Consult your database documentation for more details.</p>
+</div>
+<h2 id="dynamically-constructed-queries">Dynamically-constructed queries</h2>
+<p>In some situations, it is necessary to dynamically construct LINQ queries rather than specifying them outright in source code. This can happen, for example, in a website which receives arbitrary query details from a client, with open-ended query operators (sorting, filtering, paging...). In principle, if done correctly, dynamically-constructed queries can be just as efficient as regular ones (although it's not possible to use the compiled query optimization with dynamic queries). In practice, however, they are frequently the source of performance issues, since it's easy to accidentally produce expression trees with shapes that differ every time.</p>
+<p>The following example uses three techniques to construct a query's <code>Where</code> lambda expression:</p>
+<ol>
+<li><strong>Expression API with constant</strong>: Dynamically build the expression with the Expression API, using a constant node. This is a frequent mistake when dynamically building expression trees, and causes EF to recompile the query each time it's invoked with a different constant value (it also usually causes plan cache pollution at the database server).</li>
+<li><strong>Expression API with parameter</strong>: A better version, which substitutes the constant with a parameter. This ensures that the query is only compiled once regardless of the value provided, and the same (parameterized) SQL is generated.</li>
+<li><strong>Simple with parameter</strong>: A version which doesn't use the Expression API, for comparison, which creates the same tree as the method above but is much simpler. In many cases, it's possible to dynamically build your expression tree without resorting to the Expression API, which is easy to get wrong.</li>
+</ol>
+<p>We add a <code>Where</code> operator to the query only if the given parameter is not null. Note that this isn't a good use case for dynamically constructing a query - but we're using it for simplicity:</p>
+<div class="tabGroup" id="tabgroup_2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_2_expression-api-with-constant" role="tab" aria-controls="tabpanel_2_expression-api-with-constant" data-tab="expression-api-with-constant" tabindex="0" aria-selected="true" data-linktype="self-bookmark">Expression API with constant</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_expression-api-with-parameter" role="tab" aria-controls="tabpanel_2_expression-api-with-parameter" data-tab="expression-api-with-parameter" tabindex="-1" data-linktype="self-bookmark">Expression API with parameter</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_simple-with-parameter" role="tab" aria-controls="tabpanel_2_simple-with-parameter" data-tab="simple-with-parameter" tabindex="-1" data-linktype="self-bookmark">Simple with parameter</a>
+</li>
+</ul>
+<section id="tabpanel_2_expression-api-with-constant" role="tabpanel" data-tab="expression-api-with-constant">
+<pre><code class="lang-csharp" name="Main" highlight-lines="11-18">[Benchmark]
+public async Task&lt;int&gt; ExpressionApiWithConstant()
+{
+    var url = "blog" + Interlocked.Increment(ref _blogNumber);
+    using var context = new BloggingContext();
+
+    IQueryable&lt;Blog&gt; query = context.Blogs;
+
+    if (_addWhereClause)
+    {
+        var blogParam = Expression.Parameter(typeof(Blog), "b");
+        var whereLambda = Expression.Lambda&lt;Func&lt;Blog, bool&gt;&gt;(
+            Expression.Equal(
+                Expression.MakeMemberAccess(
+                    blogParam,
+                    typeof(Blog).GetMember(nameof(Blog.Url)).Single()),
+                Expression.Constant(url)),
+            blogParam);
+
+        query = query.Where(whereLambda);
+    }
+
+    return await query.CountAsync();
+}
+</code></pre></section>
+<section id="tabpanel_2_expression-api-with-parameter" role="tabpanel" data-tab="expression-api-with-parameter" aria-hidden="true" hidden="hidden">
+<pre><code class="lang-csharp" name="Main" highlight-lines="11-26">[Benchmark]
+public async Task&lt;int&gt; ExpressionApiWithParameter()
+{
+    var url = "blog" + Interlocked.Increment(ref _blogNumber);
+    using var context = new BloggingContext();
+
+    IQueryable&lt;Blog&gt; query = context.Blogs;
+
+    if (_addWhereClause)
+    {
+        var blogParam = Expression.Parameter(typeof(Blog), "b");
+
+        // This creates a lambda expression whose body is identical to the url captured closure variable in the non-dynamic query:
+        // blogs.Where(b =&gt; b.Url == url)
+        // This dynamically creates an expression node which EF can properly recognize and parameterize in the database query.
+        // We then extract that body and use it in our dynamically-constructed query.
+        Expression&lt;Func&lt;string&gt;&gt; urlParameterLambda = () =&gt; url;
+        var urlParamExpression = urlParameterLambda.Body;
+
+        var whereLambda = Expression.Lambda&lt;Func&lt;Blog, bool&gt;&gt;(
+            Expression.Equal(
+                Expression.MakeMemberAccess(
+                    blogParam,
+                    typeof(Blog).GetMember(nameof(Blog.Url)).Single()),
+                urlParamExpression),
+            blogParam);
+
+        query = query.Where(whereLambda);
+    }
+
+    return await query.CountAsync();
+}
+</code></pre></section>
+<section id="tabpanel_2_simple-with-parameter" role="tabpanel" data-tab="simple-with-parameter" aria-hidden="true" hidden="hidden">
+<pre><code class="lang-csharp" name="Main" highlight-lines="12">[Benchmark]
+public async Task&lt;int&gt; SimpleWithParameter()
+{
+    var url = "blog" + Interlocked.Increment(ref _blogNumber);
+
+    using var context = new BloggingContext();
+
+    IQueryable&lt;Blog&gt; query = context.Blogs;
+
+    if (_addWhereClause)
+    {
+        Expression&lt;Func&lt;Blog, bool&gt;&gt; whereLambda = b =&gt; b.Url == url;
+
+        query = query.Where(whereLambda);
+    }
+
+    return await query.CountAsync();
+}
+</code></pre></section>
+</div>
+
+<p>Benchmarking these two techniques gives the following results:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Gen0</th>
+<th style="text-align: right;">Gen1</th>
+<th style="text-align: right;">Allocated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ExpressionApiWithConstant</td>
+<td style="text-align: right;">1,665.8 us</td>
+<td style="text-align: right;">56.99 us</td>
+<td style="text-align: right;">163.5 us</td>
+<td style="text-align: right;">15.6250</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">109.92 KB</td>
+</tr>
+<tr>
+<td>ExpressionApiWithParameter</td>
+<td style="text-align: right;">757.1 us</td>
+<td style="text-align: right;">35.14 us</td>
+<td style="text-align: right;">103.6 us</td>
+<td style="text-align: right;">12.6953</td>
+<td style="text-align: right;">0.9766</td>
+<td style="text-align: right;">54.95 KB</td>
+</tr>
+<tr>
+<td>SimpleWithParameter</td>
+<td style="text-align: right;">760.3 us</td>
+<td style="text-align: right;">37.99 us</td>
+<td style="text-align: right;">112.0 us</td>
+<td style="text-align: right;">12.6953</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">55.03 KB</td>
+</tr>
+</tbody>
+</table>
+<p>Even if the sub-millisecond difference seems small, keep in mind that the constant version continuously pollutes the cache and causes other queries to be re-compiled, slowing them down as well and having a general negative impact on your overall performance. It's highly recommended to avoid constant query recompilation.</p>
+<div class="NOTE">
+<p>Note</p>
+<p>Avoid constructing queries with the expression tree API unless you really need to. Aside from the API's complexity, it's very easy to inadvertently cause significant performance issues when using them.</p>
+</div>
+<h2 id="compiled-models">Compiled models</h2>
+<p>Compiled models can improve EF Core startup time for applications with large models. A large model typically means hundreds to thousands of entity types and relationships. Startup time here is the time to perform the first operation on a <code>DbContext</code> when that <code>DbContext</code> type is used for the first time in the application. Note that just creating a <code>DbContext</code> instance does not cause the EF model to be initialized. Instead, typical first operations that cause the model to be initialized include calling <code>DbContext.Add</code> or executing the first query.</p>
+<p>Compiled models are created using the <code>dotnet ef</code> command-line tool. Ensure that you have <a href="../cli/dotnet#installing-the-tools" data-linktype="relative-path">installed the latest version of the tool</a> before continuing.</p>
+<p>A new <code>dbcontext optimize</code> command is used to generate the compiled model. For example:</p>
+<pre><code class="lang-dotnetcli">dotnet ef dbcontext optimize
+</code></pre>
+<p>The <code>--output-dir</code> and <code>--namespace</code> options can be used to specify the directory and namespace into which the compiled model will be generated. For example:</p>
+<pre><code class="lang-dotnetcli">PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels&gt; dotnet ef dbcontext optimize --output-dir MyCompiledModels --namespace MyCompiledModels
+Build started...
+Build succeeded.
+Successfully generated a compiled model, to use it call 'options.UseModel(MyCompiledModels.BlogsContextModel.Instance)'. Run this command again when the model is modified.
+PS C:\dotnet\efdocs\samples\core\Miscellaneous\CompiledModels&gt;
+</code></pre>
+<ul>
+<li>For more information see <a href="../cli/dotnet#dotnet-ef-dbcontext-optimize" data-linktype="relative-path"><code>dotnet ef dbcontext optimize</code></a>.</li>
+<li>If you're more comfortable working inside Visual Studio, you can also use <a href="../cli/powershell#optimize-dbcontext" data-linktype="relative-path">Optimize-DbContext</a></li>
+</ul>
+<p>The output from running this command includes a piece of code to copy-and-paste into your <code>DbContext</code> configuration to cause EF Core to use the compiled model. For example:</p>
+<pre><code class="lang-csharp">protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    =&gt; optionsBuilder
+        .UseModel(MyCompiledModels.BlogsContextModel.Instance)
+        .UseSqlite(@"Data Source=test.db");
+</code></pre>
+<h3 id="compiled-model-bootstrapping">Compiled model bootstrapping</h3>
+<p>It is typically not necessary to look at the generated bootstrapping code. However, sometimes it can be useful to customize the model or its loading. The bootstrapping code looks something like this:</p>
+<!--
+[DbContext(typeof(BlogsContext))]
+partial class BlogsContextModel : RuntimeModel
+{
+    private static BlogsContextModel _instance;
+    public static IModel Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new BlogsContextModel();
+                _instance.Initialize();
+                _instance.Customize();
+            }
+
+            return _instance;
+        }
+    }
+
+    partial void Initialize();
+
+    partial void Customize();
+}
+-->
+<pre><code class="lang-csharp" name="RuntimeModel">[DbContext(typeof(BlogsContext))]
+partial class BlogsContextModel : RuntimeModel
+{
+    private static BlogsContextModel _instance;
+    public static IModel Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new BlogsContextModel();
+                _instance.Initialize();
+                _instance.Customize();
+            }
+
+            return _instance;
+        }
+    }
+
+    partial void Initialize();
+
+    partial void Customize();
+}
+</code></pre>
+<p>This is a partial class with partial methods that can be implemented to customize the model as needed.</p>
+<p>In addition, multiple compiled models can be generated for <code>DbContext</code> types that may use different models depending on some runtime configuration. These should be placed into different folders and namespaces, as shown above. Runtime information, such as the connection string, can then be examined and the correct model returned as needed. For example:</p>
+<!--
+public static class RuntimeModelCache
+{
+    private static readonly ConcurrentDictionary<string, IModel> _runtimeModels
+        = new();
+
+    public static IModel GetOrCreateModel(string connectionString)
+        => _runtimeModels.GetOrAdd(
+            connectionString, cs =>
+                {
+                    if (cs.Contains("X"))
+                    {
+                        return BlogsContextModel1.Instance;
+                    }
+
+                    if (cs.Contains("Y"))
+                    {
+                        return BlogsContextModel2.Instance;
+                    }
+
+                    throw new InvalidOperationException("No appropriate compiled model found.");
+                });
+}
+-->
+<pre><code class="lang-csharp" name="RuntimeModelCache">public static class RuntimeModelCache
+{
+    private static readonly ConcurrentDictionary&lt;string, IModel&gt; _runtimeModels
+        = new();
+
+    public static IModel GetOrCreateModel(string connectionString)
+        =&gt; _runtimeModels.GetOrAdd(
+            connectionString, cs =&gt;
+            {
+                if (cs.Contains("X"))
+                {
+                    return BlogsContextModel1.Instance;
+                }
+
+                if (cs.Contains("Y"))
+                {
+                    return BlogsContextModel2.Instance;
+                }
+
+                throw new InvalidOperationException("No appropriate compiled model found.");
+            });
+}
+</code></pre><h3 id="limitations-1">Limitations</h3>
+<p>Compiled models have some limitations:</p>
+<ul>
+<li><a href="https://github.com/dotnet/efcore/issues/24897" data-linktype="external">Global query filters are not supported</a>.</li>
+<li><a href="https://github.com/dotnet/efcore/issues/24902" data-linktype="external">Lazy loading and change-tracking proxies are not supported</a>.</li>
+<li>Value converters that reference private methods are not supported. Make referenced methods public or internal instead.</li>
+<li><a href="https://github.com/dotnet/efcore/issues/24894" data-linktype="external">The model must be manually synchronized by regenerating it any time the model definition or configuration change</a>.</li>
+<li>Custom IModelCacheKeyFactory implementations are not supported. However, you can compile multiple models and load the appropriate one as needed.</li>
+</ul>
+<p>Because of these limitations, you should only use compiled models if your EF Core startup time is too slow. Compiling small models is typically not worth it.</p>
+<p>If supporting any of these features is critical to your success, then please vote for the appropriate issues linked above.</p>
+<h3 id="handling-compilation-errors-due-to-ambiguous-type-references">Handling compilation errors due to ambiguous type references</h3>
+<p>When compiling models with types that have the same name but exist in different namespaces, the generated code may produce compilation errors due to ambiguous type references. To resolve this, you can customize the code generation to use fully-qualified type names by overriding <code>CSharpHelper.ShouldUseFullName</code> to return <code>true</code>. See <a href="../cli/services" data-linktype="relative-path">Design-time services</a> for information on how to override design-time services like <code>ICSharpHelper</code>.</p>
+<h2 id="reducing-runtime-overhead">Reducing runtime overhead</h2>
+<p>As with any layer, EF Core adds a bit of runtime overhead compared to coding directly against lower-level database APIs. This runtime overhead is unlikely to impact most real-world applications in a significant way; the other topics in this performance guide, such as query efficiency, index usage and minimizing roundtrips, are far more important. In addition, even for highly-optimized applications, network latency and database I/O will usually dominate any time spent inside EF Core itself. However, for high-performance, low-latency applications where every bit of perf is important, the following recommendations can be used to reduce EF Core overhead to a minimum:</p>
+<ul>
+<li>Turn on <a href="#dbcontext-pooling" data-linktype="self-bookmark">DbContext pooling</a>; our benchmarks show that this feature can have a decisive impact on high-perf, low-latency applications.
+<ul>
+<li>Make sure that the <code>maxPoolSize</code> corresponds to your usage scenario; if it is too low, <code>DbContext</code> instances will be constantly created and disposed, degrading performance. Setting it too high may needlessly consume memory as unused <code>DbContext</code> instances are maintained in the pool.</li>
+<li>For an extra tiny perf boost, consider using <code>PooledDbContextFactory</code> instead of having DI inject context instances directly. DI management of <code>DbContext</code> pooling incurs a slight overhead.</li>
+</ul>
+</li>
+<li>Use precompiled queries for hot queries.
+<ul>
+<li>The more complex the LINQ query - the more operators it contains and the bigger the resulting expression tree - the more gains can be expected from using compiled queries.</li>
+</ul>
+</li>
+<li>Consider disabling thread safety checks by setting <code>EnableThreadSafetyChecks</code> to false in your context configuration.
+<ul>
+<li>Using the same <code>DbContext</code> instance concurrently from different threads isn't supported. EF Core has a safety feature which detects this programming bug in many cases (but not all), and immediately throws an informative exception. However, this safety feature adds some runtime overhead.</li>
+<li><strong>WARNING:</strong> Only disable thread safety checks after thoroughly testing that your application doesn't contain such concurrency bugs.</li>
+</ul>
+</li>
+</ul>
+<h2 id="memory-cache-integration">Memory Cache Integration</h2>
+<p>EF Core integrates with ASP.NET Core's memory caching infrastructure through <code>IMemoryCache</code>. However, this is not used for the internal service provider caching.</p>
+<p>EF Core automatically configures <code>IMemoryCache</code> with a default size limit of 10240 for internal caching operations such as query compilation and model building. You should call <code>AddMemoryCache</code> if you need to change these defaults. For reference, a compiled query has a cache size of 10, while the built model has a cache size of 100.</p>
+<pre><code class="lang-csharp">public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache(options =&gt; options.SizeLimit = 20480); // Custom size limit for EF Core caching
+    
+    services.AddDbContext&lt;ApplicationDbContext&gt;(options =&gt;
+        options.UseSqlServer(connectionString));
+}
+</code></pre>
+</div>
+					
+		<div
+			id="ms--inline-notifications"
+			class="margin-block-xs"
+			data-bi-name="inline-notification"
+		></div>
+	 
+		<div
+			id="assertive-live-region"
+			role="alert"
+			aria-live="assertive"
+			class="visually-hidden"
+			aria-relevant="additions"
+			aria-atomic="true"
+		></div>
+		<div
+			id="polite-live-region"
+			role="status"
+			aria-live="polite"
+			class="visually-hidden"
+			aria-relevant="additions"
+			aria-atomic="true"
+		></div>
+	
+					
+			
+		<!-- feedback section -->
+		<section
+			class="feedback-section position-relative margin-top-lg border border-radius padding-xxs display-none-print"
+			data-bi-name="open-source-feedback-section"
+			data-open-source-feedback-section
+			hidden
+		>
+			<div class="display-flex flex-direction-column flex-direction-row-tablet">
+				<div
+					class="width-450-tablet padding-inline-xs padding-inline-xs-tablet padding-top-xs padding-bottom-sm padding-top-xs-tablet background-color-body-medium"
+				>
+					<div class="display-flex flex-direction-column">
+						<div class="padding-bottom-xxs">
+							<span class="icon margin-right-xxs" aria-hidden="true">
+								<span class="docon docon-brand-github"></span>
+							</span>
+							<span class="font-weight-semibold">
+								Collaborate with us on GitHub
+							</span>
+						</div>
+						<span class="line-height-normal">
+							The source for this content can be found on GitHub, where you can also create and review issues and pull requests. For more information, see <a href="https://learn.microsoft.com/contribute/content/dotnet/dotnet-contribute">our contributor guide</a>.
+						</span>
+					</div>
+				</div>
+				<div
+					class="display-flex gap-xs width-full-tablet flex-direction-column padding-xs justify-content-space-evenly"
+				>
+					<div class="media">
+						
+					<div class="media-left">
+						<div class="image image-36x36" hidden data-open-source-image-container>
+							<img
+								class="theme-display is-light"
+								src="https://learn.microsoft.com/media/logos/logo_net.svg"
+								aria-hidden="true"
+								data-open-source-image-light
+							/>
+							<img
+								class="theme-display is-dark is-high-contrast"
+								src="https://learn.microsoft.com/media/logos/logo_net.svg"
+								aria-hidden="true"
+								data-open-source-image-dark
+							/>
+						</div>
+					</div>
+			  
+
+						<div class="media-content">
+							<p
+								class="font-size-xl font-weight-semibold margin-bottom-xxs"
+								data-open-source-product-title
+							>
+								.NET
+							</p>
+							<div class="display-flex gap-xs flex-direction-column">
+								<p class="line-height-normal" data-open-source-product-description></p>
+								<div class="display-flex gap-xs flex-direction-column">
+									<a href="#" data-github-link>
+										<span class="icon margin-right-xxs" aria-hidden="true">
+											<span class="docon docon-bug"></span>
+										</span>
+										<span>Open a documentation issue</span>
+									</a>
+									<a
+										href="https://github.com/dotnet/efcore/issues/new/choose"
+										class="display-block margin-top-auto font-size-md"
+										data-feedback-product-url
+									>
+										<span class="icon margin-right-xxs" aria-hidden="true">
+											<span class="docon docon-feedback"></span>
+										</span>
+										<span>Provide product feedback</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end feedback section -->
+	
+			
+		<!-- feedback section -->
+		<section
+			id="site-user-feedback-footer"
+			class="font-size-sm margin-top-md display-none-print display-none-desktop"
+			data-test-id="site-user-feedback-footer"
+			data-bi-name="site-feedback-section"
+		>
+			<hr class="hr" />
+			<h2 id="ms--feedback" class="title is-3">Feedback</h2>
+			<div class="display-flex flex-wrap-wrap align-items-center">
+				<p class="font-weight-semibold margin-xxs margin-left-none">
+					Was this page helpful?
+				</p>
+				<div class="buttons">
+					<button
+						class="thumb-rating-button like button button-primary button-sm"
+						data-test-id="footer-rating-yes"
+						data-binary-rating-response="rating-yes"
+						type="button"
+						title="This article is helpful"
+						data-bi-name="button-rating-yes"
+						aria-pressed="false"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-like"></span>
+						</span>
+						<span>Yes</span>
+					</button>
+					<button
+						class="thumb-rating-button dislike button button-primary button-sm"
+						id="standard-rating-no-button"
+						hidden
+						data-test-id="footer-rating-no"
+						data-binary-rating-response="rating-no"
+						type="button"
+						title="This article is not helpful"
+						data-bi-name="button-rating-no"
+						aria-pressed="false"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-dislike"></span>
+						</span>
+						<span>No</span>
+					</button>
+					<details
+						class="popover popover-top"
+						id="mobile-help-popover"
+						data-test-id="footer-feedback-popover"
+					>
+						<summary
+							class="thumb-rating-button dislike button button-primary button-sm"
+							data-test-id="details-footer-rating-no"
+							data-binary-rating-response="rating-no"
+							title="This article is not helpful"
+							data-bi-name="button-rating-no"
+							aria-pressed="false"
+							data-bi-an="feedback-unhelpful-popover"
+						>
+							<span class="icon" aria-hidden="true">
+								<span class="docon docon-dislike"></span>
+							</span>
+							<span>No</span>
+						</summary>
+						<div
+							class="popover-content width-200 width-300-tablet"
+							role="dialog"
+							aria-labelledby="popover-heading"
+							aria-describedby="popover-description"
+						>
+							<p id="popover-heading" class="font-size-lg margin-bottom-xxs font-weight-semibold">
+								Need help with this topic?
+							</p>
+							<p id="popover-description" class="font-size-sm margin-bottom-xs">
+								Want to try using Ask Learn to clarify or guide you through this topic?
+							</p>
+							
+		<div class="buttons flex-direction-row flex-wrap justify-content-center gap-xxs">
+			<div>
+		<button
+			class="button button-sm border inner-focus display-none margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-test-id="ask-learn-assistant-modal-entry-mobile-feedback"
+			data-ask-learn-modal-entry-feedback
+			data-bi-an=feedback-unhelpful-popover
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-inline-flex display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-modal-entry-tablet-feedback"
+			data-ask-learn-modal-entry-feedback
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-flyout-entry-feedback"
+			data-ask-learn-flyout-entry-show-only
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	</div>
+			<button
+				type="button"
+				class="button button-sm margin-right-xxs"
+				data-help-option="suggest-fix"
+				data-bi-name="feedback-suggest"
+				data-bi-an="feedback-unhelpful-popover"
+				data-test-id="suggest-fix"
+			>
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-feedback"></span>
+				</span>
+				<span> Suggest a fix? </span>
+			</button>
+		</div>
+	
+						</div>
+					</details>
+				</div>
+			</div>
+		</section>
+		<!-- end feedback section -->
+	
+		
+				</div>
+				
+		<div id="ms--additional-resources-mobile" class="display-none-print">
+			<hr class="hr" hidden />
+			<h2 id="ms--additional-resources-mobile-heading" class="title is-3" hidden>
+				Additional resources
+			</h2>
+			
+		<section
+			id="right-rail-recommendations-mobile"
+			class=""
+			data-bi-name="recommendations"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-training-mobile"
+			class=""
+			data-bi-name="learning-resource-card"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-events-mobile"
+			class=""
+			data-bi-name="events-card"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-qna-mobile"
+			class="margin-top-xxs"
+			data-bi-name="qna-link-card"
+			hidden
+		></section>
+	
+		</div>
+	 
+		<div
+			id="article-metadata-footer"
+			data-bi-name="article-metadata-footer"
+			data-test-id="article-metadata-footer"
+			class="page-metadata-container"
+		>
+			<hr class="hr" />
+			<ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
+				<li class="visibility-hidden-visual-diff">
+			<span class="badge badge-sm text-wrap-pretty">
+				<span>Last updated on <local-time format="twoDigitNumeric"
+		datetime="2025-11-21T08:00:00.000Z"
+		data-article-date-source="calculated"
+		class="is-invisible"
+	>
+		2025-11-21
+	</local-time></span>
+			</span>
+		</li>
+			</ul>
+		</div>
+	
+			</div>
+			
+		<div
+			id="action-panel"
+			role="region"
+			aria-label="Action Panel"
+			class="action-panel"
+			tabindex="-1"
+		></div>
+	
+		
+				</main>
+				<aside
+					id="layout-body-aside"
+					class="layout-body-aside "
+					data-bi-name="aside"
+			  >
+					
+		<div
+			id="ms--additional-resources"
+			class="right-container padding-sm display-none display-block-desktop height-full"
+			data-bi-name="pageactions"
+			role="complementary"
+			aria-label="Additional resources"
+		>
+			<div id="affixed-right-container" data-bi-name="right-column">
+				
+		<nav
+			id="side-doc-outline"
+			class="doc-outline border-bottom padding-bottom-xs margin-bottom-xs"
+			data-bi-name="intopic toc"
+			aria-label="In this article"
+		>
+			<h3>In this article</h3>
+		</nav>
+	
+				<!-- Feedback -->
+				
+		<section
+			id="ms--site-user-feedback-right-rail"
+			class="font-size-sm display-none-print"
+			data-test-id="site-user-feedback-right-rail"
+			data-bi-name="site-feedback-right-rail"
+		>
+			<p class="font-weight-semibold margin-bottom-xs">Was this page helpful?</p>
+			<div class="buttons">
+				<button
+					class="thumb-rating-button like button button-primary button-sm"
+					data-test-id="right-rail-rating-yes"
+					data-binary-rating-response="rating-yes"
+					type="button"
+					title="This article is helpful"
+					data-bi-name="button-rating-yes"
+					aria-pressed="false"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-like"></span>
+					</span>
+					<span>Yes</span>
+				</button>
+				<button
+					class="thumb-rating-button dislike button button-primary button-sm"
+					id="right-rail-no-button"
+					hidden
+					data-test-id="right-rail-rating-no"
+					data-binary-rating-response="rating-no"
+					type="button"
+					title="This article is not helpful"
+					data-bi-name="button-rating-no"
+					aria-pressed="false"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-dislike"></span>
+					</span>
+					<span>No</span>
+				</button>
+				<details class="popover popover-right" id="help-popover" data-test-id="feedback-popover">
+					<summary
+						tabindex="0"
+						class="thumb-rating-button dislike button button-primary button-sm"
+						data-test-id="details-right-rail-rating-no"
+						data-binary-rating-response="rating-no"
+						title="This article is not helpful"
+						data-bi-name="button-rating-no"
+						aria-pressed="false"
+						data-bi-an="feedback-unhelpful-popover"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-dislike"></span>
+						</span>
+						<span>No</span>
+					</summary>
+					<div
+						class="popover-content width-200 width-300-tablet"
+						role="dialog"
+						aria-labelledby="popover-heading"
+						aria-describedby="popover-description"
+					>
+						<p
+							id="popover-heading-right-rail"
+							class="font-size-lg margin-bottom-xxs font-weight-semibold"
+						>
+							Need help with this topic?
+						</p>
+						<p id="popover-description-right-rail" class="font-size-sm margin-bottom-xs">
+							Want to try using Ask Learn to clarify or guide you through this topic?
+						</p>
+						
+		<div class="buttons flex-direction-row flex-wrap justify-content-center gap-xxs">
+			<div>
+		<button
+			class="button button-sm border inner-focus display-none margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-test-id="ask-learn-assistant-modal-entry-mobile-feedback"
+			data-ask-learn-modal-entry-feedback
+			data-bi-an=feedback-unhelpful-popover
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-inline-flex display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-modal-entry-tablet-feedback"
+			data-ask-learn-modal-entry-feedback
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-flyout-entry-feedback"
+			data-ask-learn-flyout-entry-show-only
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	</div>
+			<button
+				type="button"
+				class="button button-sm margin-right-xxs"
+				data-help-option="suggest-fix"
+				data-bi-name="feedback-suggest"
+				data-bi-an="feedback-unhelpful-popover"
+				data-test-id="suggest-fix"
+			>
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-feedback"></span>
+				</span>
+				<span> Suggest a fix? </span>
+			</button>
+		</div>
+	
+					</div>
+				</details>
+			</div>
+		</section>
+	
+			</div>
+		</div>
+	
+			  </aside> <section
+					id="layout-body-flyout"
+					class="layout-body-flyout "
+					data-bi-name="flyout"
+			  >
+					 <div
+	class="height-full border-left background-color-body-medium"
+	id="ask-learn-flyout"
+></div>
+			  </section> <div class="layout-body-footer " data-bi-name="layout-footer">
+		<footer
+			id="footer"
+			data-test-id="footer"
+			data-bi-name="footer"
+			class="footer-layout has-padding has-default-focus border-top  uhf-container"
+			role="contentinfo"
+		>
+			<div class="display-flex gap-xs flex-wrap-wrap is-full-height padding-right-lg-desktop">
+				
+		<a
+			data-mscc-ic="false"
+			href="#"
+			data-bi-name="select-locale"
+			class="locale-selector-link flex-shrink-0 button button-sm button-clear external-link-indicator"
+			id=""
+			title=""
+			><span class="icon" aria-hidden="true"
+				><span class="docon docon-world"></span></span
+			><span class="local-selector-link-text">en-us</span></a
+		>
+	 <div class="ccpa-privacy-link" data-ccpa-privacy-link hidden>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://aka.ms/yourcaliforniaprivacychoices"
+			data-bi-name="your-privacy-choices"
+			class="button button-sm button-clear flex-shrink-0 external-link-indicator"
+			id=""
+			title=""
+			>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 30 14"
+			xml:space="preserve"
+			height="16"
+			width="43"
+			aria-hidden="true"
+			focusable="false"
+		>
+			<path
+				d="M7.4 12.8h6.8l3.1-11.6H7.4C4.2 1.2 1.6 3.8 1.6 7s2.6 5.8 5.8 5.8z"
+				style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff"
+			></path>
+			<path
+				d="M22.6 0H7.4c-3.9 0-7 3.1-7 7s3.1 7 7 7h15.2c3.9 0 7-3.1 7-7s-3.2-7-7-7zm-21 7c0-3.2 2.6-5.8 5.8-5.8h9.9l-3.1 11.6H7.4c-3.2 0-5.8-2.6-5.8-5.8z"
+				style="fill-rule:evenodd;clip-rule:evenodd;fill:#06f"
+			></path>
+			<path
+				d="M24.6 4c.2.2.2.6 0 .8L22.5 7l2.2 2.2c.2.2.2.6 0 .8-.2.2-.6.2-.8 0l-2.2-2.2-2.2 2.2c-.2.2-.6.2-.8 0-.2-.2-.2-.6 0-.8L20.8 7l-2.2-2.2c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0l2.2 2.2L23.8 4c.2-.2.6-.2.8 0z"
+				style="fill:#fff"
+			></path>
+			<path
+				d="M12.7 4.1c.2.2.3.6.1.8L8.6 9.8c-.1.1-.2.2-.3.2-.2.1-.5.1-.7-.1L5.4 7.7c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0L8 8.6l3.8-4.5c.2-.2.6-.2.9 0z"
+				style="fill:#06f"
+			></path>
+		</svg>
+	
+			<span>Your Privacy Choices</span></a
+		>
+	
+	</div>
+				<div class="flex-shrink-0">
+		<div class="dropdown has-caret-up">
+			<button
+				data-test-id="theme-selector-button"
+				class="dropdown-trigger button button-clear button-sm inner-focus theme-dropdown-trigger"
+				aria-controls="{{ themeMenuId }}"
+				aria-expanded="false"
+				title="Theme"
+				data-bi-name="theme"
+			>
+				<span class="icon">
+					<span class="docon docon-sun" aria-hidden="true"></span>
+				</span>
+				<span>Theme</span>
+				<span class="icon expanded-indicator" aria-hidden="true">
+					<span class="docon docon-chevron-down-light"></span>
+				</span>
+			</button>
+			<div class="dropdown-menu" id="{{ themeMenuId }}" role="menu">
+				<ul class="theme-selector padding-xxs" data-test-id="theme-dropdown-menu">
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="light"
+						>
+							<span class="theme-light margin-right-xxs">
+								<span
+									class="theme-selector-icon border display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> Light </span>
+						</button>
+					</li>
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="dark"
+						>
+							<span class="theme-dark margin-right-xxs">
+								<span
+									class="border theme-selector-icon display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> Dark </span>
+						</button>
+					</li>
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="high-contrast"
+						>
+							<span class="theme-high-contrast margin-right-xxs">
+								<span
+									class="border theme-selector-icon display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> High contrast </span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+			</div>
+			<ul class="links" data-bi-name="footerlinks">
+				<li class="manage-cookies-holder" hidden=""></li>
+				<li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/principles-for-ai-generated-content"
+			data-bi-name="aiDisclaimer"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>AI Disclaimer</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/previous-versions/"
+			data-bi-name="archivelink"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Previous Versions</a
+		>
+	
+	</li> <li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog"
+			data-bi-name="bloglink"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Blog</a
+		>
+	
+	</li> <li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/contribute"
+			data-bi-name="contributorGuide"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Contribute</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://go.microsoft.com/fwlink/?LinkId=521839"
+			data-bi-name="privacy"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Privacy</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/legal/termsofuse"
+			data-bi-name="termsofuse"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Terms of Use</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://www.microsoft.com/legal/intellectualproperty/Trademarks/"
+			data-bi-name="trademarks"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Trademarks</a
+		>
+	
+	</li>
+				<li>&copy; Microsoft 2026</li>
+			</ul>
+		</footer>
+	</footer>
+			</body>
+		</html>

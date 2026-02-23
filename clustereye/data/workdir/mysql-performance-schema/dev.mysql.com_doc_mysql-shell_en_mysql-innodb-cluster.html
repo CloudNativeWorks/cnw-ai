@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL Shell 9.6 :: 8 MySQL InnoDB Cluster</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20250803.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20250803.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20250803.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL Shell 9.6" />
+<link rel="start" href="index.html" title="MySQL Shell 9.6" />
+<link rel="prev" href="admin-api-routing-guidelines-examples.html" title="7.8.6 Routing Guidelines Examples" />
+<link rel="next" href="mysql-innodb-cluster-requirements.html?ff=nopfpls" title="8.1 InnoDB Cluster Requirements" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&c=teconsent&js=bb&noticeType=bb&text=true&cdn=1&pcookie&gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20250121.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="2vfnvcdimyy6q2m4olla-f-305b9de1c-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":38,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"b1366734","ak.r":48105,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"213.74.218.0","ak.cport":21686,"ak.gh":"2.20.179.216","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1771860694","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==1N9bq2HtXZCbWwZaLRzDG6Fa4EM95osrdcvvKb9KGLa3R5tI8RkYvJy7b+oHKeIK7rtTBQCqLFF49P3fMLJ3C/54RPHr+pLDyGB4SJKaw+oMOaHcC5Ptppc3YzdFJu9bL/QJTNwDHwauZue11GLzgsj7Zf95w+fniZmiyMgdT0sHSlwUMQo8istVbM71spoG1RfrFUDdO29tBww1p7YVpWUas0CRa4nWk/i70JUdPjOUdgNG8gBsKtvsVBYdiKN90JZMmbKMSWvtSu208OoQsNEiy9dQ6d7qppojXx4DG6m2wKuXW8vEYoFUGHYg6EzUu0ABsRwL7r1Al2el9u6dYcLvtBa0OZLX0PyLFZmih3/mXWNBGQ3nu4pDndi9pnkFHcT2blciPJ45Bejr8BBatD2Y5FPbInF1UHviG6kYsmA=","ak.pv":"17","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Fmysql-shell%2F9.6%2Fen%2Fmysql-innodb-cluster.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class=""><a  href="/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="admin-api-routing-guidelines-examples.html"
+        aria-label="Previous" title="Previous: Routing Guidelines Examples"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+    <a href="index.html" aria-label="Up" title="Up"><span class="icon-chevron-up"></span></a>
+    <a href="mysql-innodb-cluster-requirements.html" aria-label="Next"
+        title="Next: InnoDB Cluster Requirements"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="/doc/search/">
+            <input type="hidden" name="d" id="d" value="502" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL Shell 9.6</div>
+            <nav class="doctoc" id="doc-502">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-features.html">MySQL Shell Features</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-install.html">Installing MySQL Shell</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-configuring.html">Using MySQL Shell Commands</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-getting-started.html">Getting Started with MySQL Shell</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-code-execution.html">MySQL Shell Code Execution</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="admin-api-userguide.html">MySQL AdminAPI</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="admin-api-integrating-router.html">MySQL Router and AdminAPI</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link current"><a href="mysql-innodb-cluster.html">MySQL InnoDB Cluster</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-requirements.html">InnoDB Cluster Requirements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-limitations.html">InnoDB Cluster Limitations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-cluster-user-accounts.html">User Accounts for InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="deploying-production-innodb-cluster.html">Deploying a Production InnoDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="check-instance-configuration.html">Pre-Checking Instance Configuration for InnoDB Cluster Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="configuring-production-instances.html">Configuring Production Instances for InnoDB Cluster Usage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-cluster.html">Creating an InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="add-instances-cluster.html">Adding Instances to an InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="configuring-cluster-instance-ports.html">Configuring InnoDB Cluster Ports</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-clone-deployment.html">Using MySQL Clone with InnoDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-working-with-clone.html">Working with a Cluster that uses MySQL Clone</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-from-group-replication.html">Adopting a Group Replication Deployment</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="configuring-innodb-cluster.html">Configuring InnoDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-setting-options.html">Setting Options for InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="customize-your-cluster.html">Customizing InnoDB Cluster Member Servers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="configuring-election-process.html">Configuring the Election Process</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-failover-consistency.html">Configuring Failover Consistency</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="configuring-automatic-rejoin-of-instances.html">Configuring Automatic Rejoin of Instances</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="configuring-parallel-applier.html">Configuring the Parallel Replication Applier</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-auto-increment.html">InnoDB Cluster and Auto-increment</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="innodb-cluster-binary-log-purging.html">InnoDB Cluster and Binary Log Purging</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="shell-admin-api-communication-stack.html">Configuring the Group Replication Communication Stack</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-securing.html">Securing InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="monitoring-innodb-cluster.html">Monitoring InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="troubleshooting-innodb-cluster.html">Restoring and Rebooting an InnoDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rejoin-cluster.html">Rejoining an Instance to a Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="restore-cluster-from-quorum-loss.html">Restoring a Cluster from Quorum Loss</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reboot-outage.html">Rebooting a Cluster from a Major Outage</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rescan-cluster.html">Rescanning a Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fencing-cluster.html">Fencing a Cluster</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-working-with-cluster.html">Modifying or Dissolving an InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-upgrade.html">Upgrade InnoDB Cluster</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-upgrade-rolling.html">InnoDB Cluster Upgrade</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-upgrade-troubleshoot.html">Troubleshooting InnoDB Cluster Upgrades</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-read-replicas.html">MySQL InnoDB Cluster Read Replicas</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-read-replicas-prereqs.html">Prerequisites</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-read-replicas-creating.html">Creating Read Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-read-replicas-modifying.html">Modifying or Removing Read Replicas</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-read-replicas-monitoring.html">Monitoring Read Replicas</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-clusterset.html">MySQL InnoDB ClusterSet</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset.html">MySQL InnoDB ReplicaSet</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-extending.html">Extending MySQL Shell</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-utilities.html">MySQL Shell Utilities</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-application-log.html">MySQL Shell Logging and Debug</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-customizing.html">Customizing MySQL Shell</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysqlsh-command.html">MySQL Shell Command Reference</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/mysql-shell-9.6-en.pdf">PDF (US Ltr)</a>
+            - 2.5Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-shell-9.6-en.a4.pdf">PDF (A4)</a>
+            - 2.5Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="" id="docs-version-nav-toggle">version 9.6
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                                                            <a                         href="/doc/mysql-shell/8.4/en/mysql-innodb-cluster.html">
+                        8.4
+                                            </a><br />
+                                                                            <a                         href="/doc/mysql-shell/8.0/en/mysql-innodb-cluster.html">
+                        8.0
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="/doc/mysql-shell/8.0/ja/mysql-innodb-cluster.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="/doc/mysql-shell/9.6/en/">MySQL Shell 9.6</a> &nbsp;/&nbsp;
+                                                                                MySQL InnoDB Cluster
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="chapter">
+<div class="titlepage"><div><div><h1 class="title">
+<a name="mysql-innodb-cluster"></a>Chapter 8 MySQL InnoDB Cluster</h1></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="section"><a href="mysql-innodb-cluster-requirements.html">8.1 InnoDB Cluster Requirements</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-limitations.html">8.2 InnoDB Cluster Limitations</a></span></dt>
+<dt><span class="section"><a href="innodb-cluster-user-accounts.html">8.3 User Accounts for InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="deploying-production-innodb-cluster.html">8.4 Deploying a Production InnoDB Cluster</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="check-instance-configuration.html">8.4.1 Pre-Checking Instance Configuration for InnoDB Cluster Usage</a></span></dt>
+<dt><span class="section"><a href="configuring-production-instances.html">8.4.2 Configuring Production Instances for InnoDB Cluster Usage</a></span></dt>
+<dt><span class="section"><a href="create-cluster.html">8.4.3 Creating an InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="add-instances-cluster.html">8.4.4 Adding Instances to an InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="configuring-cluster-instance-ports.html">8.4.5 Configuring InnoDB Cluster Ports</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-clone-deployment.html">8.4.6 Using MySQL Clone with InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-from-group-replication.html">8.4.7 Adopting a Group Replication Deployment</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="configuring-innodb-cluster.html">8.5 Configuring InnoDB Cluster</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="mysql-innodb-cluster-setting-options.html">8.5.1 Setting Options for InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="customize-your-cluster.html">8.5.2 Customizing InnoDB Cluster Member Servers</a></span></dt>
+<dt><span class="section"><a href="configuring-election-process.html">8.5.3 Configuring the Election Process</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-failover-consistency.html">8.5.4 Configuring Failover Consistency</a></span></dt>
+<dt><span class="section"><a href="configuring-automatic-rejoin-of-instances.html">8.5.5 Configuring Automatic Rejoin of Instances</a></span></dt>
+<dt><span class="section"><a href="configuring-parallel-applier.html">8.5.6 Configuring the Parallel Replication Applier</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-auto-increment.html">8.5.7 InnoDB Cluster and Auto-increment</a></span></dt>
+<dt><span class="section"><a href="innodb-cluster-binary-log-purging.html">8.5.8 InnoDB Cluster and Binary Log Purging</a></span></dt>
+<dt><span class="section"><a href="shell-admin-api-communication-stack.html">8.5.9 Configuring the Group Replication Communication Stack</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="mysql-innodb-cluster-securing.html">8.6 Securing InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="monitoring-innodb-cluster.html">8.7 Monitoring InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="troubleshooting-innodb-cluster.html">8.8 Restoring and Rebooting an InnoDB Cluster</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="rejoin-cluster.html">8.8.1 Rejoining an Instance to a Cluster</a></span></dt>
+<dt><span class="section"><a href="restore-cluster-from-quorum-loss.html">8.8.2 Restoring a Cluster from Quorum Loss</a></span></dt>
+<dt><span class="section"><a href="reboot-outage.html">8.8.3 Rebooting a Cluster from a Major Outage</a></span></dt>
+<dt><span class="section"><a href="rescan-cluster.html">8.8.4 Rescanning a Cluster</a></span></dt>
+<dt><span class="section"><a href="fencing-cluster.html">8.8.5 Fencing a Cluster</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="mysql-innodb-cluster-working-with-cluster.html">8.9 Modifying or Dissolving an InnoDB Cluster</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-upgrade.html">8.10 Upgrade InnoDB Cluster</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="mysql-innodb-cluster-upgrade-rolling.html">8.10.1 InnoDB Cluster Upgrade</a></span></dt>
+<dt><span class="section"><a href="mysql-innodb-cluster-upgrade-troubleshoot.html">8.10.2 Troubleshooting InnoDB Cluster Upgrades</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="mysql-shell-read-replicas.html">8.11 MySQL InnoDB Cluster Read Replicas</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="mysql-shell-read-replicas-prereqs.html">8.11.1 Prerequisites</a></span></dt>
+<dt><span class="section"><a href="mysql-shell-read-replicas-creating.html">8.11.2 Creating Read Replicas</a></span></dt>
+<dt><span class="section"><a href="mysql-shell-read-replicas-modifying.html">8.11.3 Modifying or Removing Read Replicas</a></span></dt>
+<dt><span class="section"><a href="mysql-shell-read-replicas-monitoring.html">8.11.4 Monitoring Read Replicas</a></span></dt>
+</dl></dd>
+</dl>
+</div>
+<a class="indexterm" name="id8896"></a><a class="indexterm" name="id8899"></a><a class="indexterm" name="id8902"></a><a class="indexterm" name="id8905"></a><p>
+    MySQL InnoDB Cluster provides a complete high availability
+    solution for MySQL. By using AdminAPI, which is included with
+    <a class="link" href="index.html" title="MySQL Shell 9.6">MySQL Shell</a>, you can easily
+    configure and administer a group of at least three MySQL server
+    instances to function as an InnoDB Cluster.
+  </p>
+<p>
+    Each MySQL server instance in an InnoDB Cluster runs
+    MySQL Group Replication, which provides the mechanism to replicate
+    data within an InnoDB Cluster, with built-in failover. AdminAPI
+    removes the need to work directly with Group Replication in an
+    InnoDB Cluster, but for more information see
+    <a class="ulink" href="/doc/refman/9.6/en/group-replication.html" target="_top">Group Replication</a> which explains the details. You
+    can also configure InnoDB ClusterSet (see
+    <a class="xref" href="innodb-clusterset.html" title="Chapter 9 MySQL InnoDB ClusterSet">Chapter 9, <i>MySQL InnoDB ClusterSet</i></a>) to provide disaster tolerance
+    for InnoDB Cluster deployments by linking a primary
+    InnoDB Cluster with one or more replicas of itself in alternate
+    locations, such as different datacenters.
+  </p>
+<p>
+    <a class="ulink" href="/doc/mysql-router/9.6/en/" target="_top">MySQL Router</a> can automatically
+    configure itself based on the cluster you deploy, connecting client
+    applications transparently to the server instances. In the event of
+    an unexpected failure of a server instance the cluster reconfigures
+    automatically. In the default single-primary mode, an
+    InnoDB Cluster has a single read-write server instance - the
+    primary. Multiple secondary server instances are replicas of the
+    primary. If the primary fails, a secondary is automatically promoted
+    to the role of primary. MySQL Router detects this and forwards client
+    applications to the new primary. Advanced users can also configure a
+    cluster to have multiple primaries.
+  </p>
+<p>
+    The following diagram shows an overview of how the technologies work
+    together:
+  </p>
+<div class="figure">
+<a name="innodb-cluster-overview-image"></a><p class="title"><b>Figure 8.1 InnoDB Cluster overview</b></p>
+<div class="figure-contents"><div class="mediaobject"><img src="images/innodb-cluster-overview.png" width="465" height="592" alt="Three MySQL servers are grouped together as a high availability cluster. One of the servers is the read/write primary instance, and the other two are read-only secondary instances. Group Replication is used to replicate data from the primary instance to the secondary instances. MySQL Router connects client applications (in this example, a MySQL Connector) to the primary instance."></div></div>
+</div>
+<br class="figure-break"><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;">
+<div class="admon-title">Important</div>
+<p>
+      InnoDB Cluster does not provide support for MySQL NDB Cluster. NDB Cluster
+      depends on the <a class="ulink" href="/doc/refman/9.6/en/mysql-cluster.html" target="_top"><code class="literal">NDB</code></a> storage
+      engine as well as a number of programs specific to NDB Cluster which
+      are not furnished with MySQL Server 9.6;
+      <code class="literal">NDB</code> is available only as part of the MySQL
+      NDB Cluster distribution. In addition, the MySQL server binary
+      (<span class="command"><strong>mysqld</strong></span>) that is supplied with MySQL Server
+      9.6 cannot be used with NDB Cluster. For more information
+      about MySQL NDB Cluster, see <a class="ulink" href="/doc/refman/9.6/en/mysql-cluster.html" target="_top">MySQL NDB Cluster 9.6</a>.
+      <a class="ulink" href="/doc/refman/9.6/en/mysql-cluster-compared.html" target="_top">MySQL Server Using InnoDB Compared with NDB Cluster</a>, provides information
+      about the differences between the <code class="literal">InnoDB</code> and
+      <code class="literal">NDB</code> storage engines.
+    </p>
+</div>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="admin-api-routing-guidelines-examples.html"
+        aria-label="Previous" title="Previous: Routing Guidelines Examples"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+    <a href="index.html" aria-label="Up" title="Up"> UP</a> &nbsp;
+    <a href="mysql-innodb-cluster-requirements.html" aria-label="Next"
+        title="Next: InnoDB Cluster Requirements">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/mysql-shell-9.6-en.pdf">PDF (US Ltr)</a>
+            - 2.5Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-shell-9.6-en.a4.pdf">PDF (A4)</a>
+            - 2.5Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 88, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">MySQL HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="//c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+</html>

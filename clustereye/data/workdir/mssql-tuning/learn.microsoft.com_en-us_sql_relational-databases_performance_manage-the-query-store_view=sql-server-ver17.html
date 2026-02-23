@@ -1,0 +1,1941 @@
+ <!DOCTYPE html>
+		<html
+			class="layout layout-holy-grail   show-table-of-contents conceptual show-breadcrumb default-focus"
+			lang="en-us"
+			dir="ltr"
+			data-authenticated="false"
+			data-auth-status-determined="false"
+			data-target="docs"
+			x-ms-format-detection="none"
+		>
+			
+		<head>
+			<title>Best practices for managing the Query Store - SQL Server | Microsoft Learn</title>
+			<meta charset="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta name="color-scheme" content="light dark" />
+
+			<meta name="description" content="Learn best practices for managing the SQL Server Query Store, including version specific details, managing custom capture policies, and other performance features." />
+			<link rel="canonical" href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/manage-the-query-store?view=sql-server-ver17" /> 
+
+			<!-- Non-customizable open graph and sharing-related metadata -->
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:site" content="@MicrosoftLearn" />
+			<meta property="og:type" content="website" />
+			<meta property="og:image:alt" content="Microsoft Learn" />
+			<meta property="og:image" content="https://learn.microsoft.com/en-us/media/open-graph-image.png" />
+			<!-- Page specific open graph and sharing-related metadata -->
+			<meta property="og:title" content="Best practices for managing the Query Store - SQL Server" />
+			<meta property="og:url" content="https://learn.microsoft.com/en-us/sql/relational-databases/performance/manage-the-query-store?view=sql-server-ver17" />
+			<meta property="og:description" content="Learn best practices for managing the SQL Server Query Store, including version specific details, managing custom capture policies, and other performance features." />
+			<meta name="platform_id" content="3491c97d-e4b8-2285-4098-70c5bdbdf6e2" /> <meta name="scope" content="sql" />
+			<meta name="locale" content="en-us" />
+			 <meta name="adobe-target" content="true" /> 
+			<meta name="uhfHeaderId" content="MSDocsHeader-DocsSQL" />
+
+			<meta name="page_type" content="conceptual" />
+
+			<!--page specific meta tags-->
+			
+
+			<!-- custom meta tags -->
+			
+		<meta name="toc_preview" content="true" />
+	
+		<meta name="feedback_system" content="Standard" />
+	
+		<meta name="feedback_product_url" content="https://feedback.azure.com/d365community/forum/04fe6ee0-3b25-ec11-b6e6-000d3a4f0da0" />
+	
+		<meta name="feedback_help_link_url" content="https://learn.microsoft.com/answers/tags/191/sql-server" />
+	
+		<meta name="feedback_help_link_type" content="get-help-at-qna" />
+	
+		<meta name="recommendations" content="true" />
+	
+		<meta name="manager" content="jroth" />
+	
+		<meta name="breadcrumb_path" content="../../breadcrumb/toc.json" />
+	
+		<meta name="monikerRange" content="=azuresqldb-current||&gt;=sql-server-2016||&gt;=sql-server-linux-2017||=azuresqldb-mi-current" />
+	
+		<meta name="ms.update-cycle" content="1825-days" />
+	
+		<meta name="author" content="MikeRayMSFT" />
+	
+		<meta name="ms.author" content="mikeray" />
+	
+		<meta name="ms.date" content="2024-01-08T00:00:00Z" />
+	
+		<meta name="ms.service" content="sql" />
+	
+		<meta name="ms.subservice" content="performance" />
+	
+		<meta name="ms.topic" content="best-practice" />
+	
+		<meta name="document_id" content="d59e2a58-c087-c59f-ee0b-aab867f01c8d" />
+	
+		<meta name="document_version_independent_id" content="d59e2a58-c087-c59f-ee0b-aab867f01c8d" />
+	
+		<meta name="updated_at" content="2025-02-27T23:30:00Z" />
+	
+		<meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/sql-docs-pr/blob/live/docs/relational-databases/performance/manage-the-query-store.md" />
+	
+		<meta name="gitcommit" content="https://github.com/MicrosoftDocs/sql-docs-pr/blob/c90dad64a3bfebf28f4252348dceb7d844e9620c/docs/relational-databases/performance/manage-the-query-store.md" />
+	
+		<meta name="git_commit_id" content="c90dad64a3bfebf28f4252348dceb7d844e9620c" />
+	
+		<meta name="monikers" content="azuresqldb-current" />
+	
+		<meta name="monikers" content="azuresqldb-mi-current" />
+	
+		<meta name="monikers" content="sql-server-linux-2017" />
+	
+		<meta name="monikers" content="sql-server-linux-ver15" />
+	
+		<meta name="monikers" content="sql-server-linux-ver16" />
+	
+		<meta name="monikers" content="sql-server-linux-ver17" />
+	
+		<meta name="monikers" content="sql-server-2016" />
+	
+		<meta name="monikers" content="sql-server-2017" />
+	
+		<meta name="monikers" content="sql-server-ver15" />
+	
+		<meta name="monikers" content="sql-server-ver16" />
+	
+		<meta name="monikers" content="sql-server-ver17" />
+	
+		<meta name="default_moniker" content="sql-server-ver17" />
+	
+		<meta name="site_name" content="Docs" />
+	
+		<meta name="depot_name" content="SQL.sql-content" />
+	
+		<meta name="schema" content="Conceptual" />
+	
+		<meta name="toc_rel" content="../../toc.json" />
+	
+		<meta name="pdf_url_template" content="https://learn.microsoft.com/pdfstore/en-us/SQL.sql-content/{branchName}{pdfName}" />
+	
+		<meta name="word_count" content="3339" />
+	
+		<meta name="config_moniker_range" content="=azuresqldb-current || =azuresqldb-mi-current || =azure-sqldw-latest || &gt;=aps-pdw-2016 || &gt;=sql-server-2016 || &gt;=sql-server-linux-2017 || =fabric || =fabric-sqldb" />
+	
+		<meta name="asset_id" content="relational-databases/performance/manage-the-query-store" />
+	
+		<meta name="moniker_range_name" content="680725c2e8ae7b21d73b75dfec67f04e" />
+	
+		<meta name="item_type" content="Content" />
+	
+		<meta name="source_path" content="docs/relational-databases/performance/manage-the-query-store.md" />
+	
+		<meta name="previous_tlsh_hash" content="D6926782711CCD94EF924E57367AAAF054E0DC48F2722E8444392561FA8B1CF31FEC4DFA9B1B734093360BB321D2912CC9FAFB24E19D32757665286A815C2261235F37F6A9" />
+	
+		<meta name="github_feedback_content_git_url" content="https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/relational-databases/performance/manage-the-query-store.md" />
+	
+		<meta name="markdown_url" content="https://learn.microsoft.com/en-us/sql/relational-databases/performance/manage-the-query-store?view=sql-server-ver17&amp;accept=text/markdown" />
+	 
+		<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/cbe4ca68-43ac-4375-aba5-5945a6394c20" data-source="generated" />
+	
+		<meta name="cmProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/6ab7faaf-d791-4a26-96a2-3b11738538e7" data-source="generated" />
+	
+		<meta name="spProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/ced846cc-6a3c-4c8f-9dfb-3de0e90e2742" data-source="generated" />
+	
+		<meta name="spProducts" content="https://authoring-docs-microsoft.poolparty.biz/devrel/302e28b0-1f09-4811-9a9b-2a72e0770581" data-source="generated" />
+	
+
+			<!-- assets and js globals -->
+			
+			<link rel="stylesheet" href="/static/assets/0.4.03336.7510-899cc417/styles/site-ltr.css" />
+			
+			<link rel="preconnect" href="//mscom.demdex.net" crossorigin />
+						<link rel="dns-prefetch" href="//target.microsoft.com" />
+						<link rel="dns-prefetch" href="//microsoftmscompoc.tt.omtrdc.net" />
+						<link
+							rel="preload"
+							as="script"
+							href="/static/third-party/adobe-target/at-js/2.9.0/at.js"
+							integrity="sha384-l4AKhsU8cUWSht4SaJU5JWcHEWh1m4UTqL08s6b/hqBLAeIDxTNl+AMSxTLx6YMI"
+							crossorigin="anonymous"
+							id="adobe-target-script"
+							type="application/javascript"
+						/>
+			<script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+			<script src="https://js.monitor.azure.com/scripts/c/ms.jsll-4.min.js"></script>
+			<script src="/_themes/docs.theme/master/en-us/_themes/global/deprecation.js"></script>
+
+			<!-- msdocs global object -->
+			<script id="msdocs-script">
+		var msDocs = {
+  "environment": {
+    "accessLevel": "online",
+    "azurePortalHostname": "portal.azure.com",
+    "reviewFeatures": false,
+    "supportLevel": "production",
+    "systemContent": true,
+    "siteName": "learn",
+    "legacyHosting": false
+  },
+  "data": {
+    "contentLocale": "en-us",
+    "contentDir": "ltr",
+    "userLocale": "en-us",
+    "userDir": "ltr",
+    "pageTemplate": "Conceptual",
+    "brand": "",
+    "context": {},
+    "standardFeedback": true,
+    "showFeedbackReport": false,
+    "feedbackHelpLinkType": "get-help-at-qna",
+    "feedbackHelpLinkUrl": "https://learn.microsoft.com/answers/tags/191/sql-server",
+    "feedbackSystem": "Standard",
+    "feedbackGitHubRepo": "MicrosoftDocs/sql-docs",
+    "feedbackProductUrl": "https://feedback.azure.com/d365community/forum/04fe6ee0-3b25-ec11-b6e6-000d3a4f0da0",
+    "extendBreadcrumb": false,
+    "isEditDisplayable": true,
+    "isPrivateUnauthorized": false,
+    "hideViewSource": false,
+    "isPermissioned": false,
+    "hasRecommendations": true,
+    "contributors": [
+      {
+        "name": "MikeRayMSFT",
+        "url": "https://github.com/MikeRayMSFT"
+      },
+      {
+        "name": "Saisang",
+        "url": "https://github.com/Saisang"
+      },
+      {
+        "name": "rwestMSFT",
+        "url": "https://github.com/rwestMSFT"
+      },
+      {
+        "name": "WilliamDAssafMSFT",
+        "url": "https://github.com/WilliamDAssafMSFT"
+      },
+      {
+        "name": "rothja",
+        "url": "https://github.com/rothja"
+      }
+    ]
+  },
+  "functions": {}
+};;
+	</script>
+
+			<!-- base scripts, msdocs global should be before this -->
+			<script src="/static/assets/0.4.03336.7510-899cc417/scripts/en-us/index-docs.js"></script>
+			
+
+			<!-- json-ld -->
+			
+		</head>
+	
+			<body
+				id="body"
+				data-bi-name="body"
+				class="layout-body "
+				lang="en-us"
+				dir="ltr"
+			>
+				<header class="layout-body-header">
+		<div class="header-holder has-default-focus">
+			
+		<a
+			href="#main"
+			
+			style="z-index: 1070"
+			class="outline-color-text visually-hidden-until-focused position-fixed inner-focus focus-visible top-0 left-0 right-0 padding-xs text-align-center background-color-body"
+			
+		>
+			Skip to main content
+		</a>
+	
+		<a
+			href="#"
+			data-skip-to-ask-learn
+			style="z-index: 1070"
+			class="outline-color-text visually-hidden-until-focused position-fixed inner-focus focus-visible top-0 left-0 right-0 padding-xs text-align-center background-color-body"
+			hidden
+		>
+			Skip to Ask Learn chat experience
+		</a>
+	
+
+			<div hidden id="cookie-consent-holder" data-test-id="cookie-consent-container"></div>
+			<!-- Unsupported browser warning -->
+			<div
+				id="unsupported-browser"
+				style="background-color: white; color: black; padding: 16px; border-bottom: 1px solid grey;"
+				hidden
+			>
+				<div style="max-width: 800px; margin: 0 auto;">
+					<p style="font-size: 24px">This browser is no longer supported.</p>
+					<p style="font-size: 16px; margin-top: 16px;">
+						Upgrade to Microsoft Edge to take advantage of the latest features, security updates, and technical support.
+					</p>
+					<div style="margin-top: 12px;">
+						<a
+							href="https://go.microsoft.com/fwlink/p/?LinkID=2092881 "
+							style="background-color: #0078d4; border: 1px solid #0078d4; color: white; padding: 6px 12px; border-radius: 2px; display: inline-block;"
+						>
+							Download Microsoft Edge
+						</a>
+						<a
+							href="https://learn.microsoft.com/en-us/lifecycle/faq/internet-explorer-microsoft-edge"
+							style="background-color: white; padding: 6px 12px; border: 1px solid #505050; color: #171717; border-radius: 2px; display: inline-block;"
+						>
+							More info about Internet Explorer and Microsoft Edge
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- site header -->
+			<header
+				id="ms--site-header"
+				data-test-id="site-header-wrapper"
+				role="banner"
+				itemscope="itemscope"
+				itemtype="http://schema.org/Organization"
+			>
+				<div
+					id="ms--mobile-nav"
+					class="site-header display-none-tablet padding-inline-none gap-none"
+					data-bi-name="mobile-header"
+					data-test-id="mobile-header"
+				></div>
+				<div
+					id="ms--primary-nav"
+					class="site-header display-none display-flex-tablet"
+					data-bi-name="L1-header"
+					data-test-id="primary-header"
+				></div>
+				<div
+					id="ms--secondary-nav"
+					class="site-header display-none display-flex-tablet"
+					data-bi-name="L2-header"
+					data-test-id="secondary-header"
+					
+				></div>
+			</header>
+			
+		<!-- banner -->
+		<div data-banner>
+			<div id="disclaimer-holder"></div>
+			
+		</div>
+		<!-- banner end -->
+	
+		</div>
+	</header>
+				 <section
+					id="layout-body-menu"
+					class="layout-body-menu display-flex"
+					data-bi-name="menu"
+			  >
+					
+		<div
+			id="left-container"
+			class="left-container display-none display-block-tablet padding-inline-sm padding-bottom-sm width-full"
+			data-toc-container="true"
+		>
+			<!-- Regular TOC content (default) -->
+			<div id="ms--toc-content" class="height-full">
+				<nav
+					id="affixed-left-container"
+					class="margin-top-sm-tablet position-sticky display-flex flex-direction-column"
+					aria-label="Primary"
+					data-bi-name="left-toc"
+					role="navigation"
+				></nav>
+			</div>
+			<!-- Collapsible TOC content (hidden by default) -->
+			<div id="ms--toc-content-collapsible" class="height-full" hidden>
+				<nav
+					id="affixed-left-container"
+					class="margin-top-sm-tablet position-sticky display-flex flex-direction-column"
+					aria-label="Primary"
+					data-bi-name="left-toc"
+					role="navigation"
+				>
+					<div
+						id="ms--collapsible-toc-header"
+						class="display-flex flex-direction-row-reverse justify-content-space-between align-items-center margin-bottom-xxs"
+					>
+						<button
+							type="button"
+							class="button button-clear inner-focus"
+							data-collapsible-toc-toggle
+							aria-expanded="true"
+							aria-controls="ms--collapsible-toc-content"
+							aria-label="Table of contents"
+						>
+							<span class="icon font-size-h4" aria-hidden="true">
+								<span class="docon docon-panel-left-contract"></span>
+							</span>
+						</button>
+						<div id="ms--collapsible-toc-moniker-slot" class="flex-grow-1"></div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	
+			  </section>
+
+				<main
+					id="main"
+					role="main"
+					class="layout-body-main "
+					data-bi-name="content"
+					lang="en-us"
+					dir="ltr"
+				>
+					
+			<div
+		id="ms--content-header"
+		class="content-header default-focus border-bottom-none"
+		data-bi-name="content-header"
+	>
+		<div class="content-header-controls margin-xxs margin-inline-sm-tablet">
+			<button
+				type="button"
+				class="contents-button button button-sm margin-right-xxs"
+				data-bi-name="contents-expand"
+				aria-haspopup="true"
+				data-contents-button
+			>
+				<span class="icon" aria-hidden="true"><span class="docon docon-menu"></span></span>
+				<span class="contents-expand-title"> Table of contents </span>
+			</button>
+			<button
+				type="button"
+				class="ap-collapse-behavior ap-expanded button button-sm"
+				data-bi-name="ap-collapse"
+				aria-controls="action-panel"
+			>
+				<span class="icon" aria-hidden="true"><span class="docon docon-exit-mode"></span></span>
+				<span>Exit editor mode</span>
+			</button>
+		</div>
+	</div>
+			<div data-main-column class="padding-sm padding-top-none padding-top-sm-tablet">
+				<div>
+					
+		<div id="article-header" class="background-color-body margin-bottom-xs display-none-print">
+			<div class="display-flex align-items-center justify-content-space-between">
+				
+		<details
+			id="article-header-breadcrumbs-overflow-popover"
+			class="popover"
+			data-for="article-header-breadcrumbs"
+		>
+			<summary
+				class="button button-clear button-primary button-sm inner-focus"
+				aria-label="All breadcrumbs"
+			>
+				<span class="icon">
+					<span class="docon docon-more"></span>
+				</span>
+			</summary>
+			<div id="article-header-breadcrumbs-overflow" class="popover-content padding-none"></div>
+		</details>
+
+		<bread-crumbs
+			id="article-header-breadcrumbs"
+			role="group"
+			aria-label="Breadcrumbs"
+			data-test-id="article-header-breadcrumbs"
+			class="overflow-hidden flex-grow-1 margin-right-sm margin-right-md-tablet margin-right-lg-desktop margin-left-negative-xxs padding-left-xxs"
+		></bread-crumbs>
+	 
+		<div
+			id="article-header-page-actions"
+			class="opacity-none margin-left-auto display-flex flex-wrap-no-wrap align-items-stretch"
+		>
+			
+		<button
+			class="button button-sm border-none inner-focus display-none-tablet flex-shrink-0 "
+			data-bi-name="ask-learn-assistant-entry"
+			data-test-id="ask-learn-assistant-modal-entry-mobile"
+			data-ask-learn-modal-entry
+			
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-none display-inline-flex-tablet display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn "
+			data-bi-name="ask-learn-assistant-entry"
+			
+			data-test-id="ask-learn-assistant-modal-entry-tablet"
+			data-ask-learn-modal-entry
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn "
+			data-bi-name="ask-learn-assistant-entry"
+			
+			data-test-id="ask-learn-assistant-flyout-entry"
+			data-ask-learn-flyout-entry
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	 
+		<button
+			type="button"
+			id="ms--focus-mode-button"
+			data-focus-mode
+			data-bi-name="focus-mode-entry"
+			class="button button-sm flex-shrink-0 margin-right-xxs display-none display-inline-flex-desktop"
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-glasses"></span>
+			</span>
+			<span>Focus mode</span>
+		</button>
+	 
+
+			<details class="popover popover-right" id="article-header-page-actions-overflow">
+				<summary
+					class="justify-content-flex-start button button-clear button-sm button-primary inner-focus"
+					aria-label="More actions"
+					title="More actions"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-more-vertical"></span>
+					</span>
+				</summary>
+				<div class="popover-content">
+					
+		<button
+			data-page-action-item="overflow-mobile"
+			type="button"
+			class="button-block button-sm inner-focus button button-clear display-none-tablet justify-content-flex-start text-align-left"
+			data-bi-name="contents-expand"
+			data-contents-button
+			data-popover-close
+		>
+			<span class="icon">
+				<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+			</span>
+			<span class="contents-expand-title">Table of contents</span>
+		</button>
+	 
+		<a
+			id="lang-link-overflow"
+			class="button-sm inner-focus button button-clear button-block justify-content-flex-start text-align-left"
+			data-bi-name="language-toggle"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-read-in-link
+			href="#"
+			hidden
+		>
+			<span class="icon" aria-hidden="true" data-read-in-link-icon>
+				<span class="docon docon-locale-globe"></span>
+			</span>
+			<span data-read-in-link-text>Read in English</span>
+		</a>
+	 
+		<button
+			type="button"
+			class="collection button button-clear button-sm button-block justify-content-flex-start text-align-left inner-focus"
+			data-list-type="collection"
+			data-bi-name="collection"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-popover-close
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-circle-addition"></span>
+			</span>
+			<span class="collection-status">Add</span>
+		</button>
+	
+					
+		<button
+			type="button"
+			class="collection button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+			data-list-type="plan"
+			data-bi-name="plan"
+			data-page-action-item="overflow-all"
+			data-check-hidden="true"
+			data-popover-close
+			hidden
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-circle-addition"></span>
+			</span>
+			<span class="plan-status">Add to plan</span>
+		</button>
+	  
+		<a
+			data-contenteditbtn
+			class="button button-clear button-block button-sm inner-focus justify-content-flex-start text-align-left text-decoration-none"
+			data-bi-name="edit"
+			
+			href="https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/relational-databases/performance/manage-the-query-store.md"
+			data-original_content_git_url="https://github.com/MicrosoftDocs/sql-docs-pr/blob/live/docs/relational-databases/performance/manage-the-query-store.md"
+			data-original_content_git_url_template="{repo}/blob/{branch}/docs/relational-databases/performance/manage-the-query-store.md"
+			data-pr_repo=""
+			data-pr_branch=""
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-edit-outline"></span>
+			</span>
+			<span>Edit</span>
+		</a>
+	
+					
+		<hr class="margin-block-xxs" />
+		<h4 class="font-size-sm padding-left-xxs">Share via</h4>
+		
+					<a
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-facebook"
+						data-bi-name="facebook"
+						data-page-action-item="overflow-all"
+						href="#"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-facebook-share"></span>
+						</span>
+						<span>Facebook</span>
+					</a>
+
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-twitter"
+						data-bi-name="twitter"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-text" aria-hidden="true">
+							<span class="docon docon-xlogo-share"></span>
+						</span>
+						<span>x.com</span>
+					</a>
+
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-linkedin"
+						data-bi-name="linkedin"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-linked-in-logo"></span>
+						</span>
+						<span>LinkedIn</span>
+					</a>
+					<a
+						href="#"
+						class="button button-clear button-sm inner-focus button-block justify-content-flex-start text-align-left text-decoration-none share-email"
+						data-bi-name="email"
+						data-page-action-item="overflow-all"
+					>
+						<span class="icon color-primary" aria-hidden="true">
+							<span class="docon docon-mail-message"></span>
+						</span>
+						<span>Email</span>
+					</a>
+			  
+	 
+		<hr class="margin-block-xxs" />
+		
+				<button
+					class="button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+					type="button"
+					data-bi-name="copy-markdown"
+					data-page-action-item="overflow-all"
+					data-copy-markdown
+					data-copy-state="idle"
+					data-check-hidden="true"
+				>
+					<span class="icon color-primary" aria-hidden="true">
+						<span data-show-when="idle" class="docon docon-code-lang"></span>
+						<span data-show-when="loading" class="loader" hidden></span>
+						<span data-show-when="success" class="docon docon-check-mark" hidden></span>
+					</span>
+					<span>Copy Markdown</span>
+				</button>
+		   
+				<button
+					class="button button-block button-clear button-sm justify-content-flex-start text-align-left inner-focus"
+					type="button"
+					data-bi-name="print"
+					data-page-action-item="overflow-all"
+					data-popover-close
+					data-print-page
+					data-check-hidden="true"
+				>
+					<span class="icon color-primary" aria-hidden="true">
+						<span class="docon docon-print"></span>
+					</span>
+					<span>Print</span>
+				</button>
+		  
+	
+				</div>
+			</details>
+		</div>
+	
+			</div>
+		</div>
+	  
+		<!-- privateUnauthorizedTemplate is hidden by default -->
+		<div unauthorized-private-section data-bi-name="permission-content-unauthorized-private" hidden>
+			<hr class="hr margin-top-xs margin-bottom-sm" />
+			<div class="notification notification-info">
+				<div class="notification-content">
+					<p class="margin-top-none notification-title">
+						<span class="icon">
+							<span class="docon docon-exclamation-circle-solid" aria-hidden="true"></span>
+						</span>
+						<span>Note</span>
+					</p>
+					<p class="margin-top-none authentication-determined not-authenticated">
+						Access to this page requires authorization. You can try <a class="docs-sign-in" href="#" data-bi-name="permission-content-sign-in">signing in</a> or <a  class="docs-change-directory" data-bi-name="permisson-content-change-directory">changing directories</a>.
+					</p>
+					<p class="margin-top-none authentication-determined authenticated">
+						Access to this page requires authorization. You can try <a class="docs-change-directory" data-bi-name="permisson-content-change-directory">changing directories</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+	
+					<div class="content"><h1 id="best-practices-for-managing-the-query-store">Best practices for managing the Query Store</h1></div>
+					
+		<div
+			id="article-metadata"
+			data-bi-name="article-metadata"
+			data-test-id="article-metadata"
+			class="page-metadata-container display-flex gap-xxs justify-content-space-between align-items-center flex-wrap-wrap"
+		>
+			 
+				<div
+					id="user-feedback"
+					class="margin-block-xxs display-none display-none-print"
+					hidden
+					data-hide-on-archived
+				>
+					
+		<button
+			id="user-feedback-button"
+			data-test-id="conceptual-feedback-button"
+			class="button button-sm button-clear button-primary display-none"
+			type="button"
+			data-bi-name="user-feedback-button"
+			data-user-feedback-button
+			hidden
+		>
+			<span class="icon" aria-hidden="true">
+				<span class="docon docon-like"></span>
+			</span>
+			<span>Feedback</span>
+		</button>
+	
+				</div>
+		  
+		</div>
+	 
+		<div data-id="ai-summary" hidden>
+			<div id="ms--ai-summary-cta" class="margin-top-xs display-flex align-items-center">
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-sparkle-fill gradient-text-vivid"></span>
+				</span>
+				<button
+					id="ms--ai-summary"
+					type="button"
+					class="tag tag-sm tag-suggestion margin-left-xxs"
+					data-test-id="ai-summary-cta"
+					data-bi-name="ai-summary-cta"
+					data-an="ai-summary"
+				>
+					<span class="ai-summary-cta-text">
+						Summarize this article for me
+					</span>
+				</button>
+			</div>
+			<!-- Slot where the client will render the summary card after the user clicks the CTA -->
+			<div id="ms--ai-summary-header" class="margin-top-xs"></div>
+		</div>
+	 
+		<nav
+			id="center-doc-outline"
+			class="doc-outline is-hidden-desktop display-none-print margin-bottom-sm"
+			data-bi-name="intopic toc"
+			aria-label="In this article"
+		>
+			<h2 id="ms--in-this-article" class="title is-6 margin-block-xs">
+				In this article
+			</h2>
+		</nav>
+	
+					<div class="content"><p><strong>Applies to:</strong> <img src="../../includes/media/yes-icon.svg?view=sql-server-ver17" role="presentation" data-linktype="relative-path">
+ <a href="../../sql-server/sql-docs-navigation-guide?view=sql-server-ver17#applies-to" data-linktype="relative-path">SQL Server</a> <img src="../../includes/media/yes-icon.svg?view=sql-server-ver17" role="presentation" data-linktype="relative-path">
+ <a href="../../sql-server/sql-docs-navigation-guide?view=sql-server-ver17#applies-to" data-linktype="relative-path">Azure SQL Database</a> <img src="../../includes/media/yes-icon.svg?view=sql-server-ver17" role="presentation" data-linktype="relative-path">
+ <a href="../../sql-server/sql-docs-navigation-guide?view=sql-server-ver17#applies-to" data-linktype="relative-path">Azure SQL Managed Instance</a></p>
+<p>This article outlines the management of the SQL Server Query Store and the surrounding features.</p>
+<ul>
+<li>For more information on configuring and administering with the Query Store, see <a href="monitoring-performance-by-using-the-query-store?view=sql-server-ver17" data-linktype="relative-path">Monitoring performance by using the Query Store</a>.</li>
+</ul>
+<div class="NOTE">
+<p>Note</p>
+<p>In SQL Server 2022 (16.x), Query Store is now enabled by default for all newly created SQL Server databases to help better track performance history, troubleshoot query plan–related issues, and enable new query processor capabilities.</p>
+</div>
+<h3 id="QueryStoreOptions"> Query Store defaults in Azure SQL Database</h3>
+<p>This section describes optimal configuration defaults in Azure SQL Database that are designed to ensure reliable operation of the Query Store and dependent features. Default configuration is optimized for continuous data collection, that is minimal time spent in OFF/READ_ONLY states. For more information about all available Query Store options, see <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#query_store_option-" data-linktype="relative-path">ALTER DATABASE SET options (Transact-SQL)</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Description</th>
+<th>Default</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAX_STORAGE_SIZE_MB</td>
+<td>Specifies the limit for the data space that Query Store can take inside the customer database</td>
+<td>100 prior to SQL Server 2019 (15.x)<br>1000 starting with SQL Server 2019 (15.x)</td>
+<td>Enforced for new databases</td>
+</tr>
+<tr>
+<td>INTERVAL_LENGTH_MINUTES</td>
+<td>Defines size of time window during which collected runtime statistics for query plans are aggregated and persisted. Every active query plan has at most one row for a period of time defined with this configuration</td>
+<td>60</td>
+<td>Enforced for new databases</td>
+</tr>
+<tr>
+<td>STALE_QUERY_THRESHOLD_DAYS</td>
+<td>Time-based cleanup policy that controls the retention period of persisted runtime statistics and inactive queries</td>
+<td>30</td>
+<td>Enforced for new databases and databases with previous default (367)</td>
+</tr>
+<tr>
+<td>SIZE_BASED_CLEANUP_MODE</td>
+<td>Specifies whether automatic data cleanup takes place when Query Store data size approaches the limit</td>
+<td>AUTO</td>
+<td>Enforced for all databases</td>
+</tr>
+<tr>
+<td>QUERY_CAPTURE_MODE</td>
+<td>Specifies whether all queries or only a subset of queries are tracked</td>
+<td>AUTO</td>
+<td>Enforced for all databases</td>
+</tr>
+<tr>
+<td>DATA_FLUSH_INTERVAL_SECONDS</td>
+<td>Specifies maximum period during which captured runtime statistics are kept in memory, before flushing to disk</td>
+<td>900</td>
+<td>Enforced for new databases</td>
+</tr>
+</tbody>
+</table>
+<div class="IMPORTANT">
+<p>Important</p>
+<p>These defaults are automatically applied in the final stage of Query Store activation in an Azure SQL Database. After it's enabled, Azure SQL Database won't change configuration values that are set by customers, unless they negatively impact primary workload or reliable operations of the Query Store.</p>
+</div>
+<div class="NOTE">
+<p>Note</p>
+<p>Query Store cannot be disabled in Azure SQL Database single database and Elastic Pool. Executing <code>ALTER DATABASE [database] SET QUERY_STORE = OFF</code> will return the warning <code>'QUERY_STORE=OFF' is not supported in this version of SQL Server.</code></p>
+</div>
+<p>If you want to stay with your custom settings, use <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#query-store" data-linktype="relative-path">ALTER DATABASE with Query Store options</a> to revert configuration to the previous state. Check out <a href="best-practice-with-the-query-store?view=sql-server-ver17" data-linktype="relative-path">Best Practices with the Query Store</a> in order to learn how to choose optimal configuration parameters.</p>
+<h2 id="set-the-optimal-query-store-capture-mode">Set the optimal Query Store Capture Mode</h2>
+<p>Keep the most relevant data in Query Store. The following table describes typical scenarios for each Query Store Capture Mode:</p>
+<table>
+<thead>
+<tr>
+<th>Query Store Capture Mode</th>
+<th>Scenario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>All</strong></td>
+<td>Analyze your workload thoroughly in terms of all queries' shapes and their execution frequencies and other statistics.<br><br>Identify new queries in your workload.<br><br>Detect if ad hoc queries are used to identify opportunities for user or auto parameterization.<br><br>Note: This is the default capture mode in SQL Server 2016 (13.x) and SQL Server 2017 (14.x).</td>
+</tr>
+<tr>
+<td><strong>Auto</strong></td>
+<td>Focus your attention on relevant and actionable queries. An example is those queries that execute regularly or that have significant resource consumption.<br><br>Note: In SQL Server 2019 (15.x) and later versions this is the default capture mode.</td>
+</tr>
+<tr>
+<td><strong>None</strong></td>
+<td>You've already captured the query set that you want to monitor in runtime and you want to eliminate the distractions that other queries might introduce.<br><br>None is suitable for testing and benchmarking environments.<br><br>None is also appropriate for software vendors who ship Query Store configuration configured to monitor their application workload.<br><br>None should be used with caution because you might miss the opportunity to track and optimize important new queries. Avoid using None unless you have a specific scenario that requires it.</td>
+</tr>
+<tr>
+<td><strong>Custom</strong></td>
+<td>SQL Server 2019 (15.x) introduced a custom capture mode under the <code>ALTER DATABASE ... SET QUERY_STORE</code> command. While Auto is default and recommended, if there is still any concern about the overhead Query Store might introduce, database administrators can use custom capture policies to further tune the Query Store capture behavior. For more information and recommendations, see <a href="#custom-capture-policies" data-linktype="self-bookmark">Custom capture policies</a> later in this article. For more information on this syntax, see <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#query_capture_mode--all--auto--custom--none-" data-linktype="relative-path">ALTER DATABASE SET Options</a>.</td>
+</tr>
+</tbody>
+</table>
+<div class="NOTE">
+<p>Note</p>
+<p>Cursors, queries inside stored procedures, and natively compiled queries are always captured when Query Store Capture Mode is set to <strong>All</strong>, <strong>Auto</strong>, or <strong>Custom</strong>. To capture natively compiled queries, enable collection of per-query statistics by using <a href="../system-stored-procedures/sys-sp-xtp-control-query-exec-stats-transact-sql?view=sql-server-ver17" data-linktype="relative-path">sys.sp_xtp_control_query_exec_stats</a>.</p>
+</div>
+<h2 id="keep-the-most-relevant-data-in-query-store">Keep the most relevant data in Query Store</h2>
+<p>Configure Query Store to contain only the relevant data so that it runs continuously and provides a great troubleshooting experience with a minimal impact on your regular workload.</p>
+<p>The following table provides best practices:</p>
+<table>
+<thead>
+<tr>
+<th>Best practice</th>
+<th>Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Limit retained historical data.</td>
+<td>Configure time-based policy to activate autocleanup.</td>
+</tr>
+<tr>
+<td>Filter out nonrelevant queries.</td>
+<td>Configure <strong>Query Store Capture Mode</strong> to <strong>Auto</strong>.</td>
+</tr>
+<tr>
+<td>Delete less relevant queries when the maximum size is reached.</td>
+<td>Activate size-based cleanup policy.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="custom-capture-policies">Custom capture policies</h2>
+<p>When the CUSTOM Query Store Capture Mode is enabled, additional Query Store configurations are available under a new Query Store capture policy setting to fine-tune data collection in a specific server.<br><br>The new custom settings define what happens during the internal capture policy time threshold. This is a time boundary during which the configurable conditions are evaluated and, if any are true, the query is eligible to be captured by Query Store.</p>
+<p>The <strong>Query Store Capture Mode</strong> specifies the query capture policy for Query Store.</p>
+<ul>
+<li><strong>All</strong>: Captures all queries. This option is the default in SQL Server 2016 (13.x) and SQL Server 2017 (14.x).</li>
+<li><strong>Auto</strong>: Infrequent queries and queries with insignificant compile and execution duration are ignored. Thresholds for execution count, compile, and runtime duration are internally determined. Starting with SQL Server 2019 (15.x), this is the default option.</li>
+<li><strong>None</strong>: Query Store stops capturing new queries.</li>
+<li><strong>Custom</strong>: Allows additional control and the capability to fine-tune the data collection policy. The new custom settings define what happens during the internal capture policy time threshold. This is a time boundary during which the configurable conditions are evaluated and, if any are true, the query is eligible to be captured by Query Store.</li>
+</ul>
+<p>Tuning an appropriate custom capture policy for your environment should be considered when:</p>
+<ul>
+<li>The database is very large.</li>
+<li>The database has a large number of unique, ad hoc queries.</li>
+<li>The database has specific size or growth limitations.</li>
+</ul>
+<div class="tabGroup" id="tabgroup_1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_1_ssms" role="tab" aria-controls="tabpanel_1_ssms" data-tab="ssms" tabindex="0" aria-selected="true" data-linktype="self-bookmark">SSMS</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_1_tsql" role="tab" aria-controls="tabpanel_1_tsql" data-tab="tsql" tabindex="-1" data-linktype="self-bookmark">T-SQL</a>
+</li>
+</ul>
+<section id="tabpanel_1_ssms" role="tabpanel" data-tab="ssms">
+
+<p><img src="../../includes/media/download.svg?view=sql-server-ver17" role="presentation" data-linktype="relative-path">
+<strong><a href="https://aka.ms/ssms" data-linktype="external">Download the latest version of SQL Server Management Studio (SSMS)</a></strong></p>
+<p>To view current settings in Management Studio:</p>
+<ol>
+<li>In SQL Server Management Studio Object Explorer, right-click on the database.</li>
+<li>Select <strong>Properties</strong>.</li>
+<li>Select <strong>Query Store</strong>. On the <strong>Query Store</strong> page, verify that the <strong>Operation Mode (Requested)</strong> is <strong>Read write</strong>.</li>
+<li>Change <strong>Query Store Capture Mode</strong> to <strong>Custom</strong>.</li>
+<li>Note the four capture policy fields under <strong>Query Store Capture Policy</strong> are now enabled and configurable.</li>
+</ol>
+</section>
+<section id="tabpanel_1_tsql" role="tabpanel" data-tab="tsql" aria-hidden="true" hidden="hidden">
+
+<p>Use the ALTER DATABASE .. SET syntax to set <code>QUERY_CAPTURE_MODE = CUSTOM</code> and then specify options for <code>QUERY_CAPTURE_POLICY</code>. See the following T-SQL examples and the <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#query_capture_policy_option_list--" data-linktype="relative-path">ALTER DATABASE SET options (Transact-SQL)</a> for details on the custom capture policy options.</p>
+</section>
+</div>
+<h3 id="example-custom-capture-policies">Example custom capture policies</h3>
+<p>The following example sets QUERY_CAPTURE_MODE to AUTO and sets a custom capture mode. Each of the following sets the custom capture policies to its default value in SQL Server 2022 (16.x). Consider adjusting these values to reduce the number of queries captured, and therefore reduce the on-disk footprint of the Query Store. It is recommended to gradually change these values by small increments.</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE = ON
+    (
+      OPERATION_MODE = READ_WRITE,
+      CLEANUP_POLICY = ( STALE_QUERY_THRESHOLD_DAYS = 90 ),
+      DATA_FLUSH_INTERVAL_SECONDS = 900,
+      MAX_STORAGE_SIZE_MB = 1000,
+      INTERVAL_LENGTH_MINUTES = 60,
+      SIZE_BASED_CLEANUP_MODE = AUTO,
+      QUERY_CAPTURE_MODE = CUSTOM,
+      QUERY_CAPTURE_POLICY = (
+        STALE_CAPTURE_POLICY_THRESHOLD = 24 HOURS,
+        EXECUTION_COUNT = 30,
+        TOTAL_COMPILE_CPU_TIME_MS = 1000,
+        TOTAL_EXECUTION_CPU_TIME_MS = 100
+      )
+    );
+</code></pre>
+<p>The following sample query alters an existing Query Store to use a custom capture policy that overrides the default settings for <code>EXECUTION_COUNT</code> and <code>TOTAL_COMPILE_CPU_TIME_MS</code>.</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE = ON
+    (
+      QUERY_CAPTURE_MODE = CUSTOM,
+      QUERY_CAPTURE_POLICY = (
+        EXECUTION_COUNT = 100,
+        TOTAL_COMPILE_CPU_TIME_MS = 10000
+      )
+    );
+</code></pre>
+<h2 id="query-store-maximum-size">Query Store maximum size</h2>
+<p>The default maximum size value of the Query Store is 1000 MB, starting in SQL Server 2019 (15.x). In previous versions, the default was 100 MB. Increasing the maximum size limit of the Query Store is appropriate in a busy database with many unique query plans. Adjusting the capture policy (see previous section) is a more important consideration to limit the on-disk size of the Query Store and to prevent the Query Store from entering READ_ONLY mode. While Query Store collects queries, execution plans, and statistics, its size in the database grows until this limit is reached. When that happens, Query Store automatically changes the operation mode to READ_ONLY and stops collecting new data, which means that your performance analysis is no longer accurate.</p>
+<ul>
+<li>In SQL Server and Azure SQL Managed Instance, <code>MAX_STORAGE_SIZE_MB</code> limit isn't strictly enforced.</li>
+<li>In Azure SQL Database, the maximum allowed <code>MAX_STORAGE_SIZE_MB</code> value is 10,240 MB.</li>
+</ul>
+<p>Storage size is checked only when Query Store writes data to disk. This interval is set by the <code>DATA_FLUSH_INTERVAL_SECONDS</code> option or the Management Studio Query Store dialog option <strong>Data Flush Interval</strong>.</p>
+<ul>
+<li>The interval default value is 900 seconds (or 15 minutes).</li>
+<li>If the Query Store has breached the <code>MAX_STORAGE_SIZE_MB</code> limit between storage size checks, it transitions to read-only mode.</li>
+<li>If <code>SIZE_BASED_CLEANUP_MODE</code> is enabled, the cleanup mechanism to enforce the <code>MAX_STORAGE_SIZE_MB</code> limit is also triggered.
+<ul>
+<li>Once enough space has been cleared, the Query Store mode will automatically switch back to READ_WRITE mode.</li>
+</ul>
+</li>
+</ul>
+<p>For more information, see <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#max_storage_size_mb" data-linktype="relative-path">ALTER DATABASE SET OPTION MAX_STORAGE_SIZE_MB</a>.</p>
+<h2 id="data-flush-interval-minutes">Data Flush Interval (minutes)</h2>
+<p>The Data Flush Interval defines the frequency before collected runtime statistics are persisted to disk. In SQL Server Management Studio, the value is in minutes, but in Transact-SQL it's expressed in seconds. The default is 15 minutes (900 seconds).</p>
+<ul>
+<li>Increasing the data flush interval can reduce overall Query Store storage I/O impact, but cause the storage I/O workload to be more <em>spiky</em>, with fewer but heavier impacts to disk utilization.  Consider using a higher value if your workload doesn't generate a large number of different queries and plans, or if you can withstand longer time to persist data before a database shutdown.</li>
+<li>Decreasing the data flush interval decreases the amount of Query Store data that would be lost in the event of a shutdown, power loss, or failover. It can also smoothen the storage I/O impact from Query Store by writing to disk more often, but with less data.</li>
+</ul>
+<div class="NOTE">
+<p>Note</p>
+<p>Using trace flag 7745 prevents Query Store data from being written to disk in case of a failover or shutdown command. For more information, see <a href="best-practice-with-the-query-store?view=sql-server-ver17#Recovery" data-linktype="relative-path">Use Query Store in mission-critical servers</a>.</p>
+</div>
+<h2 id="modify-query-store-defaults">Modify Query Store defaults</h2>
+<p>Configure Query Store based on your workload and performance troubleshooting requirements. The default parameters are good enough to start, but you should monitor how Query Store behaves over time and adjust its configuration accordingly.</p>
+<h3 id="view-query-store-current-settings">View Query Store current settings</h3>
+<p>View the current Query Store settings in SQL Server Management Studio (SSMS) or T-SQL.</p>
+<div class="tabGroup" id="tabgroup_2">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_2_ssms" role="tab" aria-controls="tabpanel_2_ssms" data-tab="ssms" tabindex="0" aria-selected="true" data-linktype="self-bookmark">SSMS</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_2_tsql" role="tab" aria-controls="tabpanel_2_tsql" data-tab="tsql" tabindex="-1" data-linktype="self-bookmark">T-SQL</a>
+</li>
+</ul>
+<section id="tabpanel_2_ssms" role="tabpanel" data-tab="ssms">
+
+<p><img src="../../includes/media/download.svg?view=sql-server-ver17" role="presentation" data-linktype="relative-path">
+<strong><a href="https://aka.ms/ssms" data-linktype="external">Download the latest version of SQL Server Management Studio (SSMS)</a></strong></p>
+<p>To view current settings in Management Studio:</p>
+<ol>
+<li>In SQL Server Management Studio Object Explorer, right-click on the database.</li>
+<li>Select <strong>Properties</strong>.</li>
+<li>Select <strong>Query Store</strong>.</li>
+</ol>
+</section>
+<section id="tabpanel_2_tsql" role="tabpanel" data-tab="tsql" aria-hidden="true" hidden="hidden">
+
+<p>Execute the following T-SQL script to get the latest information about Query Store size:</p>
+<pre><code class="lang-sql">USE [QueryStoreDB];
+GO
+
+SELECT actual_state_desc, desired_state_desc, current_storage_size_mb,
+ max_storage_size_mb, readonly_reason
+FROM sys.database_query_store_options;
+</code></pre>
+</section>
+</div>
+
+<p>The following script sets a new value for <strong>Max Size (MB)</strong>:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (MAX_STORAGE_SIZE_MB = 1024);
+</code></pre>
+<p>Use SQL Server Management Studio or Transact-SQL to set a different value for <strong>Data Flush Interval</strong>:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (DATA_FLUSH_INTERVAL_SECONDS = 900);
+</code></pre>
+<p><strong>Statistics Collection Interval</strong>: Defines the level of granularity for the collected runtime statistic, expressed in minutes. The default is 60 minutes. Consider using a lower value if you require finer granularity or less time to detect and mitigate issues. Keep in mind that the value directly affects the size of Query Store data. Use SQL Server Management Studio or Transact-SQL to set a different value for <strong>Statistics Collection Interval</strong>:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (INTERVAL_LENGTH_MINUTES = 60);
+</code></pre>
+<p><strong>Stale Query Threshold (Days)</strong>: Time-based cleanup policy that controls the retention period of persisted runtime statistics and inactive queries, expressed in days. By default, Query Store is configured to keep the data for 30 days, which might be unnecessarily long for your scenario.</p>
+<p>Avoid keeping historical data that you don't plan to use. This practice reduces changes to read-only status. The size of Query Store data and the time to detect and mitigate the issue will be more predictable. Use Management Studio or the following script to configure time-based cleanup policy:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 90));
+</code></pre>
+<p><strong>Size Based Cleanup Mode</strong>: Specifies whether automatic data cleanup takes place when Query Store data size approaches the limit. Activate size-based cleanup to make sure that Query Store always runs in read-write mode and collects the latest data.  There's no guarantee under heavy workloads that Query Store cleanup will consistently maintain the data size under the limit. It's possible for the automatic data cleanup to fall behind and to switch (temporarily) into read-only mode.</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (SIZE_BASED_CLEANUP_MODE = AUTO);
+</code></pre>
+<p><strong>Query Store Capture Mode</strong>: Specifies the query capture policy for Query Store.</p>
+<ul>
+<li><strong>All</strong>: Captures all queries. This option is the default in SQL Server 2016 (13.x) and SQL Server 2017 (14.x).</li>
+<li><strong>Auto</strong>: Infrequent queries and queries with insignificant compile and execution duration are ignored. Thresholds for execution count, compile, and runtime duration are internally determined. Starting with SQL Server 2019 (15.x), this is the default option.</li>
+<li><strong>None</strong>: Query Store stops capturing new queries.</li>
+<li><strong>Custom</strong>: Allows additional control and the capability to fine-tune the data collection policy. The new custom settings define what happens during the internal capture policy time threshold. This is a time boundary during which the configurable conditions are evaluated and, if any are true, the query is eligible to be captured by Query Store.</li>
+</ul>
+<div class="IMPORTANT">
+<p>Important</p>
+<p>Cursors, queries inside stored procedures, and natively compiled queries are always captured when Query Store Capture Mode is set to <strong>All</strong>, <strong>Auto</strong>, or <strong>Custom</strong>. To capture natively compiled queries, enable collection of per-query statistics by using <a href="../system-stored-procedures/sys-sp-xtp-control-query-exec-stats-transact-sql?view=sql-server-ver17" data-linktype="relative-path">sys.sp_xtp_control_query_exec_stats</a>.</p>
+</div>
+<p>The following script sets QUERY_CAPTURE_MODE to AUTO:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE (QUERY_CAPTURE_MODE = AUTO);
+</code></pre>
+<h3 id="examples">Examples</h3>
+<p>The following example sets QUERY_CAPTURE_MODE to AUTO and sets other recommended options in SQL Server 2016 (13.x):</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE = ON
+    (
+      OPERATION_MODE = READ_WRITE,
+      CLEANUP_POLICY = ( STALE_QUERY_THRESHOLD_DAYS = 90 ),
+      DATA_FLUSH_INTERVAL_SECONDS = 900,
+      QUERY_CAPTURE_MODE = AUTO,
+      MAX_STORAGE_SIZE_MB = 1000,
+      INTERVAL_LENGTH_MINUTES = 60
+    );
+</code></pre>
+<p>The following example sets QUERY_CAPTURE_MODE to AUTO and sets other recommended options in SQL Server 2017 (14.x) to include wait statistics:</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE = ON
+    (
+      OPERATION_MODE = READ_WRITE,
+      CLEANUP_POLICY = ( STALE_QUERY_THRESHOLD_DAYS = 90 ),
+      DATA_FLUSH_INTERVAL_SECONDS = 900,
+      QUERY_CAPTURE_MODE = AUTO,
+      MAX_STORAGE_SIZE_MB = 1000,
+      INTERVAL_LENGTH_MINUTES = 60,
+      SIZE_BASED_CLEANUP_MODE = AUTO,
+      MAX_PLANS_PER_QUERY = 200,
+      WAIT_STATS_CAPTURE_MODE = ON
+    );
+</code></pre>
+<p>The following example sets the CUSTOM capture policy to the SQL Server 2019 (15.x) defaults, instead of the new default AUTO capture mode. For more information on custom capture policy options and defaults, see <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17#query_capture_policy_option_list--" data-linktype="relative-path">&lt;query_capture_policy_option_list&gt;</a>.</p>
+<pre><code class="lang-sql">ALTER DATABASE [QueryStoreDB]
+SET QUERY_STORE = ON
+    (
+      OPERATION_MODE = READ_WRITE,
+      CLEANUP_POLICY = ( STALE_QUERY_THRESHOLD_DAYS = 90 ),
+      DATA_FLUSH_INTERVAL_SECONDS = 900,
+      MAX_STORAGE_SIZE_MB = 1000,
+      INTERVAL_LENGTH_MINUTES = 60,
+      SIZE_BASED_CLEANUP_MODE = AUTO,
+      MAX_PLANS_PER_QUERY = 200,
+      WAIT_STATS_CAPTURE_MODE = ON,
+      QUERY_CAPTURE_MODE = CUSTOM,
+      QUERY_CAPTURE_POLICY = (
+        STALE_CAPTURE_POLICY_THRESHOLD = 24 HOURS,
+        EXECUTION_COUNT = 30,
+        TOTAL_COMPILE_CPU_TIME_MS = 1000,
+        TOTAL_EXECUTION_CPU_TIME_MS = 100
+      )
+    );
+</code></pre>
+<p><a id="OptionMgmt"></a>
+<a id="Scenarios"></a></p>
+<h2 id="query-store-maintenance">Query Store maintenance</h2>
+<p>This section provides some guidelines on managing Query Store feature itself.</p>
+<h4 id="query-store-state">Query Store state</h4>
+<p>Query Store stores its data inside the user database and that is why it has size limit (configured with <code>MAX_STORAGE_SIZE_MB</code>). If data in Query Store hits that limit Query Store will automatically change state from read-write to read-only and stop collecting new data.</p>
+<p>Query <a href="../system-catalog-views/sys-database-query-store-options-transact-sql?view=sql-server-ver17" data-linktype="relative-path">sys.database_query_store_options</a> to determine if Query Store is currently active, and whether it is currently collects runtime stats or not.</p>
+<pre><code class="lang-sql">SELECT actual_state, actual_state_desc, readonly_reason,
+    current_storage_size_mb, max_storage_size_mb
+FROM sys.database_query_store_options;
+</code></pre>
+<p>Query Store status is determined by the <code>actual_state</code> column. If it's different than the desired status, the <code>readonly_reason</code> column can give you more information. When Query Store size exceeds the quota, the feature will switch to read_only mode and provide a reason. For information on reasons, see <a href="../system-catalog-views/sys-database-query-store-options-transact-sql?view=sql-server-ver17" data-linktype="relative-path">sys.database_query_store_options</a>.</p>
+<h4 id="get-query-store-options">Get Query Store options</h4>
+<p>To find out detailed information about Query Store status, execute following in a user database.</p>
+<pre><code class="lang-sql">SELECT * FROM sys.database_query_store_options;
+</code></pre>
+<h4 id="set-the-query-store-interval">Set the Query Store interval</h4>
+<p>You can override interval for aggregating query runtime statistics (default is 60 minutes). New value for interval is exposed through <code>sys.database_query_store_options</code> view.</p>
+<pre><code class="lang-sql">ALTER DATABASE &lt;database_name&gt;
+SET QUERY_STORE (INTERVAL_LENGTH_MINUTES = 15);
+</code></pre>
+<p>Arbitrary values are not allowed for <code>INTERVAL_LENGTH_MINUTES</code>. Use one of the following intervals: 1, 5, 10, 15, 30, 60, or 1440 minutes.</p>
+<div class="NOTE">
+<p>Note</p>
+<p>For Azure Synapse Analytics, customizing Query Store configuration options, as demonstrated in this section, is not supported.</p>
+</div>
+<h4 id="query-store-space-usage">Query Store space usage</h4>
+<p>To check current the Query Store size and limit execute the following statement in the user database.</p>
+<pre><code class="lang-sql">SELECT current_storage_size_mb, max_storage_size_mb
+FROM sys.database_query_store_options;
+</code></pre>
+<p>If the Query Store storage is full use the following statement to extend the storage.</p>
+<pre><code class="lang-sql">ALTER DATABASE &lt;database_name&gt;
+SET QUERY_STORE (MAX_STORAGE_SIZE_MB = &lt;new_size&gt;);
+</code></pre>
+<h4 id="set-query-store-options">Set Query Store options</h4>
+<p>You can set multiple Query Store options at once with a single ALTER DATABASE statement.</p>
+<pre><code class="lang-sql">ALTER DATABASE &lt;database name&gt;
+SET QUERY_STORE (
+    OPERATION_MODE = READ_WRITE,
+    CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30),
+    DATA_FLUSH_INTERVAL_SECONDS = 3000,
+    MAX_STORAGE_SIZE_MB = 500,
+    INTERVAL_LENGTH_MINUTES = 15,
+    SIZE_BASED_CLEANUP_MODE = AUTO,
+    QUERY_CAPTURE_MODE = AUTO,
+    MAX_PLANS_PER_QUERY = 1000,
+    WAIT_STATS_CAPTURE_MODE = ON
+);
+</code></pre>
+<p>For the full list of configuration options, see <a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17" data-linktype="relative-path">ALTER DATABASE SET Options (Transact-SQL)</a>.</p>
+<h4 id="clean-up-the-space">Clean up the space</h4>
+<p>Query Store internal tables are created in the PRIMARY filegroup during database creation and that configuration cannot be changed later. If you are running out of space, you might want to clear older Query Store data by using the following statement.</p>
+<pre><code class="lang-sql">ALTER DATABASE &lt;db_name&gt; SET QUERY_STORE CLEAR;
+</code></pre>
+<p>Alternatively, you might want to clear up only ad hoc query data, since it is less relevant for query optimizations and plan analysis but takes up just as much space.</p>
+<p>In Azure Synapse Analytics, clearing the Query Store is not available. Data is automatically retained for the past seven days.</p>
+<h4 id="delete-ad-hoc-queries">Delete ad hoc queries</h4>
+<p>This purges ad hoc and internal queries from the Query Store so that the Query Store does not run out of space and remove queries we really need to track.</p>
+<pre><code class="lang-sql">SET NOCOUNT ON
+-- This purges adhoc and internal queries from
+-- the Query Store in the current database
+-- so that the Query Store does not run out of space
+-- and remove queries we really need to track
+
+DECLARE @id int;
+DECLARE adhoc_queries_cursor CURSOR
+FOR
+    SELECT q.query_id
+    FROM sys.query_store_query_text AS qt
+    JOIN sys.query_store_query AS q
+    ON q.query_text_id = qt.query_text_id
+    JOIN sys.query_store_plan AS p
+    ON p.query_id = q.query_id
+    JOIN sys.query_store_runtime_stats AS rs
+    ON rs.plan_id = p.plan_id
+    WHERE q.is_internal_query = 1  -- is it an internal query then we dont care to keep track of it
+       OR q.object_id = 0 -- if it does not have a valid object_id then it is an adhoc query and we don't care about keeping track of it
+    GROUP BY q.query_id
+    HAVING MAX(rs.last_execution_time) &lt; DATEADD (minute, -5, GETUTCDATE())  -- if it has been more than 5 minutes since the adhoc query ran
+    ORDER BY q.query_id;
+OPEN adhoc_queries_cursor ;
+FETCH NEXT FROM adhoc_queries_cursor INTO @id;
+WHILE @@fetch_status = 0
+BEGIN
+    PRINT 'EXEC sp_query_store_remove_query ' + str(@id);
+    EXEC sp_query_store_remove_query @id;
+    FETCH NEXT FROM adhoc_queries_cursor INTO @id;
+END
+CLOSE adhoc_queries_cursor;
+DEALLOCATE adhoc_queries_cursor;
+</code></pre>
+<p>You can define your own procedure with different logic for clearing up data you no longer want.</p>
+<p>The previous example uses the <code>sp_query_store_remove_query</code> extended stored procedure for removing unnecessary data. You can also:</p>
+<ul>
+<li>Use <code>sp_query_store_reset_exec_stats</code> to clear runtime statistics for a given plan.</li>
+<li>Use <code>sp_query_store_remove_plan</code> to remove a single plan.</li>
+</ul>
+<h2 id="related-content">Related content</h2>
+<ul>
+<li><a href="../../t-sql/statements/alter-database-transact-sql-set-options?view=sql-server-ver17" data-linktype="relative-path">ALTER DATABASE SET options (Transact-SQL)</a></li>
+<li><a href="../system-catalog-views/query-store-catalog-views-transact-sql?view=sql-server-ver17" data-linktype="relative-path">Query Store catalog views (Transact-SQL)</a></li>
+<li><a href="../system-stored-procedures/query-store-stored-procedures-transact-sql?view=sql-server-ver17" data-linktype="relative-path">Query Store stored procedures (Transact-SQL)</a></li>
+<li><a href="using-the-query-store-with-in-memory-oltp?view=sql-server-ver17" data-linktype="relative-path">Use the Query Store with In-Memory OLTP</a></li>
+<li><a href="../query-processing-architecture-guide?view=sql-server-ver17" data-linktype="relative-path">Query processing architecture guide</a></li>
+<li><a href="query-store-hints?view=sql-server-ver17" data-linktype="relative-path">Query Store hints</a></li>
+<li><a href="monitoring-performance-by-using-the-query-store?view=sql-server-ver17" data-linktype="relative-path">Monitor performance by using the Query Store</a></li>
+<li><a href="tune-performance-with-the-query-store?view=sql-server-ver17" data-linktype="relative-path">Tune performance with the Query Store</a></li>
+<li><a href="/en-us/azure/synapse-analytics/sql/query-history-storage-analysis" data-linktype="absolute-path">Historical query storage and analysis in Azure Synapse Analytics</a></li>
+</ul>
+</div>
+					
+		<div
+			id="ms--inline-notifications"
+			class="margin-block-xs"
+			data-bi-name="inline-notification"
+		></div>
+	 
+		<div
+			id="assertive-live-region"
+			role="alert"
+			aria-live="assertive"
+			class="visually-hidden"
+			aria-relevant="additions"
+			aria-atomic="true"
+		></div>
+		<div
+			id="polite-live-region"
+			role="status"
+			aria-live="polite"
+			class="visually-hidden"
+			aria-relevant="additions"
+			aria-atomic="true"
+		></div>
+	
+					
+		<!-- feedback section -->
+		<section
+			id="site-user-feedback-footer"
+			class="font-size-sm margin-top-md display-none-print display-none-desktop"
+			data-test-id="site-user-feedback-footer"
+			data-bi-name="site-feedback-section"
+		>
+			<hr class="hr" />
+			<h2 id="ms--feedback" class="title is-3">Feedback</h2>
+			<div class="display-flex flex-wrap-wrap align-items-center">
+				<p class="font-weight-semibold margin-xxs margin-left-none">
+					Was this page helpful?
+				</p>
+				<div class="buttons">
+					<button
+						class="thumb-rating-button like button button-primary button-sm"
+						data-test-id="footer-rating-yes"
+						data-binary-rating-response="rating-yes"
+						type="button"
+						title="This article is helpful"
+						data-bi-name="button-rating-yes"
+						aria-pressed="false"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-like"></span>
+						</span>
+						<span>Yes</span>
+					</button>
+					<button
+						class="thumb-rating-button dislike button button-primary button-sm"
+						id="standard-rating-no-button"
+						hidden
+						data-test-id="footer-rating-no"
+						data-binary-rating-response="rating-no"
+						type="button"
+						title="This article is not helpful"
+						data-bi-name="button-rating-no"
+						aria-pressed="false"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-dislike"></span>
+						</span>
+						<span>No</span>
+					</button>
+					<details
+						class="popover popover-top"
+						id="mobile-help-popover"
+						data-test-id="footer-feedback-popover"
+					>
+						<summary
+							class="thumb-rating-button dislike button button-primary button-sm"
+							data-test-id="details-footer-rating-no"
+							data-binary-rating-response="rating-no"
+							title="This article is not helpful"
+							data-bi-name="button-rating-no"
+							aria-pressed="false"
+							data-bi-an="feedback-unhelpful-popover"
+						>
+							<span class="icon" aria-hidden="true">
+								<span class="docon docon-dislike"></span>
+							</span>
+							<span>No</span>
+						</summary>
+						<div
+							class="popover-content width-200 width-300-tablet"
+							role="dialog"
+							aria-labelledby="popover-heading"
+							aria-describedby="popover-description"
+						>
+							<p id="popover-heading" class="font-size-lg margin-bottom-xxs font-weight-semibold">
+								Need help with this topic?
+							</p>
+							<p id="popover-description" class="font-size-sm margin-bottom-xs">
+								Want to try using Ask Learn to clarify or guide you through this topic?
+							</p>
+							
+		<div class="buttons flex-direction-row flex-wrap justify-content-center gap-xxs">
+			<div>
+		<button
+			class="button button-sm border inner-focus display-none margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-test-id="ask-learn-assistant-modal-entry-mobile-feedback"
+			data-ask-learn-modal-entry-feedback
+			data-bi-an=feedback-unhelpful-popover
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-inline-flex display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-modal-entry-tablet-feedback"
+			data-ask-learn-modal-entry-feedback
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-flyout-entry-feedback"
+			data-ask-learn-flyout-entry-show-only
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	</div>
+			<button
+				type="button"
+				class="button button-sm margin-right-xxs"
+				data-help-option="suggest-fix"
+				data-bi-name="feedback-suggest"
+				data-bi-an="feedback-unhelpful-popover"
+				data-test-id="suggest-fix"
+			>
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-feedback"></span>
+				</span>
+				<span> Suggest a fix? </span>
+			</button>
+		</div>
+	
+						</div>
+					</details>
+				</div>
+			</div>
+		</section>
+		<!-- end feedback section -->
+	
+				</div>
+				
+		<div id="ms--additional-resources-mobile" class="display-none-print">
+			<hr class="hr" hidden />
+			<h2 id="ms--additional-resources-mobile-heading" class="title is-3" hidden>
+				Additional resources
+			</h2>
+			
+		<section
+			id="right-rail-recommendations-mobile"
+			class=""
+			data-bi-name="recommendations"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-training-mobile"
+			class=""
+			data-bi-name="learning-resource-card"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-events-mobile"
+			class=""
+			data-bi-name="events-card"
+			hidden
+		></section>
+	 
+		<section
+			id="right-rail-qna-mobile"
+			class="margin-top-xxs"
+			data-bi-name="qna-link-card"
+			hidden
+		></section>
+	
+		</div>
+	 
+		<div
+			id="article-metadata-footer"
+			data-bi-name="article-metadata-footer"
+			data-test-id="article-metadata-footer"
+			class="page-metadata-container"
+		>
+			<hr class="hr" />
+			<ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
+				<li class="visibility-hidden-visual-diff">
+			<span class="badge badge-sm text-wrap-pretty">
+				<span>Last updated on <local-time format="twoDigitNumeric"
+		datetime="2024-10-09T01:28:00.000Z"
+		data-article-date-source="calculated"
+		class="is-invisible"
+	>
+		2024-10-09
+	</local-time></span>
+			</span>
+		</li>
+			</ul>
+		</div>
+	
+			</div>
+			
+		<div
+			id="action-panel"
+			role="region"
+			aria-label="Action Panel"
+			class="action-panel"
+			tabindex="-1"
+		></div>
+	
+		
+				</main>
+				<aside
+					id="layout-body-aside"
+					class="layout-body-aside "
+					data-bi-name="aside"
+			  >
+					
+		<div
+			id="ms--additional-resources"
+			class="right-container padding-sm display-none display-block-desktop height-full"
+			data-bi-name="pageactions"
+			role="complementary"
+			aria-label="Additional resources"
+		>
+			<div id="affixed-right-container" data-bi-name="right-column">
+				
+		<nav
+			id="side-doc-outline"
+			class="doc-outline border-bottom padding-bottom-xs margin-bottom-xs"
+			data-bi-name="intopic toc"
+			aria-label="In this article"
+		>
+			<h3>In this article</h3>
+		</nav>
+	
+				<!-- Feedback -->
+				
+		<section
+			id="ms--site-user-feedback-right-rail"
+			class="font-size-sm display-none-print"
+			data-test-id="site-user-feedback-right-rail"
+			data-bi-name="site-feedback-right-rail"
+		>
+			<p class="font-weight-semibold margin-bottom-xs">Was this page helpful?</p>
+			<div class="buttons">
+				<button
+					class="thumb-rating-button like button button-primary button-sm"
+					data-test-id="right-rail-rating-yes"
+					data-binary-rating-response="rating-yes"
+					type="button"
+					title="This article is helpful"
+					data-bi-name="button-rating-yes"
+					aria-pressed="false"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-like"></span>
+					</span>
+					<span>Yes</span>
+				</button>
+				<button
+					class="thumb-rating-button dislike button button-primary button-sm"
+					id="right-rail-no-button"
+					hidden
+					data-test-id="right-rail-rating-no"
+					data-binary-rating-response="rating-no"
+					type="button"
+					title="This article is not helpful"
+					data-bi-name="button-rating-no"
+					aria-pressed="false"
+				>
+					<span class="icon" aria-hidden="true">
+						<span class="docon docon-dislike"></span>
+					</span>
+					<span>No</span>
+				</button>
+				<details class="popover popover-right" id="help-popover" data-test-id="feedback-popover">
+					<summary
+						tabindex="0"
+						class="thumb-rating-button dislike button button-primary button-sm"
+						data-test-id="details-right-rail-rating-no"
+						data-binary-rating-response="rating-no"
+						title="This article is not helpful"
+						data-bi-name="button-rating-no"
+						aria-pressed="false"
+						data-bi-an="feedback-unhelpful-popover"
+					>
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-dislike"></span>
+						</span>
+						<span>No</span>
+					</summary>
+					<div
+						class="popover-content width-200 width-300-tablet"
+						role="dialog"
+						aria-labelledby="popover-heading"
+						aria-describedby="popover-description"
+					>
+						<p
+							id="popover-heading-right-rail"
+							class="font-size-lg margin-bottom-xxs font-weight-semibold"
+						>
+							Need help with this topic?
+						</p>
+						<p id="popover-description-right-rail" class="font-size-sm margin-bottom-xs">
+							Want to try using Ask Learn to clarify or guide you through this topic?
+						</p>
+						
+		<div class="buttons flex-direction-row flex-wrap justify-content-center gap-xxs">
+			<div>
+		<button
+			class="button button-sm border inner-focus display-none margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-test-id="ask-learn-assistant-modal-entry-mobile-feedback"
+			data-ask-learn-modal-entry-feedback
+			data-bi-an=feedback-unhelpful-popover
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-label="Ask Learn"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+		</button>
+		<button
+			class="button button-sm display-inline-flex display-none-desktop flex-shrink-0 margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-modal-entry-tablet-feedback"
+			data-ask-learn-modal-entry-feedback
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+		<button
+			class="button button-sm display-none flex-shrink-0 display-inline-flex-desktop margin-right-xxs border-color-ask-learn margin-right-xxs"
+			data-bi-name="ask-learn-assistant-entry-troubleshoot"
+			data-bi-an=feedback-unhelpful-popover
+			data-test-id="ask-learn-assistant-flyout-entry-feedback"
+			data-ask-learn-flyout-entry-show-only
+			data-flyout-button="toggle"
+			type="button"
+			style="min-width: max-content;"
+			aria-expanded="false"
+			aria-controls="ask-learn-flyout"
+			hidden
+		>
+			<span class="icon font-size-lg" aria-hidden="true">
+				<span class="docon docon-chat-sparkle-fill gradient-ask-learn-logo"></span>
+			</span>
+			<span>Ask Learn</span>
+		</button>
+	</div>
+			<button
+				type="button"
+				class="button button-sm margin-right-xxs"
+				data-help-option="suggest-fix"
+				data-bi-name="feedback-suggest"
+				data-bi-an="feedback-unhelpful-popover"
+				data-test-id="suggest-fix"
+			>
+				<span class="icon" aria-hidden="true">
+					<span class="docon docon-feedback"></span>
+				</span>
+				<span> Suggest a fix? </span>
+			</button>
+		</div>
+	
+					</div>
+				</details>
+			</div>
+		</section>
+	
+			</div>
+		</div>
+	
+			  </aside> <section
+					id="layout-body-flyout"
+					class="layout-body-flyout "
+					data-bi-name="flyout"
+			  >
+					 <div
+	class="height-full border-left background-color-body-medium"
+	id="ask-learn-flyout"
+></div>
+			  </section> <div class="layout-body-footer " data-bi-name="layout-footer">
+		<footer
+			id="footer"
+			data-test-id="footer"
+			data-bi-name="footer"
+			class="footer-layout has-padding has-default-focus border-top  uhf-container"
+			role="contentinfo"
+		>
+			<div class="display-flex gap-xs flex-wrap-wrap is-full-height padding-right-lg-desktop">
+				
+		<a
+			data-mscc-ic="false"
+			href="#"
+			data-bi-name="select-locale"
+			class="locale-selector-link flex-shrink-0 button button-sm button-clear external-link-indicator"
+			id=""
+			title=""
+			><span class="icon" aria-hidden="true"
+				><span class="docon docon-world"></span></span
+			><span class="local-selector-link-text">en-us</span></a
+		>
+	 <div class="ccpa-privacy-link" data-ccpa-privacy-link hidden>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://aka.ms/yourcaliforniaprivacychoices"
+			data-bi-name="your-privacy-choices"
+			class="button button-sm button-clear flex-shrink-0 external-link-indicator"
+			id=""
+			title=""
+			>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 30 14"
+			xml:space="preserve"
+			height="16"
+			width="43"
+			aria-hidden="true"
+			focusable="false"
+		>
+			<path
+				d="M7.4 12.8h6.8l3.1-11.6H7.4C4.2 1.2 1.6 3.8 1.6 7s2.6 5.8 5.8 5.8z"
+				style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff"
+			></path>
+			<path
+				d="M22.6 0H7.4c-3.9 0-7 3.1-7 7s3.1 7 7 7h15.2c3.9 0 7-3.1 7-7s-3.2-7-7-7zm-21 7c0-3.2 2.6-5.8 5.8-5.8h9.9l-3.1 11.6H7.4c-3.2 0-5.8-2.6-5.8-5.8z"
+				style="fill-rule:evenodd;clip-rule:evenodd;fill:#06f"
+			></path>
+			<path
+				d="M24.6 4c.2.2.2.6 0 .8L22.5 7l2.2 2.2c.2.2.2.6 0 .8-.2.2-.6.2-.8 0l-2.2-2.2-2.2 2.2c-.2.2-.6.2-.8 0-.2-.2-.2-.6 0-.8L20.8 7l-2.2-2.2c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0l2.2 2.2L23.8 4c.2-.2.6-.2.8 0z"
+				style="fill:#fff"
+			></path>
+			<path
+				d="M12.7 4.1c.2.2.3.6.1.8L8.6 9.8c-.1.1-.2.2-.3.2-.2.1-.5.1-.7-.1L5.4 7.7c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0L8 8.6l3.8-4.5c.2-.2.6-.2.9 0z"
+				style="fill:#06f"
+			></path>
+		</svg>
+	
+			<span>Your Privacy Choices</span></a
+		>
+	
+	</div>
+				<div class="flex-shrink-0">
+		<div class="dropdown has-caret-up">
+			<button
+				data-test-id="theme-selector-button"
+				class="dropdown-trigger button button-clear button-sm inner-focus theme-dropdown-trigger"
+				aria-controls="{{ themeMenuId }}"
+				aria-expanded="false"
+				title="Theme"
+				data-bi-name="theme"
+			>
+				<span class="icon">
+					<span class="docon docon-sun" aria-hidden="true"></span>
+				</span>
+				<span>Theme</span>
+				<span class="icon expanded-indicator" aria-hidden="true">
+					<span class="docon docon-chevron-down-light"></span>
+				</span>
+			</button>
+			<div class="dropdown-menu" id="{{ themeMenuId }}" role="menu">
+				<ul class="theme-selector padding-xxs" data-test-id="theme-dropdown-menu">
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="light"
+						>
+							<span class="theme-light margin-right-xxs">
+								<span
+									class="theme-selector-icon border display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> Light </span>
+						</button>
+					</li>
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="dark"
+						>
+							<span class="theme-dark margin-right-xxs">
+								<span
+									class="border theme-selector-icon display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> Dark </span>
+						</button>
+					</li>
+					<li class="theme display-block">
+						<button
+							class="button button-clear button-sm theme-control button-block justify-content-flex-start text-align-left"
+							data-theme-to="high-contrast"
+						>
+							<span class="theme-high-contrast margin-right-xxs">
+								<span
+									class="border theme-selector-icon display-inline-block has-body-background"
+									aria-hidden="true"
+								>
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+										<rect width="22" height="14" class="has-fill-body-background" />
+										<rect x="5" y="5" width="12" height="4" class="has-fill-secondary" />
+										<rect x="5" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="8" y="2" width="2" height="1" class="has-fill-secondary" />
+										<rect x="11" y="2" width="3" height="1" class="has-fill-secondary" />
+										<rect x="1" y="1" width="2" height="2" class="has-fill-secondary" />
+										<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary" />
+										<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary" />
+									</svg>
+								</span>
+							</span>
+							<span role="menuitem"> High contrast </span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+			</div>
+			<ul class="links" data-bi-name="footerlinks">
+				<li class="manage-cookies-holder" hidden=""></li>
+				<li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/principles-for-ai-generated-content"
+			data-bi-name="aiDisclaimer"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>AI Disclaimer</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/previous-versions/"
+			data-bi-name="archivelink"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Previous Versions</a
+		>
+	
+	</li> <li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://techcommunity.microsoft.com/t5/microsoft-learn-blog/bg-p/MicrosoftLearnBlog"
+			data-bi-name="bloglink"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Blog</a
+		>
+	
+	</li> <li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/contribute"
+			data-bi-name="contributorGuide"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Contribute</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://go.microsoft.com/fwlink/?LinkId=521839"
+			data-bi-name="privacy"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Privacy</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://learn.microsoft.com/en-us/legal/termsofuse"
+			data-bi-name="termsofuse"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Terms of Use</a
+		>
+	
+	</li><li>
+		
+		<a
+			data-mscc-ic="false"
+			href="https://www.microsoft.com/legal/intellectualproperty/Trademarks/"
+			data-bi-name="trademarks"
+			class=" external-link-indicator"
+			id=""
+			title=""
+			>Trademarks</a
+		>
+	
+	</li>
+				<li>&copy; Microsoft 2026</li>
+			</ul>
+		</footer>
+	</footer>
+			</body>
+		</html>

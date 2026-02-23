@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="The MongoDB Community Home - your hub for events, user groups, programs, and discussions. Connect, share, and build skills with the MongoDB community.">
+      <script src="https://kit.fontawesome.com/339a2625d9.js" crossorigin="anonymous"></script>
+      <script src="/community/static/javascript/get_data.js"></script>
+      <link rel="stylesheet" type="text/css" href="/community/static/chpstyle.css">
+      <title>MongoDB Community </title>
+      <link rel="canonical" href="https://www.mongodb.com/community/" />
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+      <script src="/community/static/javascript/load_map.js" type="module"></script>
+   
+    <!-- Render js for Navbar -->
+    
+    <script type="module" src="/community/static/static_assets/navbar.js"></script>
+    
+
+    
+    
+        <script src="/community/static/static_assets/analytics.js"></script>
+    
+
+    <style>
+        body.landing-page footer {
+            background: #061621 !important;
+            color: #f9fbfa !important;
+        }
+
+        /* Patch for nav and children to be front of everything*/
+        .unified-nav {
+            position: relative;
+            z-index: 9999;
+        }
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Lexend Deca' rel='stylesheet'>
+    <link rel="icon" href="https://www.mongodb.com/assets/images/global/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.mongodb.com/assets/images/global/favicon.ico">
+</head>
+
+<body>
+    <div id="___gatsby">
+        <!--
+        <div id="pencilBannerContainer" class="pencilbanner">
+            <a href="https://www.mongodb.com/events/mongodb-local/san-francisco?utm_campaign=devrel&utm_source=communityhome&utm_medium=cta&utm_term=banner.localsf"
+                class="pencilbannerlink">
+                <div class="pencilbannertext">
+                    MongoDB.local SF, Jan 15: See the speaker lineup & ship your AI vision faster. Use WEB50 to save 50% >
+                </div>
+            </a>
+            <span class="closebtn" onclick="closeBanner(event)">&times;</span>
+            <script>
+                function closeBanner(event) {
+                    document.getElementById("pencilBannerContainer").style.display = 'none';
+                }
+            </script>
+        </div>
+        -->
+        <style>
+            .pencilbanner {
+                min-height: 40px;
+                background: rgb(17, 97, 73);
+                text-align: center;
+                display: flex;
+            }
+
+            .pencilbannertext {
+                margin: auto;
+                color: white;
+                font-family: Source Code Pro;
+                font-size: 15px;
+                padding: 5px;
+            }
+
+            .pencilbannerlink {
+                flex-grow: 2;
+            }
+
+            .closebtn {
+                font-size: 25px;
+                color: white;
+                cursor: pointer;
+                margin-right: 10px;
+                align-self: center;
+            }
+        </style>
+        <div id="mdbnav" class="unified-nav"></div>
+        <style>
+            .css-10f7tc {
+                position: sticky !important;
+
+            }
+
+            .sticky {
+                position: fixed;
+                top: 0;
+                width: 100%;
+            }
+        </style>
+        <script>
+            window.onscroll = function () { myFunction() };
+            var navbar = document.getElementById("mdbnav");
+            var sticky = navbar.offsetTop;
+            function myFunction() {
+                if (window.pageYOffset >= sticky) {
+                    navbar.classList.add("sticky")
+                } else {
+                    navbar.classList.remove("sticky");
+                }
+            }
+        </script>
+        <div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper">
+            <style data-emotion="css scvaue">
+                .css-scvaue {
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-flex-direction: column;
+                    -ms-flex-direction: column;
+                    flex-direction: column;
+                    -webkit-box-pack: justify;
+                    -webkit-justify-content: space-between;
+                    justify-content: space-between;
+                    min-height: 100vh;
+                    width: 100%;
+                }
+            </style>
+            <div class="css-scvaue e16uzoiv1">
+                <style data-emotion="css-global coegwl">
+                    html {
+                        box-sizing: border-box;
+                        height: 100%;
+                    }
+
+                    *,
+                    *::before,
+                    *::after {
+                        box-sizing: inherit;
+                    }
+
+                    body {
+                        color: #f9fbfa;
+                        background-color: #001E2B;
+                        font-family: 'Lexend Deca', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+                        font-size: 18px;
+                        line-height: 32px;
+                        margin: 0;
+                        padding: 0;
+                        background-image: url('/static/assets/forums.svg');
+                        background-position: center;
+                        background-position-y: -1500px;
+                        background-repeat: repeat;
+                        background-size: cover;
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        body {
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+                    }
+
+                    main>section {
+                        padding: 32px 120px;
+                    }
+
+                    @media only screen and (max-width: 1023px) {
+                        main>section {
+                            padding: 20px;
+                        }
+                    }
+
+                    img {
+                        max-width: 100%;
+                    }
+                </style>
+                <style data-emotion="css 1awe77t">
+                    .css-1awe77t {
+                        z-index: 22;
+                    }
+                </style>
+                <style data-emotion="css-global 5j4pxs">
+                    .css-5j4pxs {
+                        font-family: 'Lexend Deca' light;
+                    }
+                </style>
+                <style data-emotion="css-global 17v57cw">
+                    @font-face {
+                        font-family: Euclid Circular A;
+                        src: url(https://static.mongodb.com/com/fonts/EuclidCircularA-Regular-WebXL.woff2) format('woff2');
+                        font-weight: normal;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: Euclid Circular A;
+                        src: url(https://static.mongodb.com/com/fonts/EuclidCircularA-Medium-WebXL.woff2) format('woff2');
+                        font-weight: 500;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: MongoDB Value Serif;
+                        src: url(https://static.mongodb.com/com/fonts/MongoDBValueSerif-Regular.woff2) format('woff2');
+                        font-weight: normal;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: MongoDB Value Serif;
+                        src: url(https://static.mongodb.com/com/fonts/MongoDBValueSerif-Medium.woff2) format('woff2');
+                        font-weight: 500;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: MongoDB Value Serif;
+                        src: url(https://static.mongodb.com/com/fonts/MongoDBValueSerif-Bold.woff2) format('woff2');
+                        font-weight: bold;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: Source Code Pro;
+                        src: url(https://static.mongodb.com/com/fonts/SourceCodePro-Regular.ttf) format('truetype');
+                        font-weight: normal;
+                        font-display: swap;
+                    }
+
+                    @font-face {
+                        font-family: Source Code Pro;
+                        src: url(https://static.mongodb.com/com/fonts/SourceCodePro-Medium.ttf) format('truetype');
+                        font-weight: 500;
+                        font-display: swap;
+                    }
+                </style>
+                <style data-emotion="css 7ybk3q">
+                    .css-7ybk3q {
+                        width: 100%;
+                        position: -webkit-sticky;
+                        position: sticky;
+                        top: 0;
+                        left: 0;
+                        z-index: 1;
+                        z-index: 22;
+                    }
+                </style>
+                <style data-emotion="css 15kcf6f">
+                    .css-15kcf6f {
+                        margin: 0 auto;
+                        max-width: 1440px;
+                        min-height: calc(100vh - 300px);
+                        width: 100%;
+                    }
+                </style>
+                <main class="css-15kcf6f e16uzoiv2">
+                    <style data-emotion="css 5fofuz">
+                        .css-5fofuz {
+                            padding: 16px 120px 64px;
+                        }
+
+                        @media only screen and (max-width: 1200px) {
+                            .css-5fofuz {
+                                padding: 24px 16px 64px;
+                            }
+                        }
+                    </style>
+                     
+        <div class="grid-sys">
+            <div class="main-container">
+                <div class="section header" style="margin-bottom: 20px;">
+                    <div class="header-container">
+                        <div class="header-info">
+                            <div class="hero-text">
+                                Come for the products, stay for the community
+                                
+                            </div>
+                            <div class="hero-description">
+                                Welcome to the MongoDB Community. Share inspiring topics, attend MongoDB events, and meet community members from around the world.
+                            </div>
+                        </div>
+                        <div class="header-image" id="header-image">
+                        </div>
+                        <div class="hero-links" style="display: flex; align-items: flex-start; gap: 20px; height: auto !important; padding-bottom: 30px;">
+    
+    <a href="https://www.meetup.com/pro/mongodb-user-groups/" class="button-links">Join MongoDB User Groups</a>
+    
+    <div style="display: flex; flex-direction: column; align-items: center; width: 280px; min-width: 280px; max-width: 280px;">
+        
+        <style>
+            /* CONTAINER */
+            #chatbot {
+                width: 100% !important; 
+                height: 45px !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                position: relative !important;
+                background: transparent !important;
+                border: none !important;
+            }
+
+            /* BUTTON STYLE */
+            #chatbot > button {
+                width: 100% !important;
+                height: 100% !important;
+                box-sizing: border-box !important;
+                background-color: #00ED64 !important; 
+                color: #001E2B !important; 
+                border: none !important;
+                border-radius: 2px !important;
+                
+                /* LAYOUT */
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                
+                /* GAP: 6px */
+                gap: 6px !important; 
+                
+                cursor: pointer !important;
+                
+                /* PADDING: 0  */
+                padding: 0 !important;
+                
+                font-size: 0 !important; /* Hide old text */
+            }
+
+            #chatbot > button > div:first-child {
+                display: none !important;
+            }
+
+            #chatbot > button > div:nth-child(2) {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: auto !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important; /* Safety: Ensure inner wrapper has no gap */
+            }
+
+            #chatbot > button svg, 
+            #chatbot > button svg path {
+                width: 16px !important;
+                height: 16px !important;
+                margin: 0 !important; 
+                fill: #001E2B !important; 
+                stroke: #001E2B !important;
+                color: #001E2B !important;
+                display: block !important;
+                flex-shrink: 0 !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+
+            #chatbot > button::after {
+                content: "Ask MongoDB Assistant" !important;
+                font-family: 'Euclid Circular A', sans-serif !important;
+                font-size: 16px !important; 
+                font-weight: 400 !important; 
+                white-space: nowrap !important;
+                color: #001E2B !important;
+            }
+
+            #chatbot > div:not(:first-child) {
+                all: initial !important;
+                display: flex !important;
+                font-family: sans-serif !important;
+                z-index: 9999 !important;
+            }
+        </style>
+
+        <div id="chatbot"></div>
+
+        <div style="margin-top: 8px; text-align: center; font-size: 11px; line-height: 14px; color: #C1C7C6; width: 100%;">
+            Review answers for accuracy. See our 
+            <a href="https://www.mongodb.com/docs/generative-ai-faq/" target="_blank" style="color: #00ED64; text-decoration: underline;">AI and data usage FAQ</a>
+        </div>
+
+    </div>
+</div>
+                    </div>
+                </div>
+                <div class="section cards" id="explore">
+                    <div class="section-title">
+                        Explore the community
+                    </div>
+                    <div class="tab-menu">
+                        <div class="tab">
+                            <button class="tablinks active" id="championsTab" onclick="openTab(event, 'Champions'), href='#Champions'">Champions</button>
+                            <button class="tablinks" id="creatorsTab" onclick="openTab(event, 'Creators'), href='#Creators'">Creators</button>                            
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="card-container">
+                        <div id="Champions" class="tab-content" style="display: flex; flex-direction: row;">
+                            <div style="gap: 10px; flex: 0.8;">
+                                <h2>Champions Program</h2>
+                                <p style="font-size: 15px;">Champions are community members who demonstrate exceptional leadership by educating and supporting the MongoDB community.</p>
+                                <p style="font-size: 15px;"><a style="color: #0498EC" href='/community/champions'>Learn more about Champions →</a></p>
+                            </div>
+                            <div style="gap: 10px; border: 1px solid rgb(100, 100, 100); padding: 30px; border-radius: 25px; flex: 1; background: #001f2c; height: fit-content;">
+                                <div style="margin-left: auto; margin-right: auto; text-align: center;">
+                                    <img class="profile-img" src="https://mdb-community.s3.amazonaws.com/champions/Christoph-Strobl.jpeg">
+                                    <p style="margin: 0;">Champion of the month</p>
+                                    <h4 style="margin: 0;">Christoph Strobl</h4>
+                                </div>
+                                <p style="font-size: 15px;">Christoph Strobl is an Engineer on the Spring Data Team at Broadcom, creating professional persistence solutions for over a decade. Leading Spring Data MongoDB he strives to make the project the best way to interact with MongoDB in the Java space. In his free time Christoph writes fantasy novels for his kids.</p>
+                                <hr style=" border-top: 1px solid #ffffff;">
+                                <h4 style="font-size: 15px;"><a style="color: #0498EC" href='/community/champions/christoph-strobl/'>Learn more about Christoph Strobl →</a></h4>
+                            </div>
+                            <div style="gap: 10px; display: flex; flex-direction: column; flex: 1;">
+                                <div style="border: 1px solid rgb(100, 100, 100); padding: 30px; border-radius: 25px; height: 75%; background: #001f2c;">
+                                    <p style="font-size: 15px;">Talk</p>
+                                    <h3><a href="https://www.youtube.com/watch?v=_tTA1TXRmyA">MongoDB for Java Developers: The Ultimate Spring Data MongoDB Starter Kit</a></h3>
+                                    <p style="font-size: 15px;">Explore the fundamentals of using Spring Boot and Spring Data MongoDB to quickly create MongoDB-backed applications and simplify database interactions.</p>
+                                    <p style="font-size: 15px;">By Christoph Strobl</p>
+                                </div>
+                                <div style="border: 1px solid rgb(100, 100, 100); padding: 30px; border-radius: 25px; height: 100%; background: #001f2c;">
+                                    <p style="font-size: 15px;">Livestream</p>
+                                    <h3><a href="https://www.youtube.com/watch?v=w4lvxI47QnU">Mastering Spring Data MongoDB for Better Developer Productivity</a></h3>
+                                    <p style="font-size: 15px;">Learn about the basics of Spring Data and repositories and MongoDB features like update methods, geospatial support, and transactions.</p>
+                                    <p style="font-size: 15px;">By Christoph Strobl</p>
+                                </div>
+                            </div>      
+                        </div>
+                        <div id="Creators" class="tab-content" style="display:none;">
+                            <div style="gap: 10px; padding-bottom: 25px;">
+                                <h2>Creators Program</h2>
+                                <p>The Creator program consists of community members who create and share content to help others learn and uplevel their MongoDB knowledge. Creators are given exclusive access to product sessions, priority access to content features, swag and more!</p>
+                                <p><a style="color: #0498EC" href='https://www.mongodb.com/community/creators/'>Learn more about Creators →</a></p>
+                            </div>
+                        </div>
+                </div>
+                <!-- <div class="section champion">
+                    
+<div class="section-title">
+    Community Champion Spotlight
+</div>
+<div class="section-description">
+    <a href="/community/champions">MongoDB Community Champions and Creators</a> are passionate advocates dedicated to keeping the community informed and excited about our latest developments and offerings. They serve as a trusted bridge between MongoDB and the community's organizers, contributors, and creators who are the backbone of our community.
+</div>
+<div class="full-container">
+    <div class="profile-container">
+        <div class="left-content">
+            <div class="profile-name-img">
+                <img class="profile-img" src="https://mdb-community.s3.amazonaws.com/champions/elie_hannouch.jpg"></img>
+                <div class="profile-details">
+                    <div class="profile-name">
+                       Elie Hannouch
+                    </div>
+                    <div class="profile-subtitle">
+                        Champion since 2023
+                    </div>
+                </div>
+            </div>
+            <div class="profile-description">
+                Elie Hannouch is a standout Product Manager with a rich background spanning six years as a Software Engineer in Lebanon. His career is marked by a strong commitment to driving digital transformation and decentralization. Elie excels in integrating technical expertise from his engineering background into strategic product management, focusing on creating customer-centric products. As a recognized MongoDB Champion, he showcases a profound mastery of database technologies, contributing significantly to the MongoDB community through his deep understanding and innovative use of the platform. Elie's leadership transcends his job responsibilities. He is a key figure in the MongoDB, Google, and CNCF communities in Lebanon, mentoring emerging tech talent and promoting knowledge sharing. His role as a tech trainer emphasizes his commitment to equipping new engineers with vital industry skills. Furthermore, as a Technical Writer and Book Author, Elie simplifies complex tech concepts, inspiring the next generation of technology enthusiasts. His impact is a blend of technical brilliance, strategic insight, and a passion for education and community engagement.
+            </div>
+            
+        </div>
+        <div class="profile-info">
+            <div class="profile-sections">
+                <div class="profile-title">
+                    PROFESSION
+                </div>
+                <div class="profile-description">
+                 Technical Product Manager 
+                </div>
+            </div>
+           <div class="profile-sections">
+                <div class="profile-title">
+                    COMMUNITY ENGAGEMENTS
+                </div>
+                <div class="profile-description">
+                    <a href="https://www.mongodb.com/community/forums/tag/lebanon-mug">&#x2022; Lebanon MongoDB User Group (MUG) Leader</a><br>
+                </div>
+            </div>
+            <div class="profile-sections">
+                <div class="profile-title">
+                    COMMUNITY CONTENT
+                </div>
+                <div class="profile-description">
+                    <a href="https://linktr.ee/elie.mongodb.champion">&#x2022; A Collection of Elie's Community Content </a><br>
+                    <a href="https://medium.com/@eliehannouch800/mongodb-and-wiredtiger-a-journey-through-the-storage-engine-d3acfcf846a0">&#x2022; MongoDB and WiredTiger: A Journey Through the Storage Engine</a><br>
+                    <a href="https://medium.com/@eliehannouch800/mongodb-replication-a-deep-dive-e6aa5f0cee81">&#x2022; MongoDB Replication: A Deep Dive </a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inverse-button-links"><a href="/community/champions">Meet our Community Champions</a></div>
+</div>
+
+
+                </div> -->
+                <div class="section badges">
+                    <div class="section-title">
+                        Grab your first MongoDB badges
+                    </div>
+                    <div class="section-description">
+                        <p>MongoDB Skill Badges are free, focused credentials designed to help you quickly learn and validate specific MongoDB skills. 
+                        Every badge you earn elevates your skillset, empowering you and your team to accelerate and optimize application development and operations. 
+                        Start learning today and earn a badge in 60 - 90 minutes.
+                        </p>
+                    </div>
+                    <div class="section-content">
+                        <div class="horizontal-card-container-row">
+                            
+<div class="horizontal-card">
+    <div class="card-profile">
+        <img class="card-img-circular" src="https://mdb-community.s3.amazonaws.com/connect/badges/badge_star.png"></img>
+        <div class="card-title-info">
+            <div class="card-title">Gen AI</div>
+            <div class="card-info">RAG with MongoDB</div>
+        </div>
+    </div>
+    <hr>
+    <div class="card-link"><a href="https://learn.mongodb.com/courses/rag-with-mongodb?team=devrel">Get Your Badge <i class="fa-solid fa-arrow-right"></i></a></div>
+</div>
+
+                            
+<div class="horizontal-card">
+    <div class="card-profile">
+        <img class="card-img-circular" src="https://mdb-community.s3.amazonaws.com/connect/badges/badge_auto.png"></img>
+        <div class="card-title-info">
+            <div class="card-title">Data Modeling</div>
+            <div class="card-info">Schema Design Patterns</div>
+        </div>
+    </div>
+    <hr>
+    <div class="card-link"><a href="https://learn.mongodb.com/courses/schema-design-patterns-and-antipatterns?team=devrel">Badge Up Today <i class="fa-solid fa-arrow-right"></i></a></div>
+</div>
+
+                            
+<div class="horizontal-card">
+    <div class="card-profile">
+        <img class="card-img-circular" src="https://mdb-community.s3.amazonaws.com/connect/badges/badge_certified.png"></img>
+        <div class="card-title-info">
+            <div class="card-title">Tuning</div>
+            <div class="card-info">Performance Tools &amp; Techniques</div>
+        </div>
+    </div>
+    <hr>
+    <div class="card-link"><a href="https://learn.mongodb.com/courses/performance-tools-and-techniques?team=devrel">Earn Your Badge <i class="fa-solid fa-arrow-right"></i></a></div>
+</div>
+
+                        </div>
+                    </div>
+                    <p style="font-size: 15px;"><a style="color: #0498EC" href='https://learn.mongodb.com/skills?team=devrel'>Learn more about MongoDB Badges →</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    const queryIdValue = "133";
+    const BASE_URL = 'https://mdb-community.s3.amazonaws.com/connect/hero/';
+    const IMAGES = ["hero1.jpg", "hero2.jpg", "hero3.jpg", "hero4.jpg", "hero5.jpg", "hero6.jpg"];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageElement = document.getElementById("header-image");
+        const skeletonLoadingElement = document.querySelector(".skeleton-loading");
+
+        const randomImage = IMAGES[Math.floor(Math.random() * IMAGES.length)];
+        const imageUrl = `${BASE_URL}${randomImage}`;
+
+        imageElement.onload = function() {
+            skeletonLoadingElement.style.display = "none";
+            imageElement.style.display = "block";
+        };
+
+        imageElement.style.backgroundImage = `url('${imageUrl}')`;
+    });
+
+
+    function isValidEmail(email) {
+        const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return pattern.test(email);
+    }
+
+    document.querySelectorAll('.post-excerpt, .post-title').forEach(el => {
+        el.innerHTML = el.innerHTML.split(' ').map(word => {
+            return word.length > 20 ? word.split('').join('\u200B') : word;
+        }).join(' ');
+    });
+
+    var isForumDataLoaded = false;
+    function loadForumData() {
+        if(isForumDataLoaded) return;
+        getData("rendered_topicbox", "forum-box-1",
+        {
+            'identifier': '1',
+            'category': 'Unanswered',
+            'cta': 'Share your wisdom',
+            'query_id': "88"
+        });
+        getData("rendered_topicbox", "forum-box-2",
+        {
+            'identifier': '2',
+            'category': 'Most Views',
+            'cta': 'Join the conversation',
+            'query_id': "90"
+        });
+        getData("rendered_topicbox", "forum-box-3",
+        {
+            'identifier': '3',
+            'category': 'Newest',
+            'cta': 'Check out the topic',
+            'query_id': "89"
+        });
+        isForumDataLoaded = true;
+    }
+
+    var isUserGroupDataLoaded = false;
+    function loadUserGroupData() {
+        if(isUserGroupDataLoaded) return;
+        getData("rendered_mugtabbox", "User-Groups",
+            {
+                'identifier': '4',
+                'query_id': "94"
+            });
+        isUserGroupDataLoaded = true;
+    }
+
+    window.onload = function() {
+    var hash = window.location.hash.substr(1);
+    
+    if (hash) {
+        var tabButton = document.querySelector(`button[onclick*='${hash}']`);
+        
+        if (tabButton) {
+            tabButton.click();
+        }
+    }
+    }
+
+
+    function openTab(evt, tabName) {
+    evt.preventDefault();
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "flex";
+
+    evt.currentTarget.className += " active";
+    }
+   </script>
+
+   <script type="module">
+        import * as mapModule from "/community/static/javascript/load_map.js";
+        window.loadMugData = mapModule.loadMugData;
+        window.openMapTab = mapModule.openMapTab;
+        window.openMugTab = mapModule.openMugTab;
+        window.searchLocations = mapModule.searchLocations;
+   </script>
+    
+                </main>
+                <div id="mdbfooter" class="unified-footer"></div>
+                <script>
+                  const s3BaseUrl = "https://mdb-community.s3.us-east-1.amazonaws.com/connect/chatbot_prod_new/";
+                  function loadChatbotAssets() {
+                    // Prevent multiple loads
+                    if (document.querySelector('script[data-chatbot-loaded]')) return;
+                    const script = document.createElement('script');
+                    script.type = 'module';
+                    script.crossOrigin = 'anonymous';
+                    script.src = s3BaseUrl + 'assets/index-a62c19bd.js'; 
+                    script.setAttribute('data-chatbot-loaded', 'true');
+                    document.head.appendChild(script);
+                    const stylesheet = document.createElement('link');
+                    stylesheet.rel = 'stylesheet';
+                    stylesheet.href = s3BaseUrl + 'assets/index-d028b4a0.css';
+                    document.head.appendChild(stylesheet);
+                  }
+                  //Only trigger load if the container actually exists on this page
+                  if (document.getElementById('chatbot')) {
+                       loadChatbotAssets();
+                  }
+
+                </script>
+                </div> </div> </div>
+</body>
+
+</html>

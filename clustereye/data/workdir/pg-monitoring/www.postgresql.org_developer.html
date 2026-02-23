@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Developers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <link href="/media/css/fontawesome.css?77152761" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?77152761">
+
+  <script src="/media/js/theme.js?77152761"></script>
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 16, 2026: <a href="/about/news/out-of-cycle-release-scheduled-for-february-26-2026-3241/">
+  Out-of-cycle release scheduled for February 26, 2026
+</a>
+</div>
+      </div>
+    </div>
+    
+<div class="container-fluid margin">
+  <div class="row">
+    <div class="col-lg-2">
+      <div id="pgSideWrap">
+       
+       <div id="pgSideNav">
+         <h2>Quick Links</h2>
+
+         <ul>
+           
+           
+           <li><a href="/developer/">Developers</a>
+            
+            
+           
+           </li>
+           <li><a href="/developer/core/">Core Team</a>
+            
+            
+           
+           </li>
+           <li><a href="/developer/committers/">Committers</a>
+            
+            
+           
+           </li>
+           <li><a href="/developer/roadmap/">Roadmap</a>
+            
+            
+           
+           </li>
+           <li><a href="/developer/coding/">Coding</a>
+            
+            
+           
+           </li>
+           <li><a href="https://commitfest.postgresql.org">CommitFests</a>
+            
+            
+           
+           </li>
+           <li><a href="/developer/testing/">Testing</a>
+            
+             <ul>
+             
+              <li class="last-child"><a href="/developer/beta/">Beta Information</a></li>
+             
+             </ul>
+            
+            
+           
+           </li>
+           <li><a href="/list/">Mailing Lists</a>
+            
+            
+           
+           </li>
+           <li><a href="https://wiki.postgresql.org/wiki/Developer_FAQ">Developer FAQ</a>
+            
+            
+           
+           </li>
+           <li class="last-child"><a href="/developer/related-projects/">Related Projects</a>
+            
+            
+           </li>
+            
+           
+        </ul>
+
+       </div>
+       
+      </div> <!-- pgSideWrap -->
+    </div>
+    <div class="col-lg-10">
+      <div id="pgContentWrap">
+        
+<h1>Developers <i class="fa fa-code"></i></h1>
+
+<h2>Who are we?</h2>
+
+<p>A PostgreSQL database developer is someone who is actually working on the project, not someone using it to develop
+an application or a website. We don't hire programmers, we reach across the Internet, drawing the best database
+developers in the world to PostgreSQL. Read about the <a href="/community/contributors/">people behind PostgreSQL</a> and
+check out the <a href="/files/community/conference06/conference_group.html">group picture</a> from the 2006
+PostgreSQL Anniversary Summit.
+</p>
+
+<h2>What will you find here?</h2>
+
+<p>The information available in this section will mainly interest PostgreSQL developers. Here you'll find the
+<a href="/developer/roadmap/">roadmap</a> with current <a href="https://wiki.postgresql.org/wiki/Todo">TODO list</a>, <a href="/developer/coding/">coding</a> and
+<a href="/developer/testing/">testing</a> information, <a href="https://commitfest.postgresql.org">CommitFests</a>, <a href="/list/">mailing lists</a>, and
+the developer <a href="https://wiki.postgresql.org/wiki/Developer_FAQ">FAQ</a>. Keep in mind the information available here is not
+necessarily available in the release version of PostgreSQL - it may not yet even be in the development version.
+</p>
+
+<h2>How to get involved</h2>
+<p>
+  A few resources to help you get involved in PostgreSQL development are:
+</p>
+<ul>
+  <li>Read the <a href="https://wiki.postgresql.org/wiki/Developer_FAQ#How_do_I_get_involved_in_PostgreSQL_development.3F">Developer FAQ</a>.</li>
+  <li>Read the <a href="https://www.postgresql.org/list/pgsql-hackers/">pgsql-hackers archives</a> about topics, and optionally <a href="https://lists.postgresql.org/">subscribe</a> to the list.</li>
+  <li>Join the <a rel="nofollow" href="https://discord.gg/bx2G9KWyrY">PostgreSQL Hacking Discord</a>.</li>
+</ul>
+
+<h2>What is a CommitFest?</h2>
+
+A <a href="https://commitfest.postgresql.org">CommitFest</a> is a period during
+the PostgreSQL feature development where
+<a href="https://wiki.postgresql.org/wiki/Committers">committers</a> and
+<a href="/community/contributors/">contributors</a> focus on
+<a href="https://wiki.postgresql.org/wiki/Reviewing_a_Patch">reviewing</a>,
+<a href="/developer/testing/">testing</a>, and getting patches committed.
+Patches are registered in the
+<a href="https://commitfest.postgresql.org">CommitFest application</a>,
+which PostgreSQL developers use to track the patch status.
+
+There are typically 5 CommitFests in a major release cycle: July, September,
+November, January, and March. The March CommitFest is the final CommitFest in a
+major release, which is followed by "feature freeze" and the beginning of the
+<a href="/developer/beta/">beta</a> period. A
+"<a href="https://wiki.postgresql.org/wiki/CommitFest_Checklist">CommitFest Manager</a>"
+manages a CommitFest and has responsibilities to help manage the list of
+patches.
+
+Anyone can participate in a CommitFest and it is a great way to get started
+contributing to PostgreSQL. You can submit a patch to be included in a
+CommitFest, sign up to review a patch, or become a CommitFest Manager
+(though CommitFest Managers tend to have some level of experience in the
+community).
+
+<h2>Google Summer of Code Program</h2>
+
+<p>The PostgreSQL Project is a proud participant in Google's Summer of Code program. If you are interested in working on a PostgreSQL related project, please check out our <a href="https://wiki.postgresql.org/wiki/GSoC">Summer of Code</a> page.</p>
+
+
+      </div> <!-- pgContentWrap -->
+    </div>
+  </div>
+</div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?77152761"></script>
+
+  </body>
+</html>

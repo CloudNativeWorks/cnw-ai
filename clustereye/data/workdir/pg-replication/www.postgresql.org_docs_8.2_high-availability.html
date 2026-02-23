@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 8.2: High Availability and Load Balancing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/8.2/high-availability.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2011-12-05T13:29:12" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="High Availability and Load Balancing" />
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?77152761" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?77152761">
+
+  <script src="/media/js/theme.js?77152761"></script>
+
+  
+  <meta name="robots" content="nofollow" />
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/high-availability.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 16, 2026: <a href="/about/news/out-of-cycle-release-scheduled-for-february-26-2026-3241/">
+  Out-of-cycle release scheduled for February 26, 2026
+</a>
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/8.2/index.html">PostgreSQL 8.2</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/high-availability.html" title="PostgreSQL 18 - High Availability and Load Balancing" >Current</a>
+                          (<a href="/docs/18/high-availability.html" title="PostgreSQL 18 - High Availability and Load Balancing" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/high-availability.html" title="PostgreSQL 17 - High Availability and Load Balancing" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/high-availability.html" title="PostgreSQL 16 - High Availability and Load Balancing" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/high-availability.html" title="PostgreSQL 15 - High Availability and Load Balancing" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/high-availability.html" title="PostgreSQL 14 - High Availability and Load Balancing" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/high-availability.html" title="PostgreSQL devel - High Availability and Load Balancing"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/high-availability.html" title="PostgreSQL 13 - High Availability and Load Balancing"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/high-availability.html" title="PostgreSQL 12 - High Availability and Load Balancing"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/high-availability.html" title="PostgreSQL 11 - High Availability and Load Balancing"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/high-availability.html" title="PostgreSQL 10 - High Availability and Load Balancing"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/high-availability.html" title="PostgreSQL 9.6 - High Availability and Load Balancing"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/high-availability.html" title="PostgreSQL 9.5 - High Availability and Load Balancing"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/high-availability.html" title="PostgreSQL 9.4 - High Availability and Load Balancing"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/high-availability.html" title="PostgreSQL 9.3 - High Availability and Load Balancing"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/high-availability.html" title="PostgreSQL 9.2 - High Availability and Load Balancing"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/high-availability.html" title="PostgreSQL 9.1 - High Availability and Load Balancing"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/high-availability.html" title="PostgreSQL 9.0 - High Availability and Load Balancing"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/high-availability.html" title="PostgreSQL 8.4 - High Availability and Load Balancing"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/high-availability.html" title="PostgreSQL 8.3 - High Availability and Load Balancing"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/high-availability.html" title="PostgreSQL 8.2 - High Availability and Load Balancing" class="docs-version-selected" rel="nofollow">8.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/8.2/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+	  <div class="text-center alert-warning">
+	    This documentation is for an unsupported version of PostgreSQL.<br/>
+	    You may want to view the same page for the
+	    <a href="/docs/current/high-availability.html" title="PostgreSQL  - High Availability and Load Balancing">current</a>
+	    version, or one of the other supported versions listed above instead.
+	  </div>
+
+          <div id="docContent">
+            <div class="NAVHEADER">
+  <table summary="Header navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <th colspan="5" align="center" valign="bottom">PostgreSQL
+      8.2.23 Documentation</th>
+    </tr>
+
+    <tr>
+      <td width="10%" align="left" valign="top"><a href=
+      "migration.html" accesskey="P">Prev</a></td>
+
+      <td width="10%" align="left" valign="top"><a href=
+      "backup.html">Fast Backward</a></td>
+
+      <td width="60%" align="center" valign="bottom"></td>
+
+      <td width="10%" align="right" valign="top"><a href=
+      "monitoring.html">Fast Forward</a></td>
+
+      <td width="10%" align="right" valign="top"><a href=
+      "monitoring.html" accesskey="N">Next</a></td>
+    </tr>
+  </table>
+  <hr class="c1" width="100%" />
+</div>
+
+<div class="CHAPTER">
+  <h1><a name="HIGH-AVAILABILITY" id=
+  "HIGH-AVAILABILITY"></a>Chapter 24. High Availability and Load
+  Balancing</h1><a name="AEN25489" id="AEN25489"></a><a name=
+  "AEN25491" id="AEN25491"></a><a name="AEN25493" id=
+  "AEN25493"></a><a name="AEN25495" id="AEN25495"></a><a name=
+  "AEN25497" id="AEN25497"></a><a name="AEN25499" id=
+  "AEN25499"></a>
+
+  <p>Database servers can work together to allow a second server to
+  take over quickly if the primary server fails (high
+  availability), or to allow several computers to serve the same
+  data (load balancing). Ideally, database servers could work
+  together seamlessly. Web servers serving static web pages can be
+  combined quite easily by merely load-balancing web requests to
+  multiple machines. In fact, read-only database servers can be
+  combined relatively easily too. Unfortunately, most database
+  servers have a read/write mix of requests, and read/write servers
+  are much harder to combine. This is because though read-only data
+  needs to be placed on each server only once, a write to any
+  server has to be propagated to all servers so that future read
+  requests to those servers return consistent results.</p>
+
+  <p>This synchronization problem is the fundamental difficulty for
+  servers working together. Because there is no single solution
+  that eliminates the impact of the sync problem for all use cases,
+  there are multiple solutions. Each solution addresses this
+  problem in a different way, and minimizes its impact for a
+  specific workload.</p>
+
+  <p>Some solutions deal with synchronization by allowing only one
+  server to modify the data. Servers that can modify data are
+  called read/write or "master" servers. Servers that can reply to
+  read-only queries are called "slave" servers. Servers that cannot
+  be accessed until they are changed to master servers are called
+  "standby" servers.</p>
+
+  <p>Some failover and load balancing solutions are synchronous,
+  meaning that a data-modifying transaction is not considered
+  committed until all servers have committed the transaction. This
+  guarantees that a failover will not lose any data and that all
+  load-balanced servers will return consistent results no matter
+  which server is queried. In contrast, asynchronous solutions
+  allow some delay between the time of a commit and its propagation
+  to the other servers, opening the possibility that some
+  transactions might be lost in the switch to a backup server, and
+  that load balanced servers might return slightly stale results.
+  Asynchronous communication is used when synchronous would be too
+  slow.</p>
+
+  <p>Solutions can also be categorized by their granularity. Some
+  solutions can deal only with an entire database server, while
+  others allow control at the per-table or per-database level.</p>
+
+  <p>Performance must be considered in any failover or load
+  balancing choice. There is usually a tradeoff between
+  functionality and performance. For example, a full synchronous
+  solution over a slow network might cut performance by more than
+  half, while an asynchronous one might have a minimal performance
+  impact.</p>
+
+  <p>The remainder of this section outlines various failover,
+  replication, and load balancing solutions.</p>
+
+  <div class="VARIABLELIST">
+    <dl>
+      <dt>Shared Disk Failover</dt>
+
+      <dd>
+        <p>Shared disk failover avoids synchronization overhead by
+        having only one copy of the database. It uses a single disk
+        array that is shared by multiple servers. If the main
+        database server fails, the standby server is able to mount
+        and start the database as though it was recovering from a
+        database crash. This allows rapid failover with no data
+        loss.</p>
+
+        <p>Shared hardware functionality is common in network
+        storage devices. Using a network file system is also
+        possible, though care must be taken that the file system
+        has full POSIX behavior. One significant limitation of this
+        method is that if the shared disk array fails or becomes
+        corrupt, the primary and standby servers are both
+        nonfunctional. Another issue is that the standby server
+        should never access the shared storage while the primary
+        server is running.</p>
+
+        <p>A modified version of shared hardware functionality is
+        file system replication, where all changes to a file system
+        are mirrored to a file system residing on another computer.
+        The only restriction is that the mirroring must be done in
+        a way that ensures the standby server has a consistent copy
+        of the file system — specifically, writes to the standby
+        must be done in the same order as those on the master. DRBD
+        is a popular file system replication solution for
+        Linux.</p>
+      </dd>
+
+      <dt>Warm Standby Using Point-In-Time Recovery</dt>
+
+      <dd>
+        <p>A warm standby server (see <a href=
+        "warm-standby.html">Section 23.4</a>) can be kept current
+        by reading a stream of write-ahead log (WAL) records. If
+        the main server fails, the warm standby contains almost all
+        of the data of the main server, and can be quickly made the
+        new master database server. This is asynchronous and can
+        only be done for the entire database server.</p>
+      </dd>
+
+      <dt>Master-Slave Replication</dt>
+
+      <dd>
+        <p>A master-slave replication setup sends all data
+        modification queries to the master server. The master
+        server asynchronously sends data changes to the slave
+        server. The slave can answer read-only queries while the
+        master server is running. The slave server is ideal for
+        data warehouse queries.</p>
+
+        <p>Slony-I is an example of this type of replication, with
+        per-table granularity, and support for multiple slaves.
+        Because it updates the slave server asynchronously (in
+        batches), there is possible data loss during fail over.</p>
+      </dd>
+
+      <dt>Statement-Based Replication Middleware</dt>
+
+      <dd>
+        <p>With statement-based replication middleware, a program
+        intercepts every SQL query and sends it to one or all
+        servers. Each server operates independently. Read-write
+        queries are sent to all servers, while read-only queries
+        can be sent to just one server, allowing the read workload
+        to be distributed.</p>
+
+        <p>If queries are simply broadcast unmodified, functions
+        like <code class="FUNCTION">random()</code>, <code class=
+        "FUNCTION">CURRENT_TIMESTAMP</code>, and sequences would
+        have different values on different servers. This is because
+        each server operates independently, and because SQL queries
+        are broadcast (and not actual modified rows). If this is
+        unacceptable, either the middleware or the application must
+        query such values from a single server and then use those
+        values in write queries. Also, care must be taken that all
+        transactions either commit or abort on all servers, perhaps
+        using two-phase commit (<a class="c2" href=
+        "sql-prepare-transaction.html">PREPARE TRANSACTION</a> and
+        <a class="c2" href="sql-commit-prepared.html">COMMIT
+        PREPARED</a>. Pgpool and Sequoia are an example of this
+        type of replication.</p>
+      </dd>
+
+      <dt>Synchronous Multi-Master Replication</dt>
+
+      <dd>
+        <p>In synchronous multi-master replication, each server can
+        accept write requests, and modified data is transmitted
+        from the original server to every other server before each
+        transaction commits. Heavy write activity can cause
+        excessive locking, leading to poor performance. In fact,
+        write performance is often worse than that of a single
+        server. Read requests can be sent to any server. Some
+        implementations use shared disk to reduce the communication
+        overhead. Synchronous multi-master replication is best for
+        mostly read workloads, though its big advantage is that any
+        server can accept write requests — there is no need to
+        partition workloads between master and slave servers, and
+        because the data changes are sent from one server to
+        another, there is no problem with non-deterministic
+        functions like <code class="FUNCTION">random()</code>.</p>
+
+        <p><span class="PRODUCTNAME">PostgreSQL</span> does not
+        offer this type of replication, though <span class=
+        "PRODUCTNAME">PostgreSQL</span> two-phase commit (<a class=
+        "c2" href="sql-prepare-transaction.html">PREPARE
+        TRANSACTION</a> and <a class="c2" href=
+        "sql-commit-prepared.html">COMMIT PREPARED</a>) can be used
+        to implement this in application code or middleware.</p>
+      </dd>
+
+      <dt>Asynchronous Multi-Master Replication</dt>
+
+      <dd>
+        <p>For servers that are not regularly connected, like
+        laptops or remote servers, keeping data consistent among
+        servers is a challenge. Using asynchronous multi-master
+        replication, each server works independently, and
+        periodically communicates with the other servers to
+        identify conflicting transactions. The conflicts can be
+        resolved by users or conflict resolution rules.</p>
+      </dd>
+
+      <dt>Data Partitioning</dt>
+
+      <dd>
+        <p>Data partitioning splits tables into data sets. Each set
+        can be modified by only one server. For example, data can
+        be partitioned by offices, e.g. London and Paris, with a
+        server in each office. If queries combining London and
+        Paris data are necessary, an application can query both
+        servers, or master/slave replication can be used to keep a
+        read-only copy of the other office's data on each
+        server.</p>
+      </dd>
+
+      <dt>Multi-Server Parallel Query Execution</dt>
+
+      <dd>
+        <p>Many of the above solutions allow multiple servers to
+        handle multiple queries, but none allow a single query to
+        use multiple servers to complete faster. This solution
+        allows multiple servers to work concurrently on a single
+        query. This is usually accomplished by splitting the data
+        among servers and having each server execute its part of
+        the query and return results to a central server where they
+        are combined and returned to the user. Pgpool-II has this
+        capability.</p>
+      </dd>
+
+      <dt>Commercial Solutions</dt>
+
+      <dd>
+        <p>Because <span class="PRODUCTNAME">PostgreSQL</span> is
+        open source and easily extended, a number of companies have
+        taken <span class="PRODUCTNAME">PostgreSQL</span> and
+        created commercial closed-source solutions with unique
+        failover, replication, and load balancing capabilities.</p>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="NAVFOOTER">
+  <hr class="c1" width="100%" />
+
+  <table summary="Footer navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="33%" align="left" valign="top"><a href=
+      "migration.html" accesskey="P">Prev</a></td>
+
+      <td width="34%" align="center" valign="top"><a href=
+      "index.html" accesskey="H">Home</a></td>
+
+      <td width="33%" align="right" valign="top"><a href=
+      "monitoring.html" accesskey="N">Next</a></td>
+    </tr>
+
+    <tr>
+      <td width="33%" align="left" valign="top">Migration Between
+      Releases</td>
+
+      <td width="34%" align="center" valign="top"><a href=
+      "admin.html" accesskey="U">Up</a></td>
+
+      <td width="33%" align="right" valign="top">Monitoring
+      Database Activity</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?77152761"></script>
+
+  </body>
+</html>

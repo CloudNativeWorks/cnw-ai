@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.0 Reference Manual :: 29.10 Performance Schema Statement Digests and Sampling</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20250803.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20250803.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20250803.min.css" />
+
+    
+    
+    
+    
+            <link rel="canonical" href="https://dev.mysql.com/doc/refman/8.4/en/performance-schema-statement-digests.html" />
+<link rel="contents" href="index.html" title="MySQL 8.0 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.0 Reference Manual" />
+<link rel="prev" href="performance-schema-event-tables.html" title="29.9 Performance Schema Tables for Current and Historical Events" />
+<link rel="next" href="performance-schema-table-characteristics.html?ff=nopfpls" title="29.11 Performance Schema General Table Characteristics" />
+<link rel="up" href="performance-schema.html" title="29 MySQL Performance Schema" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&c=teconsent&js=bb&noticeType=bb&text=true&cdn=1&pcookie&gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20250121.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="2vfnvcax2j5lo2m4omhq-f-d5e9988c4-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":50,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"20be45f1","ak.r":41196,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"213.74.218.0","ak.cport":18957,"ak.gh":"92.123.122.150","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1771860751","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==ExLvx+PlotwAnWYevX89SQQ2TkCP72SLQJyXa42ZHTArvhJw0ImV6p/N+KYM20LvjCaTMk4MDn1q8IzDLKL5Mnepcvd/3R9O7TAZDwffhPecxjCq8JDQjDbE1gbgPnTp5roaO4B+5YjgS5AC03BJEF7Nd9Lia6rFwxTwKArXWaSxXPLvfw7nivVQuMzkn0o08wGcqzmTZKEds/DYjYazGRYemQcxgvlY3Lu/EhEugkKSwheZYd72wnDvGXsiCNCHgnN8m/uTlWS3HPu4TvVAvFVydnYPzHavN7bbmO54Sg0XTg97qshYu34VMdDPEYOSL7Aa/CzCLNR7yaCW7PKzjoKNR9JL6Fh+gZRXf9GTIoeiSj1Rr2Zyn2FgRiUNufI3+V2KwkK63lBuFFrQElT1SA1JtBChf21v/PdVbFFxs0U=","ak.pv":"17","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.0%2Fen%2Fperformance-schema-statement-digests.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="performance-schema-event-tables.html"
+        aria-label="Previous" title="Previous: Performance Schema Tables for Current and Historical Events"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="performance-schema.html" title="Up: MySQL Performance Schema"><span class="icon-chevron-up"></span></a>
+    <a href="performance-schema-table-characteristics.html" aria-label="Next"
+        title="Next: Performance Schema General Table Characteristics"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="/doc/search/">
+            <input type="hidden" name="d" id="d" value="201" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.0 Reference Manual</div>
+            <nav class="doctoc" id="doc-201">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.0</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-quick-start.html">Performance Schema Quick Start</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-build-configuration.html">Performance Schema Build Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-startup-configuration.html">Performance Schema Startup Configuration</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-runtime-configuration.html">Performance Schema Runtime Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-timing.html">Performance Schema Event Timing</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-filtering.html">Performance Schema Event Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-pre-filtering.html">Event Pre-Filtering</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-instrument-filtering.html">Pre-Filtering by Instrument</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-object-filtering.html">Pre-Filtering by Object</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-thread-filtering.html">Pre-Filtering by Thread</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-consumer-filtering.html">Pre-Filtering by Consumer</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-consumer-configurations.html">Example Consumer Configurations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-filtering-names.html">Naming Instruments or Consumers for Filtering Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-instrumentation-checking.html">Determining What Is Instrumented</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-queries.html">Performance Schema Queries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-instrument-naming.html">Performance Schema Instrument Naming Conventions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-status-monitoring.html">Performance Schema Status Monitoring</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-atom-molecule-events.html">Performance Schema Atom and Molecule Events</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-event-tables.html">Performance Schema Tables for Current and Historical Events</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link current"><a href="performance-schema-statement-digests.html">Performance Schema Statement Digests and Sampling</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-table-characteristics.html">Performance Schema General Table Characteristics</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-table-descriptions.html">Performance Schema Table Descriptions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-table-reference.html">Performance Schema Table Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-tables.html">Performance Schema Setup Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-actors-table.html">The setup_actors Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-consumers-table.html">The setup_consumers Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-instruments-table.html">The setup_instruments Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-objects-table.html">The setup_objects Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-setup-threads-table.html">The setup_threads Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-instance-tables.html">Performance Schema Instance Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-cond-instances-table.html">The cond_instances Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-file-instances-table.html">The file_instances Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-mutex-instances-table.html">The mutex_instances Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-rwlock-instances-table.html">The rwlock_instances Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-socket-instances-table.html">The socket_instances Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-wait-tables.html">Performance Schema Wait Event Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-waits-current-table.html">The events_waits_current Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-waits-history-table.html">The events_waits_history Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-waits-history-long-table.html">The events_waits_history_long Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-stage-tables.html">Performance Schema Stage Event Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-stages-current-table.html">The events_stages_current Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-stages-history-table.html">The events_stages_history Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-stages-history-long-table.html">The events_stages_history_long Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-statement-tables.html">Performance Schema Statement Event Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-statements-current-table.html">The events_statements_current Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-statements-history-table.html">The events_statements_history Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-statements-history-long-table.html">The events_statements_history_long Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-prepared-statements-instances-table.html">The prepared_statements_instances Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-transaction-tables.html">Performance Schema Transaction Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-transactions-current-table.html">The events_transactions_current Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-transactions-history-table.html">The events_transactions_history Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-events-transactions-history-long-table.html">The events_transactions_history_long Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-connection-tables.html">Performance Schema Connection Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-accounts-table.html">The accounts Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-hosts-table.html">The hosts Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-users-table.html">The users Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-connection-attribute-tables.html">Performance Schema Connection Attribute Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-session-account-connect-attrs-table.html">The session_account_connect_attrs Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-session-connect-attrs-table.html">The session_connect_attrs Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-user-variable-tables.html">Performance Schema User-Defined Variable Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-tables.html">Performance Schema Replication Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-binary-log-transaction-compression-stats-table.html">The binary_log_transaction_compression_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-configuration-table.html">The replication_applier_configuration Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-status-table.html">The replication_applier_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-status-by-coordinator-table.html">The replication_applier_status_by_coordinator Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-status-by-worker-table.html">The replication_applier_status_by_worker Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-filters-table.html">The replication_applier_filters Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-applier-global-filters-table.html">The replication_applier_global_filters Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-asynchronous-connection-failover-table.html">The replication_asynchronous_connection_failover Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-asynchronous-connection-failover-managed-table.html">The replication_asynchronous_connection_failover_managed Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-connection-configuration-table.html">The replication_connection_configuration Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-connection-status-table.html">The replication_connection_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-group-communication-information-table.html">The replication_group_communication_information Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-group-configuration-version-table.html">The replication_group_configuration_version Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-group-member-actions-table.html">The replication_group_member_actions Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-group-member-stats-table.html">The replication_group_member_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-replication-group-members-table.html">The replication_group_members Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-ndb-cluster-tables.html">Performance Schema NDB Cluster Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-ndb-sync-pending-objects-table.html">The ndb_sync_pending_objects Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-ndb-sync-excluded-objects-table.html">The ndb_sync_excluded_objects Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-lock-tables.html">Performance Schema Lock Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-data-locks-table.html">The data_locks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-data-lock-waits-table.html">The data_lock_waits Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-metadata-locks-table.html">The metadata_locks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-table-handles-table.html">The table_handles Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-system-variable-tables.html">Performance Schema System Variable Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-persisted-variables-table.html">Performance Schema persisted_variables Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-variables-info-table.html">Performance Schema variables_info Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-status-variable-tables.html">Performance Schema Status Variable Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-thread-pool-tables.html">Performance Schema Thread Pool Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-tp-thread-group-state-table.html">The tp_thread_group_state Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-tp-thread-group-stats-table.html">The tp_thread_group_stats Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-tp-thread-state-table.html">The tp_thread_state Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-firewall-tables.html">Performance Schema Firewall Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-firewall-groups-table.html">The firewall_groups Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-firewall-group-allowlist-table.html">The firewall_group_allowlist Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-firewall-membership-table.html">The firewall_membership Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-keyring-tables.html">Performance Schema Keyring Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-keyring-component-status-table.html">The keyring_component_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-keyring-keys-table.html">The keyring_keys table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-clone-tables.html">Performance Schema Clone Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-clone-status-table.html">The clone_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-clone-progress-table.html">The clone_progress Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-summary-tables.html">Performance Schema Summary Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-wait-summary-tables.html">Wait Event Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-stage-summary-tables.html">Stage Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-statement-summary-tables.html">Statement Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-statement-histogram-summary-tables.html">Statement Histogram Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-transaction-summary-tables.html">Transaction Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-objects-summary-global-by-type-table.html">Object Wait Summary Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-file-summary-tables.html">File I/O Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-table-wait-summary-tables.html">Table I/O and Lock Wait Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-socket-summary-tables.html">Socket Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-memory-summary-tables.html">Memory Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-error-summary-tables.html">Error Summary Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-status-variable-summary-tables.html">Status Variable Summary Tables</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-miscellaneous-tables.html">Performance Schema Miscellaneous Tables</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-component-scheduler-tasks-table.html">The component_scheduler_tasks Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-error-log-table.html">The error_log Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-host-cache-table.html">The host_cache Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-innodb-redo-log-files-table.html">The innodb_redo_log_files Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-log-status-table.html">The log_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-performance-timers-table.html">The performance_timers Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-processlist-table.html">The processlist Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-threads-table.html">The threads Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-tls-channel-status-table.html">The tls_channel_status Table</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-user-defined-functions-table.html">The user_defined_functions Table</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-option-variable-reference.html">Performance Schema Option and Variable Reference</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-options.html">Performance Schema Command Options</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-system-variables.html">Performance Schema System Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-status-variables.html">Performance Schema Status Variables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-memory-model.html">The Performance Schema Memory-Allocation Model</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-and-plugins.html">Performance Schema and Plugins</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema-examples.html">Using the Performance Schema to Diagnose Problems</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-query-profiling.html">Query Profiling Using Performance Schema</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-obtaining-parent-events.html">Obtaining Parent Event Information</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="performance-schema-restrictions.html">Restrictions on Performance Schema</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.0 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        <a href="/doc/dev/mysql-server/latest/">MySQL 8.0 Source Code Documentation</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.0-en.pdf">PDF (US Ltr)</a>
+            - 43.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.a4.pdf">PDF (A4)</a>
+            - 43.4Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 297.3Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 402.5Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.gz">Info (Gzip)</a>
+            - 4.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.zip">Info (Zip)</a>
+            - 4.3Mb<br />
+                                </div>
+    </div>
+
+<a class="docs-sidebar-section" href=""><span class="icon-book"></span>
+    <span class="text">Excerpts from this Manual</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+                <a href="/doc/mysql-backup-excerpt/8.0/en/">MySQL Backup and Recovery</a><br />
+                <a href="/doc/mysql-g11n-excerpt/8.0/en/">MySQL Globalization</a><br />
+                <a href="/doc/mysql-infoschema-excerpt/8.0/en/">MySQL Information Schema</a><br />
+                <a href="/doc/mysql-installation-excerpt/8.0/en/">MySQL Installation Guide</a><br />
+                <a href="/doc/mysql-security-excerpt/8.0/en/">Security in MySQL</a><br />
+                <a href="/doc/mysql-startstop-excerpt/8.0/en/">Starting and Stopping MySQL</a><br />
+                <a href="/doc/mysql-linuxunix-excerpt/8.0/en/">MySQL and Linux/Unix</a><br />
+                <a href="/doc/mysql-windows-excerpt/8.0/en/">MySQL and Windows</a><br />
+                <a href="/doc/mysql-macos-excerpt/8.0/en/">MySQL and macOS</a><br />
+                <a href="/doc/mysql-solaris-excerpt/8.0/en/">MySQL and Solaris</a><br />
+                <a href="/doc/mysql-sourcebuild-excerpt/8.0/en/">Building MySQL from Source</a><br />
+                <a href="/doc/mysql-reslimits-excerpt/8.0/en/">MySQL Restrictions and Limitations</a><br />
+                <a href="/doc/mysql-partitioning-excerpt/8.0/en/">MySQL Partitioning</a><br />
+                <a href="/doc/mysql-tutorial-excerpt/8.0/en/">MySQL Tutorial</a><br />
+                <a href="/doc/mysql-perfschema-excerpt/8.0/en/">MySQL Performance Schema</a><br />
+                <a href="/doc/mysql-replication-excerpt/8.0/en/">MySQL Replication</a><br />
+                <a href="/doc/mysql-repo-excerpt/8.0/en/">Using the MySQL Yum Repository</a><br />
+                <a href="/doc/mysql-cluster-excerpt/8.0/en/">MySQL NDB Cluster 8.0</a><br />
+            </div>
+</div>
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="" id="docs-version-nav-toggle">version 8.0
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="/doc/refman/9.6/en/performance-schema-statement-digests.html">
+                        9.6
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.5/en/performance-schema-statement-digests.html">
+                        9.5
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.4/en/performance-schema-statement-digests.html">
+                        9.4
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.3/en/performance-schema-statement-digests.html">
+                        9.3
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/8.4/en/performance-schema-statement-digests.html">
+                        8.4
+                                                &nbsp;current
+                                            </a><br />
+                                                                                                                <a                         href="/doc/refman/5.7/en/performance-schema-statement-digests.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="/doc/refman/8.0/ja/performance-schema-statement-digests.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a> &nbsp;/&nbsp;
+                                                        <a href="performance-schema.html">MySQL Performance Schema</a> &nbsp;/&nbsp;
+                                                                                    Performance Schema Statement Digests and Sampling
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title"><a name="performance-schema-statement-digests"></a>29.10 Performance Schema Statement Digests and Sampling</h2>
+
+</div>
+
+</div>
+
+</div>
+<p>
+      The MySQL server is capable of maintaining statement digest
+      information. The digesting process converts each SQL statement to
+      normalized form (the statement digest) and computes a SHA-256 hash
+      value (the digest hash value) from the normalized result.
+      Normalization permits statements that are similar to be grouped
+      and summarized to expose information about the types of statements
+      the server is executing and how often they occur. For each digest,
+      a representative statement that produces the digest is stored as a
+      sample. This section describes how statement digesting and
+      sampling occur and how they can be useful.
+    </p><p>
+      Digesting occurs in the parser regardless of whether the
+      Performance Schema is available, so that other features such as
+      MySQL Enterprise Firewall and query rewrite plugins have access to statement digests.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a class="xref" href="performance-schema-statement-digests.html#statement-digests-general" title="Statement Digest General Concepts">Statement Digest General Concepts</a></p></li><li class="listitem"><p><a class="xref" href="performance-schema-statement-digests.html#statement-digests-performance-schema" title="Statement Digests in the Performance Schema">Statement Digests in the Performance Schema</a></p></li><li class="listitem"><p><a class="xref" href="performance-schema-statement-digests.html#statement-digests-memory-use" title="Statement Digest Memory Use">Statement Digest Memory Use</a></p></li><li class="listitem"><p><a class="xref" href="performance-schema-statement-digests.html#statement-digests-sampling" title="Statement Sampling">Statement Sampling</a></p></li></ul>
+</div>
+
+<div class="simplesect">
+
+<div class="titlepage">
+<div>
+
+<div class="simple">
+<h3 class="title"><a name="statement-digests-general"></a>Statement Digest General Concepts</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        When the parser receives an SQL statement, it computes a
+        statement digest if that digest is needed, which is true if any
+        of the following conditions are true:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Performance Schema digest instrumentation is enabled
+          </p></li><li class="listitem"><p>
+            MySQL Enterprise Firewall is enabled
+          </p></li><li class="listitem"><p>
+            A query rewrite plugin is enabled
+</p></li></ul>
+</div>
+<p>
+        The parser is also used by the
+        <a class="link" href="encryption-functions.html#function_statement-digest-text"><code class="literal">STATEMENT_DIGEST_TEXT()</code></a> and
+        <a class="link" href="encryption-functions.html#function_statement-digest"><code class="literal">STATEMENT_DIGEST()</code></a> functions,
+        which applications can call to compute a normalized statement
+        digest and a digest hash value, respectively, from an SQL
+        statement.
+      </p><p>
+        The <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> system
+        variable value determines the maximum number of bytes available
+        per session for computation of normalized statement digests.
+        Once that amount of space is used during digest computation,
+        truncation occurs: no further tokens from a parsed statement are
+        collected or figure into its digest value. Statements that
+        differ only after that many bytes of parsed tokens produce the
+        same normalized statement digest and are considered identical if
+        compared or if aggregated for digest statistics.
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Warning
+</div>
+<p>
+          Setting the <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+          system variable to zero disables digest production, which also
+          disables server functionality that requires digests.
+</p>
+</div>
+<p>
+        After the normalized statement has been computed, a SHA-256 hash
+        value is computed from it. In addition:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If MySQL Enterprise Firewall is enabled, it is called and the digest as
+            computed is available to it.
+          </p></li><li class="listitem"><p>
+            If any query rewrite plugin is enabled, it is called and the
+            statement digest and digest value are available to it.
+          </p></li><li class="listitem"><p>
+            If the Performance Schema has digest instrumentation
+            enabled, it makes a copy of the normalized statement digest,
+            allocating a maximum of
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+            bytes for it. Consequently, if
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+            is less than
+            <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>, the copy
+            is truncated relative to the original. The copy of the
+            normalized statement digest is stored in the appropriate
+            Performance Schema tables, along with the SHA-256 hash value
+            computed from the original normalized statement. (If the
+            Performance Schema truncates its copy of the normalized
+            statement digest relative to the original, it does not
+            recompute the SHA-256 hash value.)
+</p></li></ul>
+</div>
+<p>
+        Statement normalization transforms the statement text to a more
+        standardized digest string representation that preserves the
+        general statement structure while removing information not
+        essential to the structure:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Object identifiers such as database and table names are
+            preserved.
+          </p></li><li class="listitem"><p>
+            Literal values are converted to parameter markers. A
+            normalized statement does not retain information such as
+            names, passwords, dates, and so forth.
+          </p></li><li class="listitem"><p>
+            Comments are removed and whitespace is adjusted.
+</p></li></ul>
+</div>
+<p>
+        Consider these statements:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM orders WHERE customer_id=10 AND quantity&gt;20
+SELECT * FROM orders WHERE customer_id = 20 AND quantity &gt; 100</code></pre><p>
+        To normalize these statements, the parser replaces data values
+        by <code class="literal">?</code> and adjusts whitespace. Both statements
+        yield the same normalized form and thus are considered
+        <span class="quote">“<span class="quote">the same</span>”</span>:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM orders WHERE customer_id = ? AND quantity &gt; ?</code></pre><p>
+        The normalized statement contains less information but is still
+        representative of the original statement. Other similar
+        statements that have different data values have the same
+        normalized form.
+      </p><p>
+        Now consider these statements:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM customers WHERE customer_id = 1000
+SELECT * FROM orders WHERE customer_id = 1000</code></pre><p>
+        In this case, the normalized statements differ because the
+        object identifiers differ:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM customers WHERE customer_id = ?
+SELECT * FROM orders WHERE customer_id = ?</code></pre><p>
+        If normalization produces a statement that exceeds the space
+        available in the digest buffer (as determined by
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>), truncation
+        occurs and the text ends with <span class="quote">“<span class="quote">...</span>”</span>. Long
+        normalized statements that differ only in the part that occurs
+        following the <span class="quote">“<span class="quote">...</span>”</span> are considered the same.
+        Consider these statements:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT * FROM mytable WHERE cola = 10 AND colb = 20
+SELECT * FROM mytable WHERE cola = 10 AND colc = 20</code></pre><p>
+        If the cutoff happens to be right after the
+        <code class="literal">AND</code>, both statements have this normalized
+        form:
+      </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM mytable WHERE cola = ? AND ...</code></pre><p>
+        In this case, the difference in the second column name is lost
+        and both statements are considered the same.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="statement-digests-performance-schema"></a>Statement Digests in the Performance Schema</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        In the Performance Schema, statement digesting involves these
+        elements:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            A <code class="literal">statements_digest</code> consumer in the
+            <a class="link" href="performance-schema-setup-consumers-table.html" title="29.12.2.2 The setup_consumers Table"><code class="literal">setup_consumers</code></a> table controls
+            whether the Performance Schema maintains digest information.
+            See
+            <a class="xref" href="performance-schema-consumer-filtering.html#performance-schema-consumer-filtering-statement-digest" title="Statement Digest Consumer">Statement Digest Consumer</a>.
+          </p></li><li class="listitem"><p>
+            The statement event tables
+            (<a class="link" href="performance-schema-events-statements-current-table.html" title="29.12.6.1 The events_statements_current Table"><code class="literal">events_statements_current</code></a>,
+            <a class="link" href="performance-schema-events-statements-history-table.html" title="29.12.6.2 The events_statements_history Table"><code class="literal">events_statements_history</code></a>, and
+            <a class="link" href="performance-schema-events-statements-history-long-table.html" title="29.12.6.3 The events_statements_history_long Table"><code class="literal">events_statements_history_long</code></a>)
+            have columns for storing normalized statement digests and
+            the corresponding digest SHA-256 hash values:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                <code class="literal">DIGEST_TEXT</code> is the text of the
+                normalized statement digest. This is a copy of the
+                original normalized statement that was computed to a
+                maximum of
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+                bytes, further truncated as necessary to
+                <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+                bytes.
+              </p></li><li class="listitem"><p>
+                <code class="literal">DIGEST</code> is the digest SHA-256 hash
+                value computed from the original normalized statement.
+</p></li></ul>
+</div>
+<p>
+            See <a class="xref" href="performance-schema-statement-tables.html" title="29.12.6 Performance Schema Statement Event Tables">Section 29.12.6, “Performance Schema Statement Event Tables”</a>.
+          </p></li><li class="listitem"><p>
+            The
+            <a class="link" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables"><code class="literal">events_statements_summary_by_digest</code></a>
+            summary table provides aggregated statement digest
+            information. This table aggregates information for
+            statements per <code class="literal">SCHEMA_NAME</code> and
+            <code class="literal">DIGEST</code> combination. The Performance
+            Schema uses SHA-256 hash values for aggregation because they
+            are fast to compute and have a favorable statistical
+            distribution that minimizes collisions. See
+            <a class="xref" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables">Section 29.12.20.3, “Statement Summary Tables”</a>.
+</p></li></ul>
+</div>
+<p>
+        Some Performance Tables have a column that stores original SQL
+        statements from which digests are computed:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The <code class="literal">SQL_TEXT</code> column of the
+            <a class="link" href="performance-schema-events-statements-current-table.html" title="29.12.6.1 The events_statements_current Table"><code class="literal">events_statements_current</code></a>,
+            <a class="link" href="performance-schema-events-statements-history-table.html" title="29.12.6.2 The events_statements_history Table"><code class="literal">events_statements_history</code></a>, and
+            <a class="link" href="performance-schema-events-statements-history-long-table.html" title="29.12.6.3 The events_statements_history_long Table"><code class="literal">events_statements_history_long</code></a>
+            statement event tables.
+          </p></li><li class="listitem"><p>
+            The <code class="literal">QUERY_SAMPLE_TEXT</code> column of the
+            <a class="link" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables"><code class="literal">events_statements_summary_by_digest</code></a>
+            summary table.
+</p></li></ul>
+</div>
+<p>
+        The maximum space available for statement display is 1024 bytes
+        by default. To change this value, set the
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_sql_text_length"><code class="literal">performance_schema_max_sql_text_length</code></a>
+        system variable at server startup. Changes affect the storage
+        required for all the columns just named.
+      </p><p>
+        The
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        system variable determines the maximum number of bytes available
+        per statement for digest value storage in the Performance
+        Schema. However, the display length of statement digests may be
+        longer than the available buffer size due to internal encoding
+        of statement elements such as keywords and literal values.
+        Consequently, values selected from the
+        <code class="literal">DIGEST_TEXT</code> column of statement event tables
+        may appear to exceed the
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        value.
+      </p><p>
+        The
+        <a class="link" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables"><code class="literal">events_statements_summary_by_digest</code></a>
+        summary table provides a profile of the statements executed by
+        the server. It shows what kinds of statements an application is
+        executing and how often. An application developer can use this
+        information together with other information in the table to
+        assess the application's performance characteristics. For
+        example, table columns that show wait times, lock times, or
+        index use may highlight types of queries that are inefficient.
+        This gives the developer insight into which parts of the
+        application need attention.
+      </p><p>
+        The
+        <a class="link" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables"><code class="literal">events_statements_summary_by_digest</code></a>
+        summary table has a fixed size. By default the Performance
+        Schema estimates the size to use at startup. To specify the
+        table size explicitly, set the
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_digests_size"><code class="literal">performance_schema_digests_size</code></a>
+        system variable at server startup. If the table becomes full,
+        the Performance Schema groups statements that have
+        <code class="literal">SCHEMA_NAME</code> and <code class="literal">DIGEST</code>
+        values not matching existing values in the table in a special
+        row with <code class="literal">SCHEMA_NAME</code> and
+        <code class="literal">DIGEST</code> set to <code class="literal">NULL</code>. This
+        permits all statements to be counted. However, if the special
+        row accounts for a significant percentage of the statements
+        executed, it might be desirable to increase the summary table
+        size by increasing
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_digests_size"><code class="literal">performance_schema_digests_size</code></a>.
+</p>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="statement-digests-memory-use"></a>Statement Digest Memory Use</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        For applications that generate very long statements that differ
+        only at the end, increasing
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> enables
+        computation of digests that distinguish statements that would
+        otherwise aggregate to the same digest. Conversely, decreasing
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> causes the
+        server to devote less memory to digest storage but increases the
+        likelihood of longer statements aggregating to the same digest.
+        Administrators should keep in mind that larger values result in
+        correspondingly increased memory requirements, particularly for
+        workloads that involve large numbers of simultaneous sessions
+        (the server allocates
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> bytes per
+        session).
+      </p><p>
+        As described previously, normalized statement digests as
+        computed by the parser are constrained to a maximum of
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> bytes,
+        whereas normalized statement digests stored in the Performance
+        Schema use
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        bytes. The following memory-use considerations apply regarding
+        the relative values of
+        <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> and
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> is
+            less than
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                Server features other than the Performance Schema use
+                normalized statement digests that take up to
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+                bytes.
+              </p></li><li class="listitem"><p>
+                The Performance Schema does not further truncate
+                normalized statement digests that it stores, but
+                allocates more memory than
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> bytes
+                per digest, which is unnecessary.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> equals
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                Server features other than the Performance Schema use
+                normalized statement digests that take up to
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+                bytes.
+              </p></li><li class="listitem"><p>
+                The Performance Schema does not further truncate
+                normalized statement digests that it stores, and
+                allocates the same amount of memory as
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> bytes
+                per digest.
+</p></li></ul>
+</div>
+</li><li class="listitem"><p>
+            If <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> is
+            greater than
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+                Server features other than the Performance Schema use
+                normalized statement digests that take up to
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+                bytes.
+              </p></li><li class="listitem"><p>
+                The Performance Schema further truncates normalized
+                statement digests that it stores, and allocates less
+                memory than
+                <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a> bytes
+                per digest.
+</p></li></ul>
+</div>
+</li></ul>
+</div>
+<p>
+        Because the Performance Schema statement event tables might
+        store many digests, setting
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        smaller than <a class="link" href="server-system-variables.html#sysvar_max_digest_length"><code class="literal">max_digest_length</code></a>
+        enables administrators to balance these factors:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            The need to have long normalized statement digests available
+            to server features outside the Performance Schema
+          </p></li><li class="listitem"><p>
+            Many concurrent sessions, each of which allocates
+            digest-computation memory
+          </p></li><li class="listitem"><p>
+            The need to limit memory consumption by the Performance
+            Schema statement event tables when storing many statement
+            digests
+</p></li></ul>
+</div>
+<p>
+        The
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        setting is not per session, it is per statement, and a session
+        can store multiple statements in the
+        <a class="link" href="performance-schema-events-statements-history-table.html" title="29.12.6.2 The events_statements_history Table"><code class="literal">events_statements_history</code></a> table. A
+        typical number of statements in this table is 10 per session, so
+        each session consumes 10 times the memory indicated by the
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        value, for this table alone.
+      </p><p>
+        Also, there are many statements (and digests) collected
+        globally, most notably in the
+        <a class="link" href="performance-schema-events-statements-history-long-table.html" title="29.12.6.3 The events_statements_history_long Table"><code class="literal">events_statements_history_long</code></a>
+        table. Here, too, <em class="replaceable"><code>N</code></em> statements stored
+        consumes <em class="replaceable"><code>N</code></em> times the memory indicated
+        by the
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_length"><code class="literal">performance_schema_max_digest_length</code></a>
+        value.
+      </p><p>
+        To assess the amount of memory used for SQL statement storage
+        and digest computation, use the
+        <a class="link" href="show-engine.html" title="15.7.7.15 SHOW ENGINE Statement"><code class="literal">SHOW ENGINE
+        PERFORMANCE_SCHEMA STATUS</code></a> statement, or monitor these
+        instruments:
+      </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT NAME
+       FROM performance_schema.setup_instruments
+       WHERE NAME LIKE '%.sqltext';
++------------------------------------------------------------------+
+| NAME                                                             |
++------------------------------------------------------------------+
+| memory/performance_schema/events_statements_history.sqltext      |
+| memory/performance_schema/events_statements_current.sqltext      |
+| memory/performance_schema/events_statements_history_long.sqltext |
++------------------------------------------------------------------+
+
+mysql&gt; SELECT NAME
+       FROM performance_schema.setup_instruments
+       WHERE NAME LIKE 'memory/performance_schema/%.tokens';
++----------------------------------------------------------------------+
+| NAME                                                                 |
++----------------------------------------------------------------------+
+| memory/performance_schema/events_statements_history.tokens           |
+| memory/performance_schema/events_statements_current.tokens           |
+| memory/performance_schema/events_statements_summary_by_digest.tokens |
+| memory/performance_schema/events_statements_history_long.tokens      |
++----------------------------------------------------------------------+</code></pre>
+</div>
+<div class="simplesect">
+<div class="titlepage">
+<div>
+<div class="simple">
+<h3 class="title"><a name="statement-digests-sampling"></a>Statement Sampling</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        The Performance Schema uses statement sampling to collect
+        representative statements that produce each digest value in the
+        <a class="link" href="performance-schema-statement-summary-tables.html" title="29.12.20.3 Statement Summary Tables"><code class="literal">events_statements_summary_by_digest</code></a>
+        table. These columns store sample statement information:
+        <code class="literal">QUERY_SAMPLE_TEXT</code> (the text of the
+        statement), <code class="literal">QUERY_SAMPLE_SEEN</code> (when the
+        statement was seen), and
+        <code class="literal">QUERY_SAMPLE_TIMER_WAIT</code> (the statement wait
+        or execution time). The Performance Schema updates all three
+        columns each time it chooses a sample statement.
+      </p><p>
+        When a new table row is inserted, the statement that produced
+        the row digest value is stored as the current sample statement
+        associated with the digest. Thereafter, when the server sees
+        other statements with the same digest value, it determines
+        whether to use the new statement to replace the current sample
+        statement (that is, whether to resample). Resampling policy is
+        based on the comparative wait times of the current sample
+        statement and new statement and, optionally, the age of the
+        current sample statement:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+            Resampling based on wait times: If the new statement wait
+            time has a wait time greater than that of the current sample
+            statement, it becomes the current sample statement.
+          </p></li><li class="listitem"><p>
+            Resampling based on age: If the
+            <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_sample_age"><code class="literal">performance_schema_max_digest_sample_age</code></a>
+            system variable has a value greater than zero and the
+            current sample statement is more than that many seconds old,
+            the current statement is considered <span class="quote">“<span class="quote">too old</span>”</span>
+            and the new statement replaces it. This occurs even if the
+            new statement wait time is less than that of the current
+            sample statement.
+</p></li></ul>
+</div>
+<p>
+        By default,
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_sample_age"><code class="literal">performance_schema_max_digest_sample_age</code></a>
+        is 60 seconds (1 minute). To change how quickly sample
+        statements <span class="quote">“<span class="quote">expire</span>”</span> due to age, increase or
+        decrease the value. To disable the age-based part of the
+        resampling policy, set
+        <a class="link" href="performance-schema-system-variables.html#sysvar_performance_schema_max_digest_sample_age"><code class="literal">performance_schema_max_digest_sample_age</code></a>
+        to 0.
+</p>
+</div>
+
+</div>
+<br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="performance-schema-event-tables.html"
+        aria-label="Previous" title="Previous: Performance Schema Tables for Current and Historical Events"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="performance-schema.html" title="Up: MySQL Performance Schema"> UP</a> &nbsp;
+    <a href="performance-schema-table-characteristics.html" aria-label="Next"
+        title="Next: Performance Schema General Table Characteristics">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        <a href="/doc/dev/mysql-server/latest/">MySQL 8.0 Source Code Documentation</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.0-en.pdf">PDF (US Ltr)</a>
+            - 43.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.a4.pdf">PDF (A4)</a>
+            - 43.4Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 297.3Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 402.5Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.gz">Info (Gzip)</a>
+            - 4.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.zip">Info (Zip)</a>
+            - 4.3Mb<br />
+                                </div>
+    </div>
+
+<a class="docs-sidebar-section" href=""><span class="icon-book"></span>
+    <span class="text">Excerpts from this Manual</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+                <a href="/doc/mysql-backup-excerpt/8.0/en/">MySQL Backup and Recovery</a><br />
+                <a href="/doc/mysql-g11n-excerpt/8.0/en/">MySQL Globalization</a><br />
+                <a href="/doc/mysql-infoschema-excerpt/8.0/en/">MySQL Information Schema</a><br />
+                <a href="/doc/mysql-installation-excerpt/8.0/en/">MySQL Installation Guide</a><br />
+                <a href="/doc/mysql-security-excerpt/8.0/en/">Security in MySQL</a><br />
+                <a href="/doc/mysql-startstop-excerpt/8.0/en/">Starting and Stopping MySQL</a><br />
+                <a href="/doc/mysql-linuxunix-excerpt/8.0/en/">MySQL and Linux/Unix</a><br />
+                <a href="/doc/mysql-windows-excerpt/8.0/en/">MySQL and Windows</a><br />
+                <a href="/doc/mysql-macos-excerpt/8.0/en/">MySQL and macOS</a><br />
+                <a href="/doc/mysql-solaris-excerpt/8.0/en/">MySQL and Solaris</a><br />
+                <a href="/doc/mysql-sourcebuild-excerpt/8.0/en/">Building MySQL from Source</a><br />
+                <a href="/doc/mysql-reslimits-excerpt/8.0/en/">MySQL Restrictions and Limitations</a><br />
+                <a href="/doc/mysql-partitioning-excerpt/8.0/en/">MySQL Partitioning</a><br />
+                <a href="/doc/mysql-tutorial-excerpt/8.0/en/">MySQL Tutorial</a><br />
+                <a href="/doc/mysql-perfschema-excerpt/8.0/en/">MySQL Performance Schema</a><br />
+                <a href="/doc/mysql-replication-excerpt/8.0/en/">MySQL Replication</a><br />
+                <a href="/doc/mysql-repo-excerpt/8.0/en/">Using the MySQL Yum Repository</a><br />
+                <a href="/doc/mysql-cluster-excerpt/8.0/en/">MySQL NDB Cluster 8.0</a><br />
+            </div>
+</div>
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">MySQL HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="//c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+</html>

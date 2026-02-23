@@ -9,7 +9,7 @@ OS="$(uname -s)"
 
 install_ubuntu() {
     sudo apt update && sudo apt install -y \
-        curl git python3.11 python3.11-venv python3-pip build-essential
+        curl git python3 python3-venv python3-pip build-essential
 
     # uv (Python package manager)
     if ! command -v uv &>/dev/null; then
@@ -41,7 +41,7 @@ install_macos() {
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
-    brew install python@3.11 git
+    brew install python@3.12 git
 
     # uv
     if ! command -v uv &>/dev/null; then

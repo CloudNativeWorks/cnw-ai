@@ -16,6 +16,7 @@ dependencies = [
     "markdownify>=0.14",
     "pyyaml>=6.0",
     "structlog>=24.0",
+    "streamlit>=1.38",
 ]
 
 [project.optional-dependencies]

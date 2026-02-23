@@ -160,6 +160,36 @@ def chunk_documents(
             if len(text_content) < min_length:
                 continue
 
+            # Re-split if restored code fences made the chunk too large
+            if len(text_content) > chunk_size * 2:
+                sub_chunks = _split_text(text_content, chunk_size, chunk_overlap, separators)
+                for j, sub in enumerate(sub_chunks):
+                    sub = sub.strip()
+                    if len(sub) < min_length:
+                        continue
+                    chunk = ChunkDoc(
+                        chunk_id=make_chunk_id(doc.source_id, doc.uri, doc.section, i * 1000 + j),
+                        text=sub,
+                        source_id=doc.source_id,
+                        domain=doc.domain,
+                        source_type=doc.source_type,
+                        priority=doc.priority,
+                        version=doc.version,
+                        uri=doc.uri,
+                        title=doc.title,
+                        section=doc.section,
+                        chunk_index=i * 1000 + j,
+                        tags=list(doc.tags),
+                        component=doc.component,
+                        text_hash=text_hash(sub),
+                        license=doc.license,
+                        origin=doc.origin,
+                        db_engine=doc.db_engine,
+                        topic=doc.topic,
+                    )
+                    all_chunks.append(chunk)
+                continue
+
             chunk = ChunkDoc(
                 chunk_id=make_chunk_id(doc.source_id, doc.uri, doc.section, i),
                 text=text_content,

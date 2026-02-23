@@ -9,7 +9,7 @@ uv sync
 # Pull embedding model
 ollama pull nomic-embed-text
 # Pull LLM
-ollama pull deepseek-r1:8b
+ollama pull qwen2.5:14b
 
 # Verify Qdrant
 curl -sf http://localhost:6333/healthz > /dev/null && echo "Qdrant: OK" || echo "Qdrant: NOT RUNNING"

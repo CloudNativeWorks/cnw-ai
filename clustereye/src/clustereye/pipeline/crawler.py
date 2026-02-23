@@ -147,6 +147,7 @@ def crawl(
         dest = workdir / safe_name
         dest.write_text(resp.text, encoding="utf-8")
         downloaded.append(dest)
+        log.info("crawl_page", page=len(downloaded), queue=len(queue), url=url[:80])
 
         # Extract links for next depth level
         if depth < max_depth:

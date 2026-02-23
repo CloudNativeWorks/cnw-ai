@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL Replication</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20250803.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20250803.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20250803.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL Replication" />
+<link rel="start" href="index.html" title="MySQL Replication" />
+<link rel="next" href="preface.html?ff=nopfpls" title=" Preface and Legal Notices" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&c=teconsent&js=bb&noticeType=bb&text=true&cdn=1&pcookie&gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20250121.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="2vfnvcax2j5lo2m4op2a-f-4ba37fa97-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":39,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"20c410fd","ak.r":41196,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"213.74.218.0","ak.cport":10004,"ak.gh":"92.123.122.150","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1771860980","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==0wRSNOvXBtNsdv9NTY0XwNgRLTu5qY5+273xy3IyyyXtGBh1zFrBvd69rmQW+F9gCT+AboC+R3u0cGFgm9MCzROh/IAvuYgl/AdKPVFpWqJUeUH3B7j+LqqFVjEFATR5fxvYE++3j+p8tvHsXdukqkDav/hevYwCAiplafyWVgynnnab1jgRIs9HjpIbqbwcj3+YppYv5hfIU1pLK3iM51tx0fA50HU/mp8omvx4FNlc6/H0ZCPtOZYaSvoyxY6VZL+LeUGMWqq82A64cl8ggTgtVU/DqqTCI8DKBVnSpbh3e37+lK36IiNnvzDo+IO0Ck2FDBzlQOlnVvN44wsAcSgJxN4jLjo1w1BRp11EeC7jjZUMNcpgivsCAwAo1PYqo7cBtA66PqQsMh3LOmoY4TPD/Byt397JeTvcxr3nNGk=","ak.pv":"17","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Fmysql-replication-excerpt%2F8.0%2Fen%2F">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+
+    <a href="preface.html" aria-label="Next"
+        title="Next: Preface and Legal Notices"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="/doc/search/">
+            <input type="hidden" name="d" id="d" value="245" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL Replication</div>
+            <nav class="doctoc" id="doc-245">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-configuration.html">Configuring Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-solutions.html">Replication Solutions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-notes.html">Replication Notes and Tips</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-implementation.html">Replication Implementation</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a><br />
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Excerpt
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/mysql-replication-excerpt-8.0-en.pdf">PDF (US Ltr)</a>
+            - 1.8Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-replication-excerpt-8.0-en.a4.pdf">PDF (A4)</a>
+            - 1.8Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="" id="docs-version-nav-toggle">version 8.0
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         class="tooltip-left"
+                        data-tooltip="The page you are viewing does not exist in version 8.3.
+                        This link will take you to the Table of Contents."
+                                                href="/doc/mysql-replication-excerpt/8.3/en/">
+                        8.3
+                                            </a><br />
+                                                                                                                <a                         href="/doc/mysql-replication-excerpt/5.7/en/index.html">
+                        5.7
+                                            </a><br />
+                                                                </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                
+        <div id="docs-body">
+        
+<div lang="en" class="book">
+
+<div class="titlepage">
+<div>
+<div>
+<h1 class="title"><a name="mysql-replication-excerpt"></a>MySQL Replication</h1>
+</div>
+<div>
+
+<div class="abstract">
+<p class="title"><b>Abstract</b></p><p>
+        This is the MySQL Replication extract from the MySQL
+        8.0 Reference Manual.
+      </p><p>
+        For legal information, see the <a class="link" href="preface.html#legalnotice" title="Legal Notices">Legal
+        Notices</a>.
+      </p><p>
+    For help with using MySQL, please visit the
+    <a class="ulink" href="http://forums.mysql.com"  target="_blank">MySQL Forums</a>, where you
+    can discuss your issues with other MySQL users.
+
+  </p><p>
+        Document generated on:
+
+        2026-02-19
+
+
+
+        (revision: 84395)
+</p>
+</div>
+
+</div>
+
+</div>
+<hr>
+</div>
+<div class="toc">
+<p><b>Table of Contents</b></p><dl class="toc"><dt><span class="preface"><a href="preface.html">Preface and Legal Notices</a></span></dt><dt><span class="chapter"><a href="replication.html">1 Replication</a></span></dt><dt><span class="chapter"><a href="replication-configuration.html">2 Configuring Replication</a></span></dt><dd><dl><dt><span class="section"><a href="binlog-replication-configuration-overview.html">2.1 Binary Log File Position Based Replication Configuration Overview</a></span></dt><dt><span class="section"><a href="replication-howto.html">2.2 Setting Up Binary Log File Position Based Replication</a></span></dt><dd><dl><dt><span class="section"><a href="replication-howto-masterbaseconfig.html">2.2.1 Setting the Replication Source Configuration</a></span></dt><dt><span class="section"><a href="replication-howto-slavebaseconfig.html">2.2.2 Setting the Replica Configuration</a></span></dt><dt><span class="section"><a href="replication-howto-repuser.html">2.2.3 Creating a User for Replication</a></span></dt><dt><span class="section"><a href="replication-howto-masterstatus.html">2.2.4 Obtaining the Replication Source Binary Log Coordinates</a></span></dt><dt><span class="section"><a href="replication-snapshot-method.html">2.2.5 Choosing a Method for Data Snapshots</a></span></dt><dt><span class="section"><a href="replication-setup-replicas.html">2.2.6 Setting Up Replicas</a></span></dt><dt><span class="section"><a href="replication-howto-slaveinit.html">2.2.7 Setting the Source Configuration on the Replica</a></span></dt><dt><span class="section"><a href="replication-howto-additionalslaves.html">2.2.8 Adding Replicas to a Replication Environment</a></span></dt></dl></dd><dt><span class="section"><a href="replication-gtids.html">2.3 Replication with Global Transaction Identifiers</a></span></dt><dd><dl><dt><span class="section"><a href="replication-gtids-concepts.html">2.3.1 GTID Format and Storage</a></span></dt><dt><span class="section"><a href="replication-gtids-lifecycle.html">2.3.2 GTID Life Cycle</a></span></dt><dt><span class="section"><a href="replication-gtids-auto-positioning.html">2.3.3 GTID Auto-Positioning</a></span></dt><dt><span class="section"><a href="replication-gtids-howto.html">2.3.4 Setting Up Replication Using GTIDs</a></span></dt><dt><span class="section"><a href="replication-gtids-failover.html">2.3.5 Using GTIDs for Failover and Scaleout</a></span></dt><dt><span class="section"><a href="replication-gtids-assign-anon.html">2.3.6 Replication From a Source Without GTIDs to a Replica With GTIDs</a></span></dt><dt><span class="section"><a href="replication-gtids-restrictions.html">2.3.7 Restrictions on Replication with GTIDs</a></span></dt><dt><span class="section"><a href="replication-gtids-functions.html">2.3.8 Stored Function Examples to Manipulate GTIDs</a></span></dt></dl></dd><dt><span class="section"><a href="replication-mode-change-online.html">2.4 Changing GTID Mode on Online Servers</a></span></dt><dd><dl><dt><span class="section"><a href="replication-mode-change-online-concepts.html">2.4.1 Replication Mode Concepts</a></span></dt><dt><span class="section"><a href="replication-mode-change-online-enable-gtids.html">2.4.2 Enabling GTID Transactions Online</a></span></dt><dt><span class="section"><a href="replication-mode-change-online-disable-gtids.html">2.4.3 Disabling GTID Transactions Online</a></span></dt><dt><span class="section"><a href="replication-mode-change-online-verify-transactions.html">2.4.4 Verifying Replication of Anonymous Transactions</a></span></dt></dl></dd><dt><span class="section"><a href="replication-multi-source.html">2.5 MySQL Multi-Source Replication</a></span></dt><dd><dl><dt><span class="section"><a href="replication-multi-source-configuration.html">2.5.1 Configuring Multi-Source Replication</a></span></dt><dt><span class="section"><a href="replication-multi-source-provision-replica.html">2.5.2 Provisioning a Multi-Source Replica for GTID-Based Replication</a></span></dt><dt><span class="section"><a href="replication-multi-source-adding-gtid-master.html">2.5.3 Adding GTID-Based Sources to a Multi-Source Replica</a></span></dt><dt><span class="section"><a href="replication-multi-source-adding-binlog-master.html">2.5.4 Adding Binary Log Based Replication Sources to a Multi-Source Replica</a></span></dt><dt><span class="section"><a href="replication-multi-source-start-replica.html">2.5.5 Starting Multi-Source Replicas</a></span></dt><dt><span class="section"><a href="replication-multi-source-stop-replica.html">2.5.6 Stopping Multi-Source Replicas</a></span></dt><dt><span class="section"><a href="replication-multi-source-reset-replica.html">2.5.7 Resetting Multi-Source Replicas</a></span></dt><dt><span class="section"><a href="replication-multi-source-monitoring.html">2.5.8 Monitoring Multi-Source Replication</a></span></dt></dl></dd><dt><span class="section"><a href="replication-options.html">2.6 Replication and Binary Logging Options and Variables</a></span></dt><dd><dl><dt><span class="section"><a href="replication-options-reference.html">2.6.1 Replication and Binary Logging Option and Variable Reference</a></span></dt><dt><span class="section"><a href="replication-options-source.html">2.6.2 Replication Source Options and Variables</a></span></dt><dt><span class="section"><a href="replication-options-replica.html">2.6.3 Replica Server Options and Variables</a></span></dt><dt><span class="section"><a href="replication-options-binary-log.html">2.6.4 Binary Logging Options and Variables</a></span></dt><dt><span class="section"><a href="replication-options-gtids.html">2.6.5 Global Transaction ID System Variables</a></span></dt></dl></dd><dt><span class="section"><a href="replication-administration.html">2.7 Common Replication Administration Tasks</a></span></dt><dd><dl><dt><span class="section"><a href="replication-administration-status.html">2.7.1 Checking Replication Status</a></span></dt><dt><span class="section"><a href="replication-administration-pausing.html">2.7.2 Pausing Replication on the Replica</a></span></dt><dt><span class="section"><a href="replication-administration-skip.html">2.7.3 Skipping Transactions</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="replication-solutions.html">3 Replication Solutions</a></span></dt><dd><dl><dt><span class="section"><a href="replication-solutions-backups.html">3.1 Using Replication for Backups</a></span></dt><dd><dl><dt><span class="section"><a href="replication-solutions-backups-mysqldump.html">3.1.1 Backing Up a Replica Using mysqldump</a></span></dt><dt><span class="section"><a href="replication-solutions-backups-rawdata.html">3.1.2 Backing Up Raw Data from a Replica</a></span></dt><dt><span class="section"><a href="replication-solutions-backups-read-only.html">3.1.3 Backing Up a Source or Replica by Making It Read Only</a></span></dt></dl></dd><dt><span class="section"><a href="replication-solutions-unexpected-replica-halt.html">3.2 Handling an Unexpected Halt of a Replica</a></span></dt><dt><span class="section"><a href="replication-solutions-rbr-monitoring.html">3.3 Monitoring Row-based Replication</a></span></dt><dt><span class="section"><a href="replication-solutions-diffengines.html">3.4 Using Replication with Different Source and Replica Storage Engines</a></span></dt><dt><span class="section"><a href="replication-solutions-scaleout.html">3.5 Using Replication for Scale-Out</a></span></dt><dt><span class="section"><a href="replication-solutions-partitioning.html">3.6 Replicating Different Databases to Different Replicas</a></span></dt><dt><span class="section"><a href="replication-solutions-performance.html">3.7 Improving Replication Performance</a></span></dt><dt><span class="section"><a href="replication-solutions-switch.html">3.8 Switching Sources During Failover</a></span></dt><dt><span class="section"><a href="replication-asynchronous-connection-failover.html">3.9 Switching Sources and Replicas with Asynchronous Connection Failover</a></span></dt><dd><dl><dt><span class="section"><a href="replication-asynchronous-connection-failover-source.html">3.9.1 Asynchronous Connection Failover for Sources</a></span></dt><dt><span class="section"><a href="replication-asynchronous-connection-failover-replica.html">3.9.2 Asynchronous Connection Failover for Replicas</a></span></dt></dl></dd><dt><span class="section"><a href="replication-semisync.html">3.10 Semisynchronous Replication</a></span></dt><dd><dl><dt><span class="section"><a href="replication-semisync-installation.html">3.10.1 Installing Semisynchronous Replication</a></span></dt><dt><span class="section"><a href="replication-semisync-interface.html">3.10.2 Configuring Semisynchronous Replication</a></span></dt><dt><span class="section"><a href="replication-semisync-monitoring.html">3.10.3 Semisynchronous Replication Monitoring</a></span></dt></dl></dd><dt><span class="section"><a href="replication-delayed.html">3.11 Delayed Replication</a></span></dt></dl></dd><dt><span class="chapter"><a href="replication-notes.html">4 Replication Notes and Tips</a></span></dt><dd><dl><dt><span class="section"><a href="replication-features.html">4.1 Replication Features and Issues</a></span></dt><dd><dl><dt><span class="section"><a href="replication-features-auto-increment.html">4.1.1 Replication and AUTO_INCREMENT</a></span></dt><dt><span class="section"><a href="replication-features-blackhole.html">4.1.2 Replication and BLACKHOLE Tables</a></span></dt><dt><span class="section"><a href="replication-features-charset.html">4.1.3 Replication and Character Sets</a></span></dt><dt><span class="section"><a href="replication-features-checksum-table.html">4.1.4 Replication and CHECKSUM TABLE</a></span></dt><dt><span class="section"><a href="replication-features-create-alter-drop-server.html">4.1.5 Replication of CREATE SERVER, ALTER SERVER, and DROP SERVER</a></span></dt><dt><span class="section"><a href="replication-features-create-if-not-exists.html">4.1.6 Replication of CREATE ... IF NOT EXISTS Statements</a></span></dt><dt><span class="section"><a href="replication-features-create-select.html">4.1.7 Replication of CREATE TABLE ... SELECT Statements</a></span></dt><dt><span class="section"><a href="replication-features-current-user.html">4.1.8 Replication of CURRENT_USER()</a></span></dt><dt><span class="section"><a href="replication-features-differing-tables.html">4.1.9 Replication with Differing Table Definitions on Source and Replica</a></span></dt><dt><span class="section"><a href="replication-features-directory.html">4.1.10 Replication and DIRECTORY Table Options</a></span></dt><dt><span class="section"><a href="replication-features-drop-if-exists.html">4.1.11 Replication of DROP ... IF EXISTS Statements</a></span></dt><dt><span class="section"><a href="replication-features-floatvalues.html">4.1.12 Replication and Floating-Point Values</a></span></dt><dt><span class="section"><a href="replication-features-flush.html">4.1.13 Replication and FLUSH</a></span></dt><dt><span class="section"><a href="replication-features-functions.html">4.1.14 Replication and System Functions</a></span></dt><dt><span class="section"><a href="replication-features-fractional-seconds.html">4.1.15 Replication and Fractional Seconds Support</a></span></dt><dt><span class="section"><a href="replication-features-invoked.html">4.1.16 Replication of Invoked Features</a></span></dt><dt><span class="section"><a href="replication-features-json.html">4.1.17 Replication of JSON Documents</a></span></dt><dt><span class="section"><a href="replication-features-limit.html">4.1.18 Replication and LIMIT</a></span></dt><dt><span class="section"><a href="replication-features-load-data.html">4.1.19 Replication and LOAD DATA</a></span></dt><dt><span class="section"><a href="replication-features-max-allowed-packet.html">4.1.20 Replication and max_allowed_packet</a></span></dt><dt><span class="section"><a href="replication-features-memory.html">4.1.21 Replication and MEMORY Tables</a></span></dt><dt><span class="section"><a href="replication-features-mysqldb.html">4.1.22 Replication of the mysql System Schema</a></span></dt><dt><span class="section"><a href="replication-features-optimizer.html">4.1.23 Replication and the Query Optimizer</a></span></dt><dt><span class="section"><a href="replication-features-partitioning.html">4.1.24 Replication and Partitioning</a></span></dt><dt><span class="section"><a href="replication-features-repair-table.html">4.1.25 Replication and REPAIR TABLE</a></span></dt><dt><span class="section"><a href="replication-features-reserved-words.html">4.1.26 Replication and Reserved Words</a></span></dt><dt><span class="section"><a href="replication-features-row-searches.html">4.1.27 Replication and Row Searches</a></span></dt><dt><span class="section"><a href="replication-features-shutdowns.html">4.1.28 Replication and Source or Replica Shutdowns</a></span></dt><dt><span class="section"><a href="replication-features-errors.html">4.1.29 Replica Errors During Replication</a></span></dt><dt><span class="section"><a href="replication-features-sql-mode.html">4.1.30 Replication and Server SQL Mode</a></span></dt><dt><span class="section"><a href="replication-features-temptables.html">4.1.31 Replication and Temporary Tables</a></span></dt><dt><span class="section"><a href="replication-features-timeout.html">4.1.32 Replication Retries and Timeouts</a></span></dt><dt><span class="section"><a href="replication-features-timezone.html">4.1.33 Replication and Time Zones</a></span></dt><dt><span class="section"><a href="replication-features-transaction-inconsistencies.html">4.1.34 Replication and Transaction Inconsistencies</a></span></dt><dt><span class="section"><a href="replication-features-transactions.html">4.1.35 Replication and Transactions</a></span></dt><dt><span class="section"><a href="replication-features-triggers.html">4.1.36 Replication and Triggers</a></span></dt><dt><span class="section"><a href="replication-features-truncate.html">4.1.37 Replication and TRUNCATE TABLE</a></span></dt><dt><span class="section"><a href="replication-features-user-names.html">4.1.38 Replication and User Name Length</a></span></dt><dt><span class="section"><a href="replication-features-variables.html">4.1.39 Replication and Variables</a></span></dt><dt><span class="section"><a href="replication-features-views.html">4.1.40 Replication and Views</a></span></dt></dl></dd><dt><span class="section"><a href="replication-compatibility.html">4.2 Replication Compatibility Between MySQL Versions</a></span></dt><dt><span class="section"><a href="replication-upgrade.html">4.3 Upgrading a Replication Topology</a></span></dt><dt><span class="section"><a href="replication-problems.html">4.4 Troubleshooting Replication</a></span></dt><dt><span class="section"><a href="replication-bugs.html">4.5 How to Report Replication Bugs or Problems</a></span></dt></dl></dd><dt><span class="chapter"><a href="replication-implementation.html">5 Replication Implementation</a></span></dt><dd><dl><dt><span class="section"><a href="replication-formats.html">5.1 Replication Formats</a></span></dt><dd><dl><dt><span class="section"><a href="replication-sbr-rbr.html">5.1.1 Advantages and Disadvantages of Statement-Based and Row-Based
+Replication</a></span></dt><dt><span class="section"><a href="replication-rbr-usage.html">5.1.2 Usage of Row-Based Logging and Replication</a></span></dt><dt><span class="section"><a href="replication-rbr-safe-unsafe.html">5.1.3 Determination of Safe and Unsafe Statements in Binary Logging</a></span></dt></dl></dd><dt><span class="section"><a href="replication-channels.html">5.2 Replication Channels</a></span></dt><dd><dl><dt><span class="section"><a href="channels-commands-single-channel.html">5.2.1 Commands for Operations on a Single Channel</a></span></dt><dt><span class="section"><a href="channels-with-prev-replication.html">5.2.2 Compatibility with Previous Replication Statements</a></span></dt><dt><span class="section"><a href="channels-startup-options.html">5.2.3 Startup Options and Replication Channels</a></span></dt><dt><span class="section"><a href="channels-naming-conventions.html">5.2.4 Replication Channel Naming Conventions</a></span></dt></dl></dd><dt><span class="section"><a href="replication-threads.html">5.3 Replication Threads</a></span></dt><dd><dl><dt><span class="section"><a href="replication-threads-monitor-main.html">5.3.1 Monitoring Replication Main Threads</a></span></dt><dt><span class="section"><a href="replication-threads-monitor-worker.html">5.3.2 Monitoring Replication Applier Worker Threads</a></span></dt></dl></dd><dt><span class="section"><a href="replica-logs.html">5.4 Relay Log and Replication Metadata Repositories</a></span></dt><dd><dl><dt><span class="section"><a href="replica-logs-relaylog.html">5.4.1 The Relay Log</a></span></dt><dt><span class="section"><a href="replica-logs-status.html">5.4.2 Replication Metadata Repositories</a></span></dt></dl></dd><dt><span class="section"><a href="replication-rules.html">5.5 How Servers Evaluate Replication Filtering Rules</a></span></dt><dd><dl><dt><span class="section"><a href="replication-rules-db-options.html">5.5.1 Evaluation of Database-Level Replication and Binary Logging Options</a></span></dt><dt><span class="section"><a href="replication-rules-table-options.html">5.5.2 Evaluation of Table-Level Replication Options</a></span></dt><dt><span class="section"><a href="replication-rules-examples.html">5.5.3 Interactions Between Replication Filtering Options</a></span></dt><dt><span class="section"><a href="replication-rules-channel-based-filters.html">5.5.4 Replication Channel Based Filters</a></span></dt></dl></dd></dl></dd></dl>
+</div>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+
+    <a href="preface.html" aria-label="Next"
+        title="Next: Preface and Legal Notices">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a><br />
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Excerpt
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/mysql-replication-excerpt-8.0-en.pdf">PDF (US Ltr)</a>
+            - 1.8Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-replication-excerpt-8.0-en.a4.pdf">PDF (A4)</a>
+            - 1.8Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 42, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">MySQL HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="//c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+</html>

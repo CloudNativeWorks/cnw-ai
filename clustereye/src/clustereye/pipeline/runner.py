@@ -118,27 +118,31 @@ class PipelineRunner:
         result: PipelineResult,
         client,
     ) -> None:
+        log.info("step_start", source_id=source.id, step="fetch")
+
         # 1. Fetch
         files = fetch(source, max_items=self.max_items)
         result.files_fetched += len(files)
-        log.info("files_fetched", source_id=source.id, count=len(files))
+        log.info("step_done", source_id=source.id, step="fetch", count=len(files))
 
         # 2. Parse
+        log.info("step_start", source_id=source.id, step="parse")
         all_docs = []
         for file_path in files:
             docs = parse_file(file_path, source)
             all_docs.extend(docs)
         result.documents_parsed += len(all_docs)
-        log.info("documents_parsed", source_id=source.id, count=len(all_docs))
+        log.info("step_done", source_id=source.id, step="parse", count=len(all_docs))
 
         if not all_docs:
             log.warning("no_documents", source_id=source.id)
             return
 
         # 3. Chunk
+        log.info("step_start", source_id=source.id, step="chunk")
         chunks = chunk_documents(all_docs)
         result.chunks_created += len(chunks)
-        log.info("chunks_created", source_id=source.id, count=len(chunks))
+        log.info("step_done", source_id=source.id, step="chunk", count=len(chunks))
 
         if self.dry_run:
             log.info("dry_run_skip", source_id=source.id, chunks=len(chunks))
@@ -155,16 +159,38 @@ class PipelineRunner:
                 if skipped:
                     log.info("dedup_skipped", source_id=source.id, skipped=skipped)
         else:
+            log.info("step_start", source_id=source.id, step="delete_old")
             delete_by_source(client, source.id)
+            log.info("step_done", source_id=source.id, step="delete_old")
 
         if not chunks:
             log.info("no_new_chunks", source_id=source.id)
             return
 
-        # 5. Embed (sequential per source - Ollama memory constraint)
-        vectors = embed_chunks(chunks)
+        # 5. Embed (retry-safe: skip individual failures)
+        log.info("step_start", source_id=source.id, step="embed", chunks=len(chunks))
+        try:
+            vectors = embed_chunks(chunks)
+        except Exception as e:
+            log.warning("embed_partial_retry", source_id=source.id, error=str(e))
+            # Fall back to one-by-one embedding, skipping failures
+            vectors = []
+            failed_indices = []
+            for idx, chunk in enumerate(chunks):
+                try:
+                    v = embed_chunks([chunk])
+                    vectors.extend(v)
+                except Exception:
+                    log.warning("embed_chunk_skipped", source_id=source.id, chunk_index=idx)
+                    failed_indices.append(idx)
+            # Remove failed chunks from list
+            for idx in reversed(failed_indices):
+                chunks.pop(idx)
         result.chunks_embedded += len(vectors)
+        log.info("step_done", source_id=source.id, step="embed", count=len(vectors))
 
         # 6. Upsert
+        log.info("step_start", source_id=source.id, step="upsert", chunks=len(vectors))
         upserted = upsert_chunks(client, chunks, vectors)
         result.chunks_upserted += upserted
+        log.info("step_done", source_id=source.id, step="upsert", count=upserted)

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL Workbench Manual</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20250803.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20250803.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20250803.min.css" />
+
+    
+    
+    
+    
+            <link rel="contents" href="index.html" title="MySQL Workbench Manual" />
+<link rel="start" href="index.html" title="MySQL Workbench Manual" />
+<link rel="next" href="wb-preface.html?ff=nopfpls" title=" Preface and Legal Notices" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&c=teconsent&js=bb&noticeType=bb&text=true&cdn=1&pcookie&gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20250121.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="2vfnvcdimyy6q2m4olkq-f-6713f9b3b-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":37,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"b13656bb","ak.r":48105,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"213.74.218.0","ak.cport":9372,"ak.gh":"2.20.179.216","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1771860693","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==/zsGWwMPvprRaCq63BhRpWNUVUZrlV6ocTgZeL5eIEcN01JVdci25E9zrEw/buWVQ4By6Euq8cjO2DyPHuwkWgegKZhioUAdO6lvb4wHS7h3B2+j6BO72kiK8RwGdBA7Fv3k1w+d9G9+3Y4TNEHweWZBP4zgzwghPJnDZ2ip04WAGyJMKnPYWqehUdHDXtzH9MqV8N0fWx4YIzoavIE34kIM33G6+V63H0y5g/Bk1hH9oBbMFZbCppSvPsbh5nkkYKfgMCfiUAZ4IaKlOUAItEwTyAezLHkD3gDRRfHd8LdjP0bY7X4tZA3xjvjAfeS6yqsEpxOHhYMIfx5wLgxJF0gOFoIcV3jQZ0WSKD9vmEv4AdVTH8Q+9uh1r3H3joAZruFjo53VdKskDCbTUC8kTyWMNgsdhjITAMo8+7wZqZs=","ak.pv":"17","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Fworkbench%2Fen%2F">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class=""><a  href="/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class="active"><a class="active " href="/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+
+    <a href="wb-preface.html" aria-label="Next"
+        title="Next: Preface and Legal Notices"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="/doc/search/">
+            <input type="hidden" name="d" id="d" value="22" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL Workbench Manual</div>
+            <nav class="doctoc" id="doc-22">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="wb-preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-intro.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-installing.html">Installation</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-configuring.html">Configuration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="wb-home.html">Home Screen Tab</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-mysql-connections.html">Connections in MySQL Workbench</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-admin.html">Administrative Tasks</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-performance.html">Performance Tools</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-develop.html">Database Development</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-data-modeling.html">Database Design and Modeling</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-migration.html">Database Migration Wizard</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="heatwave-migration-assistant.html">MySQL HeatWave Migration Assistant</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench-faq.html">MySQL Workbench Frequently Asked Questions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="wb-keys.html">Keyboard Shortcuts</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="wb-extending.html">Extending Workbench</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench-reporting-bugs.html">How To Report Bugs or Problems</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="wb-mysql-enterprise.html">MySQL Enterprise Features</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="wb-mysql-utilities.html">MySQL Utilities</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="/doc/relnotes/workbench/en/">MySQL Workbench Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/workbench-en.pdf">PDF (US Ltr)</a>
+            - 17.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/workbench-en.a4.pdf">PDF (A4)</a>
+            - 17.0Mb<br />
+                                </div>
+    </div>
+
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                
+        <div id="docs-body">
+        
+<div lang="en" class="book">
+<div class="titlepage"><div>
+<div><h1 class="title">
+<a name="workbench"></a>MySQL Workbench</h1></div>
+<div><div class="abstract">
+<p class="title"><b>Abstract</b></p>
+<p>
+        This is the MySQL Workbench Reference Manual. It documents the
+        MySQL Workbench Community and MySQL Workbench Commercial releases for
+        versions 8.0 through
+        8.0.46.
+      </p>
+<p>
+        MySQL Workbench is developed and tested with MySQL Server 8.0.
+        MySQL Workbench may connect to MySQL Server 8.4 and higher but some
+        MySQL Workbench features may not function with those later server
+        versions.
+      </p>
+<p>
+        MySQL Workbench platform support evolves over time. For the latest
+        platform support information, see
+        <a class="ulink" href="https://www.mysql.com/support/supportedplatforms/workbench.html"  target="_blank">https://www.mysql.com/support/supportedplatforms/workbench.html</a>.
+      </p>
+<p>
+        For notes detailing the changes in each release, see the
+        <a class="ulink" href="/doc/relnotes/workbench/en/" target="_top">MySQL Workbench
+        Release Notes</a>.
+      </p>
+<p>
+        For legal information, including licensing information, see the
+        <a class="xref" href="wb-preface.html" title="Preface and Legal Notices">Preface and Legal Notices</a>.
+      </p>
+<p>
+        If you have not yet installed the MySQL Workbench Community release,
+        please download your free copy from the
+        <a class="ulink" href="https://dev.mysql.com/downloads/workbench" target="_top">download
+        site</a>. The MySQL Workbench Community release is available for
+        Microsoft Windows, macOS, and Linux.
+      </p>
+<p>
+    For help with using MySQL, please visit the
+    <a class="ulink" href="http://forums.mysql.com"  target="_blank">MySQL Forums</a>, where you
+    can discuss your issues with other MySQL users.
+
+  </p>
+<p>
+        Document generated on:
+
+        2026-02-17
+
+
+
+        (revision: 84385)
+      </p>
+</div></div>
+</div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="preface"><a href="wb-preface.html">Preface and Legal Notices</a></span></dt>
+<dt><span class="chapter"><a href="wb-intro.html">1 General Information</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-what-is-new.html">1.1 What Is New in MySQL Workbench</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-what-is-new-8.html">1.1.1 New in MySQL Workbench 8.0 Release Series</a></span></dt>
+<dt><span class="section"><a href="wb-what-is-new-6.html">1.1.2 New in MySQL Workbench 6.0 Release Series</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-editions.html">1.2 MySQL Workbench Editions</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-installing.html">2 Installation</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-requirements.html">2.1 System Requirements</a></span></dt>
+<dt><span class="section"><a href="wb-command-line-options.html">2.2 Command-Line Options</a></span></dt>
+<dt><span class="section"><a href="wb-windows.html">2.3 MySQL Workbench on Windows</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-installing-windows.html">2.3.1 Installing</a></span></dt>
+<dt><span class="section"><a href="wb-launching-windows.html">2.3.2 Launching</a></span></dt>
+<dt><span class="section"><a href="wb-windows-uninstalling.html">2.3.3 Uninstalling</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-linux.html">2.4 MySQL Workbench on Linux</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-installing-linux.html">2.4.1 Installing</a></span></dt>
+<dt><span class="section"><a href="wb-launching-linux.html">2.4.2 Launching</a></span></dt>
+<dt><span class="section"><a href="wb-linux-uninstalling.html">2.4.3 Uninstalling</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-mac.html">2.5 MySQL Workbench on macOS</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-installing-mac.html">2.5.1 Installing</a></span></dt>
+<dt><span class="section"><a href="wb-launching-macos.html">2.5.2 Launching</a></span></dt>
+<dt><span class="section"><a href="wb-mac-uninstalling.html">2.5.3 Uninstalling</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-configuring.html">3 Configuration</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-accessibility.html">3.1 User Accessibility Options</a></span></dt>
+<dt><span class="section"><a href="wb-preferences.html">3.2 Workbench Preferences</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-preferences-general-editors.html">3.2.1 General Editors Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-sql-editor.html">3.2.2 SQL Editor Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-administration.html">3.2.3 Administration Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-modeling.html">3.2.4 Modeling Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-fonts-and-colors.html">3.2.5 Fonts and Colors Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-ssh.html">3.2.6 SSH Preferences</a></span></dt>
+<dt><span class="section"><a href="wb-preferences-others.html">3.2.7 Other Preferences</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-configuring-files.html">3.3 MySQL Workbench Settings and Log Files</a></span></dt>
+<dt><span class="section"><a href="wb-configuration-additional.html">3.4 Common Preferences and Configurations</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-home.html">4 Home Screen Tab</a></span></dt>
+<dt><span class="chapter"><a href="wb-mysql-connections.html">5 Connections in MySQL Workbench</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-mysql-connections-new.html">5.1 Creating A New MySQL Connection (Simple)</a></span></dt>
+<dt><span class="section"><a href="wb-getting-started-tutorial-create-connection.html">5.2 Creating A New MySQL Connection (Tutorial)</a></span></dt>
+<dt><span class="section"><a href="wb-manage-server-connections.html">5.3 Manage Server Connections</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-mysql-connections-methods-standard.html">5.3.1 Standard TCP/IP Connection Method</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-methods-socket.html">5.3.2 Local Socket/Pipe Connection Method</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-methods-ssh.html">5.3.3 Standard TCP/IP over SSH Connection Method</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-methods-ldap-kerberos.html">5.3.4 LDAP and Kerberos Connection Methods</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-ssl-wizard.html">5.3.5 SSL Wizard (Certificates)</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-remote-management.html">5.3.6 Remote Management</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-system-profile.html">5.3.7 System Profile</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-server-management-wizard.html">5.3.8 Configure Server Management Wizard</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-vault.html">5.3.9 The Password Storage Vault</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-secure-auth.html">5.3.10 Updating Old Authentication Protocol Passwords</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-management-client-connections.html">5.4 Client Connections</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-admin.html">6 Administrative Tasks</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-admin-server-management.html">6.1 Server Administration</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-instance-server-logs.html">6.1.1 Server Logs</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-instance-startup-shutdown.html">6.1.2 Service Control</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-instance-options-file.html">6.1.3 Configuration (Options File)</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-management-users-and-privileges.html">6.2 Users and Privileges</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-management-server-status.html">6.3 Server Status</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-connections-navigator-management-status-variables.html">6.4 Status and System Variables</a></span></dt>
+<dt><span class="section"><a href="wb-admin-export-import.html">6.5 Data Export and Import</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-admin-export-import-table.html">6.5.1 Table Data Export and Import Wizard</a></span></dt>
+<dt><span class="section"><a href="wb-admin-export-import-management.html">6.5.2 SQL Data Export and Import Wizard</a></span></dt>
+<dt><span class="section"><a href="wb-admin-export-import-results.html">6.5.3 Result Data Export and Import</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-audit-inspector.html">6.6 MySQL Audit Inspector Interface</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-enterprise-backup.html">6.7 MySQL Enterprise Backup Interface</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-mysql-enterprise-backup-general-requirements.html">6.7.1 General Requirements</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-enterprise-backup-online-backup.html">6.7.2 Online Backup</a></span></dt>
+<dt><span class="section"><a href="wb-mysql-enterprise-backup-backup-recovery.html">6.7.3 Backup Recovery</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-mysql-firewall.html">6.8 MySQL Enterprise Firewall Interface</a></span></dt>
+<dt><span class="section"><a href="wbcopytables.html">6.9 wbcopytables Utility</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-performance.html">7 Performance Tools</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-performance-dashboard.html">7.1 Performance Dashboard</a></span></dt>
+<dt><span class="section"><a href="wb-performance-reports.html">7.2 Performance Schema Reports</a></span></dt>
+<dt><span class="section"><a href="wb-performance-query-statistics.html">7.3 Query Statistics</a></span></dt>
+<dt><span class="section"><a href="wb-performance-explain.html">7.4 Visual Explain Plan</a></span></dt>
+<dt><span class="section"><a href="wb-tutorial-visual-explain-dbt3.html">7.5 Tutorial: Using Explain to Improve Query Performance</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-develop.html">8 Database Development</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-sql-editor.html">8.1 Visual SQL Editor</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-sql-editor-query-panel.html">8.1.1 SQL Query Tab</a></span></dt>
+<dt><span class="section"><a href="wb-sql-editor-toolbar.html">8.1.2 SQL Query Toolbar</a></span></dt>
+<dt><span class="section"><a href="wb-sql-editor-main-menu.html">8.1.3 Query and Edit Menus</a></span></dt>
+<dt><span class="section"><a href="wb-develop-sql-editor-results.html">8.1.4 Result Grid</a></span></dt>
+<dt><span class="section"><a href="wb-sql-editor-snippets.html">8.1.5 SQL Additions - Snippets Tab</a></span></dt>
+<dt><span class="section"><a href="wb-develop-sql-editor-help.html">8.1.6 SQL Additions - Context Help Tab</a></span></dt>
+<dt><span class="section"><a href="wb-develop-sql-editor-history.html">8.1.7 Output Panel</a></span></dt>
+<dt><span class="section"><a href="wb-develop-sql-editor-table-search.html">8.1.8 Table Data Search Tab</a></span></dt>
+<dt><span class="section"><a href="wb-develop-sql-editor-table-export-import.html">8.1.9 Export or Import a Table</a></span></dt>
+<dt><span class="section"><a href="wb-table-editor.html">8.1.10 MySQL Table Editor</a></span></dt>
+<dt><span class="section"><a href="wb-generating.html">8.1.11 Code Generation Overview</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-develop-object-management.html">8.2 Object Management</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-sql-editor-navigator.html">8.2.1 Object Browser and Editor Navigator</a></span></dt>
+<dt><span class="section"><a href="wb-sql-editor-connection-information-panel.html">8.2.2 Session and Object Information Panel</a></span></dt>
+<dt><span class="section"><a href="wb-develop-object-management-inspector.html">8.2.3 Schema and Table Inspector</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-data-modeling.html">9 Database Design and Modeling</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-design-modeling-interface.html">9.1 Modeling Interface</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-model-editor.html">9.1.1 Model Editor</a></span></dt>
+<dt><span class="section"><a href="wb-eer-diagram-editor.html">9.1.2 EER Diagram Editor</a></span></dt>
+<dt><span class="section"><a href="wb-tables.html">9.1.3 Creating Tables</a></span></dt>
+<dt><span class="section"><a href="wb-foreign-key-relationships.html">9.1.4 Creating Foreign Key Relationships</a></span></dt>
+<dt><span class="section"><a href="wb-creating-views.html">9.1.5 Creating Views</a></span></dt>
+<dt><span class="section"><a href="wb-routines-routine-groups.html">9.1.6 Creating Routines and Routine Groups</a></span></dt>
+<dt><span class="section"><a href="wb-layers.html">9.1.7 Creating Layers</a></span></dt>
+<dt><span class="section"><a href="wb-notes.html">9.1.8 Creating Notes</a></span></dt>
+<dt><span class="section"><a href="wb-text-objects.html">9.1.9 Creating Text Objects</a></span></dt>
+<dt><span class="section"><a href="wb-images.html">9.1.10 Creating Images</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-design-modeling-additional.html">9.2 Additional Modeling Tools</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-printing.html">9.2.1 Printing Diagrams</a></span></dt>
+<dt><span class="section"><a href="wb-model-reporting.html">9.2.2 DBDoc Model Reporting</a></span></dt>
+<dt><span class="section"><a href="wb-validation-plugins.html">9.2.3 Schema Validation Plugins</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-tutorials.html">9.3 Modeling Tutorials</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-getting-started-tutorial-creating-a-model.html">9.3.1 Creating a Model</a></span></dt>
+<dt><span class="section"><a href="wb-basic-modeling.html">9.3.2 Basic Modeling</a></span></dt>
+<dt><span class="section"><a href="wb-importing-sql-script.html">9.3.3 Importing a Data Definition SQL Script</a></span></dt>
+<dt><span class="section"><a href="wb-default-schema.html">9.3.4 Using the Default Schema</a></span></dt>
+<dt><span class="section"><a href="wb-documenting-sakila.html">9.3.5 Documenting the sakila Database</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-design-engineering.html">9.4 Forward and Reverse Engineering</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-forward-engineering.html">9.4.1 Forward Engineering</a></span></dt>
+<dt><span class="section"><a href="wb-reverse-engineering.html">9.4.2 Reverse Engineering</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-design-schema.html">9.5 Schema Synchronization and Comparison</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-database-synchronization.html">9.5.1 Database Synchronization</a></span></dt>
+<dt><span class="section"><a href="wb-database-diff-report.html">9.5.2 Compare and Report Differences in Catalogs</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-design-table-templates.html">9.6 Table Templates</a></span></dt>
+<dt><span class="section"><a href="dbdoc-templates.html">9.7 Customizing DBDoc Model Reporting Templates</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="dbdoc-templates-markers.html">9.7.1 Supported Template Markers</a></span></dt>
+<dt><span class="section"><a href="dbdoc-templates-custom.html">9.7.2 Creating a Custom Template</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="wb-migration.html">10 Database Migration Wizard</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-install.html">10.1 General Installation Requirements</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-install-odbc-libraries.html">10.1.1 ODBC Libraries</a></span></dt>
+<dt><span class="section"><a href="wb-migration-install-odbc-drivers.html">10.1.2 ODBC Drivers</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-migration-overview.html">10.2 Migration Overview</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-overview-steps.html">10.2.1 A Visual Guide to Performing a Database Migration</a></span></dt>
+<dt><span class="section"><a href="wb-migration-overview-supported.html">10.2.2 Migrating from Supported Databases</a></span></dt>
+<dt><span class="section"><a href="wb-migration-overview-generic.html">10.2.3 Migrating from Unsupported (Generic) Databases</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-migration-database-concepts.html">10.3 Conceptual DBMS Equivalents</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-access.html">10.4 Microsoft Access Migration</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-mssql.html">10.5 Microsoft SQL Server Migration</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-database-mssql-prepare.html">10.5.1 Preparations</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-mssql-drivers.html">10.5.2 Drivers</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-mssql-connection.html">10.5.3 Connection Setup</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-mssql-typemapping.html">10.5.4 Microsoft SQL Server Type Mapping</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-migration-database-postgresql.html">10.6 PostgreSQL migration</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-database-postgresql-prepare.html">10.6.1 Preparations</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-postgresql-drivers.html">10.6.2 Drivers</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-postgresql-connection.html">10.6.3 Connection Setup</a></span></dt>
+<dt><span class="section"><a href="wb-migration-database-postgresql-typemapping.html">10.6.4 PostgreSQL Type Mapping</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-migration-database-mysql.html">10.7 MySQL Migration</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard.html">10.8 Using the MySQL Workbench Migration Wizard</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-migration-wizard-connection.html">10.8.1 Connecting to the Databases</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-schemata.html">10.8.2 Schema Retrieval and Selection</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-reverse-engineering.html">10.8.3 Reverse Engineering</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-object-selection.html">10.8.4 Object Selection</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-migration.html">10.8.5 Migration</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-manual-editing.html">10.8.6 Manual Editing</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-schema-target-options.html">10.8.7 Target Creation Options</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-schema-creation.html">10.8.8 Schema Creation</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-create-target.html">10.8.9 Create Target Results</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-data-migration-setup.html">10.8.10 Data Transfer and Migration Setup</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-data-migration-transfer.html">10.8.11 Bulk Data Transfer</a></span></dt>
+<dt><span class="section"><a href="wb-migration-wizard-report.html">10.8.12 Migration Report</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-migration-faq.html">10.9 MySQL Workbench Migration Wizard FAQ</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="heatwave-migration-assistant.html">11 MySQL HeatWave Migration Assistant</a></span></dt>
+<dt><span class="appendix"><a href="workbench-faq.html">A MySQL Workbench Frequently Asked Questions</a></span></dt>
+<dt><span class="appendix"><a href="wb-keys.html">B Keyboard Shortcuts</a></span></dt>
+<dt><span class="appendix"><a href="wb-extending.html">C Extending Workbench</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-grt-data-organization.html">C.1 GRT and Workbench Data Organization</a></span></dt>
+<dt><span class="section"><a href="wb-modules.html">C.2 Modules</a></span></dt>
+<dt><span class="section"><a href="wb-plugins.html">C.3 Plugins and Tools</a></span></dt>
+<dt><span class="section"><a href="wb-mforms.html">C.4 Adding a GUI to a Plugin Using MForms</a></span></dt>
+<dt><span class="section"><a href="wb-scripting-shell.html">C.5 The Workbench Scripting Shell</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-exploring-scripting-shell.html">C.5.1 Exploring the Workbench Scripting Shell</a></span></dt>
+<dt><span class="section"><a href="wb-scripting-shell-window.html">C.5.2 The Shell Window</a></span></dt>
+<dt><span class="section"><a href="wb-scripting-modules-palettes.html">C.5.3 Files, Globals, Classes, Modules, and Notifications Tabs</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="wb-tutorial-plugins.html">C.6 Tutorial: Writing Plugins</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="wb-tutorial-plugins-php-pdo.html">C.6.1 Tutorial: Generate PHP Code to Create a Connection with PDO_MySQL</a></span></dt>
+<dt><span class="section"><a href="wb-tutorial-plugins-myisam-fk.html">C.6.2 Tutorial: Generating Foreign Keys with MyISAM</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="appendix"><a href="workbench-reporting-bugs.html">D How To Report Bugs or Problems</a></span></dt>
+<dt><span class="appendix"><a href="wb-mysql-enterprise.html">E MySQL Enterprise Features</a></span></dt>
+<dt><span class="appendix"><a href="wb-mysql-utilities.html">F MySQL Utilities</a></span></dt>
+</dl>
+</div>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+
+    <a href="wb-preface.html" aria-label="Next"
+        title="Next: Preface and Legal Notices">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="/doc/relnotes/workbench/en/">MySQL Workbench Release Notes</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/workbench-en.pdf">PDF (US Ltr)</a>
+            - 17.0Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/workbench-en.a4.pdf">PDF (A4)</a>
+            - 17.0Mb<br />
+                                </div>
+    </div>
+
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 4, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">MySQL HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="//c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+</html>

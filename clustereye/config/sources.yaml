@@ -110,7 +110,7 @@ sources:
     topic: monitoring
     priority: 1
     source_type: web
-    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-and-tuning-for-performance
+    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitor-and-tune-for-performance?view=sql-server-ver17
     crawl_depth: 1
     rate_limit: 2.0
     tags: [mssql, monitoring, performance]
@@ -121,7 +121,7 @@ sources:
     topic: tuning
     priority: 1
     source_type: web
-    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/best-practices-with-query-store
+    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/best-practice-with-the-query-store?view=sql-server-ver17
     crawl_depth: 1
     rate_limit: 2.0
     tags: [mssql, tuning, query-store]
@@ -159,7 +159,7 @@ sources:
     topic: monitoring
     priority: 1
     source_type: web
-    location: https://www.elastic.co/guide/en/elasticsearch/reference/current/monitor-elasticsearch-cluster.html
+    location: https://www.elastic.co/guide/en/elasticsearch/reference/8.18/monitor-elasticsearch-cluster.html
     crawl_depth: 1
     rate_limit: 2.0
     tags: [elasticsearch, monitoring, cluster]

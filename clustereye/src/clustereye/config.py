@@ -9,7 +9,7 @@ CONFIG_DIR = PROJECT_ROOT / "config"
 DEFAULT_SOURCES_YAML = CONFIG_DIR / "sources.yaml"
 
 # Ollama models
-LLM_MODEL = "deepseek-r1:8b"
+LLM_MODEL = "qwen2.5:14b"
 EMBEDDING_MODEL = "nomic-embed-text"
 EMBEDDING_DIM = 768
 OLLAMA_BASE_URL = "http://localhost:11434"
@@ -19,12 +19,12 @@ QDRANT_URL = "http://localhost:6333"
 COLLECTION_NAME = "clustereye_docs"
 
 # Chunking
-CHUNK_SIZE = 4000  # chars (~1000 tokens)
-CHUNK_OVERLAP = 600  # chars (~150 tokens)
+CHUNK_SIZE = 2000  # chars (~500 tokens, safe for nomic-embed-text 8192 token limit)
+CHUNK_OVERLAP = 300  # chars (~75 tokens)
 MIN_CHUNK_LENGTH = 200  # skip chunks shorter than this
 
 # Embedding
-EMBED_BATCH_SIZE = 64
+EMBED_BATCH_SIZE = 32
 
 # Upsert
 UPSERT_BATCH_SIZE = 100

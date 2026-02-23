@@ -12,15 +12,42 @@ log = get_logger(__name__)
 
 
 def _embed_batch_ollama(texts: list[str], model: str, base_url: str) -> list[list[float]]:
-    """Embed a batch of texts using Ollama API."""
-    resp = httpx.post(
-        f"{base_url}/api/embed",
-        json={"model": model, "input": texts},
-        timeout=120,
-    )
-    resp.raise_for_status()
-    data = resp.json()
-    return data["embeddings"]
+    """Embed a batch of texts using Ollama API with automatic retry on smaller batches."""
+    try:
+        resp = httpx.post(
+            f"{base_url}/api/embed",
+            json={"model": model, "input": texts},
+            timeout=120,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        return data["embeddings"]
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code == 400 and len(texts) > 1:
+            log.warning("embed_batch_too_large", count=len(texts), status="retrying_smaller")
+            mid = len(texts) // 2
+            left = _embed_batch_ollama(texts[:mid], model, base_url)
+            right = _embed_batch_ollama(texts[mid:], model, base_url)
+            return left + right
+        if exc.response.status_code == 400 and len(texts) == 1:
+            # Single text too large for model context - progressively truncate
+            original_len = len(texts[0])
+            for limit in [2000, 1000, 500]:
+                truncated = texts[0][:limit]
+                log.warning("embed_text_truncated", original_chars=original_len, truncated_to=limit)
+                try:
+                    resp = httpx.post(
+                        f"{base_url}/api/embed",
+                        json={"model": model, "input": [truncated]},
+                        timeout=120,
+                    )
+                    resp.raise_for_status()
+                    return resp.json()["embeddings"]
+                except httpx.HTTPStatusError:
+                    continue
+            log.error("embed_text_failed", original_chars=original_len, status="skipped")
+            raise
+        raise
 
 
 def embed_chunks(
@@ -38,7 +65,7 @@ def embed_chunks(
         batch = chunks[i : i + batch_size]
         texts = [f"search_document: {c.text}" for c in batch]
 
-        log.debug("embedding_batch", batch=f"{i}-{i + len(batch)}/{total}")
+        log.info("embedding_batch", batch=f"{i + len(batch)}/{total}")
         vectors = _embed_batch_ollama(texts, model, base_url)
         all_vectors.extend(vectors)
 

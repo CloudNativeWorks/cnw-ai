@@ -25,6 +25,7 @@ class AskResponse(BaseModel):
     answer: str
     sources: list[dict]
     timing_ms: int
+    stats: dict = {}
 
 
 class HealthResponse(BaseModel):
@@ -51,6 +52,7 @@ def ask_endpoint(request: AskRequest):
             answer=result["answer"],
             sources=result["sources"],
             timing_ms=result["timing_ms"],
+            stats=result.get("stats", {}),
         )
     except Exception as e:
         log.error("ask_error", error=str(e))

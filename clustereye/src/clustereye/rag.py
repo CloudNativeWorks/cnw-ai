@@ -1,6 +1,5 @@
 """RAG pipeline: retrieve relevant docs from Qdrant and query Ollama."""
 
-import re
 import time
 
 from langchain_core.output_parsers import StrOutputParser
@@ -39,8 +38,6 @@ Answer:"""
 
 PROMPT = ChatPromptTemplate.from_template(SYSTEM_PROMPT)
 
-# Regex to strip <think>...</think> from deepseek-r1 responses
-_THINK_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
 
 
 def get_qdrant_client() -> QdrantClient:
@@ -90,11 +87,6 @@ def _dedup_and_rerank(docs, boost_factor: float = 0.1):
     return unique_docs
 
 
-def _strip_think_tags(text: str) -> str:
-    """Strip <think>...</think> blocks from deepseek-r1 responses."""
-    return _THINK_RE.sub("", text).strip()
-
-
 def get_retriever():
     """Get the retriever from vectorstore with priority reranking."""
     vectorstore = get_vectorstore()
@@ -107,6 +99,7 @@ def get_chain():
     llm = ChatOllama(
         model=LLM_MODEL,
         base_url=OLLAMA_BASE_URL,
+        timeout=600,
     )
 
     chain = (
@@ -120,30 +113,48 @@ def get_chain():
 
 def ask(question: str) -> dict:
     """Ask a question and return the answer with source documents and timing."""
-    start = time.monotonic()
+    t0 = time.monotonic()
 
     retriever = get_retriever()
-    chain = get_chain()
+    t1 = time.monotonic()
 
     docs = retriever.invoke(question)
-    docs = _dedup_and_rerank(docs)
-    raw_answer = chain.invoke(question)
-    answer = _strip_think_tags(raw_answer)
+    t2 = time.monotonic()
 
-    elapsed_ms = int((time.monotonic() - start) * 1000)
+    docs = _dedup_and_rerank(docs)
+    context = _format_docs(docs)
+    t3 = time.monotonic()
+
+    chain = get_chain()
+    answer = chain.invoke(question)
+    t4 = time.monotonic()
 
     sources = []
+    db_engines_used = set()
     for doc in docs:
+        eng = doc.metadata.get("db_engine", "")
+        if eng:
+            db_engines_used.add(eng)
         sources.append({
             "uri": doc.metadata.get("uri", ""),
             "title": doc.metadata.get("title", ""),
             "section": doc.metadata.get("section", ""),
-            "db_engine": doc.metadata.get("db_engine", ""),
+            "db_engine": eng,
             "topic": doc.metadata.get("topic", ""),
         })
 
     return {
         "answer": answer,
         "sources": sources,
-        "timing_ms": elapsed_ms,
+        "timing_ms": int((t4 - t0) * 1000),
+        "stats": {
+            "retrieval_ms": int((t2 - t1) * 1000),
+            "rerank_ms": int((t3 - t2) * 1000),
+            "llm_ms": int((t4 - t3) * 1000),
+            "docs_retrieved": len(docs),
+            "context_chars": len(context),
+            "context_tokens_est": len(context) // 4,
+            "db_engines": sorted(db_engines_used),
+            "model": LLM_MODEL,
+        },
     }

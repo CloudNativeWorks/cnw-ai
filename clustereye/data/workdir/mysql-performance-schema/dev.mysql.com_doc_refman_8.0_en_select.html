@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="en" class="svg no-js">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Language" content="en">
+
+    <title>MySQL :: MySQL 8.0 Reference Manual :: 15.2.13 SELECT Statement</title>
+    <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/main-20250803.min.css" />
+            <link rel="stylesheet" media="all" href="https://labs.mysql.com/common/css/docs-20250803.min.css" />
+    
+    
+    <link rel="stylesheet" media="print" href="https://labs.mysql.com/common/css/print-20250803.min.css" />
+
+    
+    
+    
+    
+            <link rel="canonical" href="https://dev.mysql.com/doc/refman/8.4/en/select.html" />
+<link rel="contents" href="index.html" title="MySQL 8.0 Reference Manual" />
+<link rel="start" href="index.html" title="MySQL 8.0 Reference Manual" />
+<link rel="prev" href="replace.html" title="15.2.12 REPLACE Statement" />
+<link rel="next" href="select-into.html?ff=nopfpls" title="15.2.13.1 SELECT ... INTO Statement" />
+<link rel="up" href="sql-data-manipulation-statements.html" title="15.2 Data Manipulation Statements" />
+
+    
+    <link rel="shortcut icon" href="https://labs.mysql.com/common/themes/sakila/favicon.ico" />
+    <script async="async" type="text/javascript" src='https://consent.truste.com/notice?domain=oracle.com&c=teconsent&js=bb&noticeType=bb&text=true&cdn=1&pcookie&gtm=1' crossorigin></script>
+    <script src="https://www.oracle.com/assets/truste-oraclelib.js"></script>
+    <script>(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.documentElement)</script>
+    <script src="https://labs.mysql.com/common/js/site-20250121.min.js"></script>
+
+    
+    
+    <!--[if lt IE 9]>
+        <script src="https://labs.mysql.com/common/js/polyfills/html5shiv-printshiv-3.7.2.min.js"></script>
+        <script src="https://labs.mysql.com/common/js/polyfills/respond-1.4.2.min.js"></script>
+    <![endif]-->
+        <!--[if IE 9]>
+        <style>#docs-sidebar-toc { box-sizing: content-box; }</style>
+    <![endif]-->
+        
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="E6BB6-B37B4-898B7-F97BA-BBCDB",function(){function e(){if(!o){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,i.parentNode.appendChild(e),o=!0}}function t(e){o=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(i.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",i.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"E6BB6-B37B4-898B7-F97BA-BBCDB";var i=document.currentScript||document.getElementsByTagName("script")[0],o=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!o)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),i.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="2vfnvcaxywboc2m4oqdq-f-dcf350511-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"1334304","ak.ai":parseInt("802521",10),"ak.ol":"0","ak.cr":37,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"4c56f244","ak.r":47909,"ak.a2":n,"ak.m":"dscx","ak.n":"essl","ak.bpcip":"213.74.218.0","ak.cport":11856,"ak.gh":"23.51.23.82","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1771860999","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==PK565nMeu5TrX0rb2Q8fCurtay+BIzJB6v8pPpzvZSOefexPWnEipycGwDeD8m/SRfFS4CGQAIpeIZipcn2XuJLu5AydDALDdAb4A5Q4FHd6nnz3ua8Fexbsfj77HaJMBpC1aWei0iLKAXTePeNsNNthCSuj5IwOj2AX6GBPGDzSL42yXpxo2i7rJIP0Ae4yC9wMZEfCdl9c2tFabNWGr3Yp6NLUbwippud3/56/Wizeu6fGiXUBmITSU57NPSSXIqEaDHWzzssnVekVfH1kM5vPm4E6LQlzsZ316usEzVjHrFs0L6orb7OxmGpgO7Fh4gXdwT2bWo8LSRx+m1Une4lJFfciU+UkmSemPrmcCYGHePqwS/lDJ4Z/XQ8s52E1tehJAQyILyRlnIBZgFTGCNX7dZ3S24rQLBP52OKV9Ug=","ak.pv":"17","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body class="no-sidebar full-page dev">
+<a class="skip-main" href="#main">Skip to Main Content</a>
+<div class="page-wrapper">
+    <header>
+
+                        <a href="https://dev.mysql.com/" aria-label="MySQL Home" title="MySQL" id="l1-home-link"></a>
+        
+        <div id="l1-nav-container">
+            <div id="l1-line1">
+                <div id="l1-lhs">
+                    <div id="l1-slogan">
+                        The world's most popular open source database
+                    </div>
+                    <div id="l1-search-box">
+                        <form id="l1-search-form" method="get" action="https://search.oracle.com/mysql">
+                        <input type="hidden" name="app" value="mysql" />
+                        <input id="l1-search-input" type="search" class="icon-search" placeholder="Search" aria-label="Search" name="q" />
+                        </form>
+                    </div>
+                    <div id="l1-auth-links">
+                        <nav aria-label="Contact/Login Navigation" role="navigation">
+                            <a href="https://www.mysql.com/about/contact/"><b>Contact MySQL</b></a>
+                            <span id="l1-contact-separator">&nbsp;|&nbsp;</span>
+                            <span id="l1-contact-separator-br"><br /></span>
+                                                             <a href="https://dev.mysql.com/auth/login/?dest=https%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F8.0%2Fen%2Fselect.html">Login</a> &nbsp;|&nbsp;
+                                 <a href="https://dev.mysql.com/auth/register/">Register</a>
+                                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="l1-line2">
+                <nav aria-label="Primary Navigation" role="navigation">
+                    <ul id="l1-nav">
+                        <li>
+                            <a href="https://www.mysql.com/"><!-- <span class="icon-sakila"></span>  -->MySQL.com</a>
+                        </li><li>
+                            <a href="https://www.mysql.com/downloads/"><!-- <span class="icon-download-thin"></span>  -->Downloads</a>
+                        </li><li class="active">
+                            <a href="/doc/"><!-- <span class="icon-books"></span>  -->Documentation</a>
+                        </li><li>
+                            <a href="/"><!-- <span class="icon-code"></span>  -->Developer Zone</a>
+                        </li>                    </ul>
+                </nav>
+                <div class="social-icons">
+                    <nav aria-label="Social Navigation" role="navigation">
+                        <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook"></span></a>
+                        <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter"></span></a>
+                        <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin"></span></a>
+                        <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="sub-header">
+            <div id="l2-nav-container">
+                <div id="l2-nav-toggle">
+                    <span class="icon-three-bars"></span>
+                </div>
+                                                                                        <a class="button nav-button-3" href="/"><span class="icon-code"></span> Developer Zone</a>
+                                                                                                                                    <a class="button nav-button-2" href="https://www.mysql.com/downloads/"><span class="icon-download-thin"></span> Downloads</a>
+                                                                                                <a class="button nav-button-1" href="https://www.mysql.com/"><span class="icon-sakila"></span> MySQL.com</a>
+                                                                        <div id="l2-search-toggle">
+                    <span class="icon-search"></span>
+                </div>
+                <div id="l2-site-icon">
+                                                                                                                                                                                                    <span class="icon-books"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+                <div id="l1-section-title">
+                    <span id="l1-section-label">
+                        <a href="/doc/">Documentation</a>
+                    </span>
+                </div>
+                <nav aria-label="Secondary Navigation" role="navigation">
+                    
+
+<ul id="l2-nav">
+            	<li class="active"><a class="active " href="/doc/refman/en/">MySQL Server</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-enterprise.html">MySQL Enterprise</a>
+    			</li>
+	        	<li class=""><a  href="/doc/workbench/en/">Workbench</a>
+    			</li>
+	        	<li class=""><a  href="/doc/mysql-shell/en/mysql-innodb-cluster.html">InnoDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-cluster.html">MySQL NDB Cluster</a>
+    			</li>
+	        	<li class=""><a  href="/doc/index-connectors.html">Connectors</a>
+    			</li>
+	        	<li class=" last"><a  href="/doc/index-other.html">More</a>
+    			</li>
+	                        <li class="other-section"><a href="https://www.mysql.com/">MySQL.com</a></li>
+                            <li class="other-section"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                                        <li class="other-section"><a href="/">Developer Zone</a></li>
+            </ul>
+                </nav>
+            </div>
+            <div id="l3-search-container"></div>
+            <div id="top-orange"><span id="section-nav">Section Menu: &nbsp; </span></div>
+        </div>
+    </header>
+        <div id="page">
+                        <div role="main" id="main" tabindex="-1">
+
+            
+                
+            
+<div>
+    <div id="docs-sidebar-toc" class="">
+    <div id="docs-toc-inner">
+        <div class="docs-sidebar-header" id="docs-nav-header">
+            <a class="docs-show-hide-nav" id="docs-hide-nav" href="" title="Hide Sidebar" aria-label="Hide Sidebar"><span class="icon-arrow-small-left"></span></a>
+            <div class="docs-nav-links">
+                                    
+    <a href="replace.html"
+        aria-label="Previous" title="Previous: REPLACE Statement"><span
+        class="icon-chevron-left"></span></a>
+<a href="index.html" aria-label="Start" title="Start"><span class="icon-book-open"></span></a>
+        <a aria-label="Up" href="sql-data-manipulation-statements.html" title="Up: Data Manipulation Statements"><span class="icon-chevron-up"></span></a>
+    <a href="select-into.html" aria-label="Next"
+        title="Next: SELECT ... INTO Statement"><span
+        class="icon-chevron-right"></span></a>
+                            </div>
+        </div>
+                    
+<div id="docs-sidebar-search-container">
+    <div id="docs-sidebar-search-box">
+        <form method="get" action="/doc/search/">
+            <input type="hidden" name="d" id="d" value="201" />
+            <input type="hidden" name="p" id="p" value="1" />
+            <input type="text" name="q" id="q" title="Search this Manual"
+                value="Search this Manual"
+                style="color: #bbb;"
+                onfocus="if(this.value == 'Search this Manual') {this.value='';this.style.color='#555';}"
+                onblur="if(this.value == '') {this.value='Search this Manual';this.style.color='#bbb';}" />
+
+            <button class="docs-sidebar-search-btn" aria-label="Search" title="Search" type="submit">
+                <span class="icon-search"></span>
+            </button>
+        </form>
+    </div>
+</div>
+                <div class="docs-sidebar-nav">
+            <a class="docs-icon-home" href="/doc/"><span class="icon-home"></span>Documentation Home</a><hr />
+            <div class="docs-sidebar-mtitle">MySQL 8.0 Reference Manual</div>
+            <nav class="doctoc" id="doc-201">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="preface.html">Preface and Legal Notices</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="introduction.html">General Information</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="installing.html">Installing MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="upgrading.html">Upgrading MySQL</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="downgrading.html">Downgrading MySQL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="tutorial.html">Tutorial</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="programs.html">MySQL Programs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="server-administration.html">MySQL Server Administration</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="security.html">Security</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="backup-and-recovery.html">Backup and Recovery</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="optimization.html">Optimization</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="language-structure.html">Language Structure</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="charset.html">Character Sets, Collations, Unicode</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-types.html">Data Types</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="functions.html">Functions and Operators</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-statements.html">SQL Statements</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-data-definition-statements.html">Data Definition Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="atomic-ddl.html">Atomic Data Definition Statement Support</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-database.html">ALTER DATABASE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-event.html">ALTER EVENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-function.html">ALTER FUNCTION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-instance.html">ALTER INSTANCE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-logfile-group.html">ALTER LOGFILE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-procedure.html">ALTER PROCEDURE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-server.html">ALTER SERVER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="alter-table.html">ALTER TABLE Statement</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-table-partition-operations.html">ALTER TABLE Partition Operations</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-table-generated-columns.html">ALTER TABLE and Generated Columns</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-table-examples.html">ALTER TABLE Examples</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-tablespace.html">ALTER TABLESPACE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-view.html">ALTER VIEW Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-database.html">CREATE DATABASE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-event.html">CREATE EVENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-function.html">CREATE FUNCTION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-index.html">CREATE INDEX Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-logfile-group.html">CREATE LOGFILE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-procedure.html">CREATE PROCEDURE and CREATE FUNCTION Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-server.html">CREATE SERVER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-spatial-reference-system.html">CREATE SPATIAL REFERENCE SYSTEM Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="create-table.html">CREATE TABLE Statement</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-files.html">Files Created by CREATE TABLE</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-temporary-table.html">CREATE TEMPORARY TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-like.html">CREATE TABLE ... LIKE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-select.html">CREATE TABLE ... SELECT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-foreign-keys.html">FOREIGN KEY Constraints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-check-constraints.html">CHECK Constraints</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="silent-column-changes.html">Silent Column Specification Changes</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-generated-columns.html">CREATE TABLE and Generated Columns</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-secondary-indexes.html">Secondary Indexes and Generated Columns</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="invisible-columns.html">Invisible Columns</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-gipks.html">Generated Invisible Primary Keys</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-table-ndb-comment-options.html">Setting NDB Comment Options</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-tablespace.html">CREATE TABLESPACE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-trigger.html">CREATE TRIGGER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-view.html">CREATE VIEW Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-database.html">DROP DATABASE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-event.html">DROP EVENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-function.html">DROP FUNCTION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-index.html">DROP INDEX Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-logfile-group.html">DROP LOGFILE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-procedure.html">DROP PROCEDURE and DROP FUNCTION Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-server.html">DROP SERVER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-spatial-reference-system.html">DROP SPATIAL REFERENCE SYSTEM Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-table.html">DROP TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-tablespace.html">DROP TABLESPACE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-trigger.html">DROP TRIGGER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-view.html">DROP VIEW Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rename-table.html">RENAME TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="truncate-table.html">TRUNCATE TABLE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-data-manipulation-statements.html">Data Manipulation Statements</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="call.html">CALL Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="delete.html">DELETE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="do.html">DO Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="except.html">EXCEPT Clause</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="handler.html">HANDLER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="import-table.html">IMPORT TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="insert.html">INSERT Statement</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="insert-select.html">INSERT ... SELECT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="insert-on-duplicate.html">INSERT ... ON DUPLICATE KEY UPDATE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="insert-delayed.html">INSERT DELAYED Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="intersect.html">INTERSECT Clause</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-data.html">LOAD DATA Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-xml.html">LOAD XML Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="parenthesized-query-expressions.html">Parenthesized Query Expressions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="replace.html">REPLACE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-down"></span></a></div><div class="docs-sidebar-nav-link current"><a href="select.html">SELECT Statement</a></div></div>                        <div class="docs-submenu">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="select-into.html">SELECT ... INTO Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="join.html">JOIN Clause</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-operations.html">Set Operations with UNION, INTERSECT, and EXCEPT</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="subqueries.html">Subqueries</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="scalar-subqueries.html">The Subquery as Scalar Operand</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="comparisons-using-subqueries.html">Comparisons Using Subqueries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="any-in-some-subqueries.html">Subqueries with ANY, IN, or SOME</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="all-subqueries.html">Subqueries with ALL</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="row-subqueries.html">Row Subqueries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="exists-and-not-exists-subqueries.html">Subqueries with EXISTS or NOT EXISTS</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="correlated-subqueries.html">Correlated Subqueries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="derived-tables.html">Derived Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lateral-derived-tables.html">Lateral Derived Tables</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-errors.html">Subquery Errors</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimizing-subqueries.html">Optimizing Subqueries</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="subquery-restrictions.html">Restrictions on Subqueries</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="table.html">TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="update.html">UPDATE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="union.html">UNION Clause</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="values.html">VALUES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="with.html">WITH (Common Table Expressions)</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-transactional-statements.html">Transactional and Locking Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="commit.html">START TRANSACTION, COMMIT, and ROLLBACK Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cannot-roll-back.html">Statements That Cannot Be Rolled Back</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="implicit-commit.html">Statements That Cause an Implicit Commit</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="savepoint.html">SAVEPOINT, ROLLBACK TO SAVEPOINT, and RELEASE SAVEPOINT Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-instance-for-backup.html">LOCK INSTANCE FOR BACKUP and UNLOCK INSTANCE Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="lock-tables.html">LOCK TABLES and UNLOCK TABLES Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-transaction.html">SET TRANSACTION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="xa.html">XA Transactions</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="xa-statements.html">XA Transaction SQL Statements</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="xa-states.html">XA Transaction States</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="xa-restrictions.html">Restrictions on XA Transactions</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-replication-statements.html">Replication Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-statements-master.html">SQL Statements for Controlling Source Servers</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="purge-binary-logs.html">PURGE BINARY LOGS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reset-master.html">RESET MASTER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-sql-log-bin.html">SET sql_log_bin Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-statements-replica.html">SQL Statements for Controlling Replica Servers</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="change-master-to.html">CHANGE MASTER TO Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="change-replication-filter.html">CHANGE REPLICATION FILTER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="change-replication-source-to.html">CHANGE REPLICATION SOURCE TO Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reset-replica.html">RESET REPLICA Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reset-slave.html">RESET SLAVE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="start-replica.html">START REPLICA Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="start-slave.html">START SLAVE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stop-replica.html">STOP REPLICA Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stop-slave.html">STOP SLAVE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication-statements-group.html">SQL Statements for Controlling Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="start-group-replication.html">START GROUP_REPLICATION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="stop-group-replication.html">STOP GROUP_REPLICATION Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-prepared-statements.html">Prepared Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="prepare.html">PREPARE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="execute.html">EXECUTE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="deallocate-prepare.html">DEALLOCATE PREPARE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-compound-statements.html">Compound Statement Syntax</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="begin-end.html">BEGIN ... END Compound Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="statement-labels.html">Statement Labels</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="declare.html">DECLARE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-program-variables.html">Variables in Stored Programs</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="declare-local-variable.html">Local Variable DECLARE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="local-variable-scope.html">Local Variable Scope and Resolution</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="flow-control-statements.html">Flow Control Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="case.html">CASE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="if.html">IF Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="iterate.html">ITERATE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="leave.html">LEAVE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="loop.html">LOOP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="repeat.html">REPEAT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="return.html">RETURN Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="while.html">WHILE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="cursors.html">Cursors</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="close.html">Cursor CLOSE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="declare-cursor.html">Cursor DECLARE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="fetch.html">Cursor FETCH Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="open.html">Cursor OPEN Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cursor-restrictions.html">Restrictions on Server-Side Cursors</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="condition-handling.html">Condition Handling</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="declare-condition.html">DECLARE ... CONDITION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="declare-handler.html">DECLARE ... HANDLER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="get-diagnostics.html">GET DIAGNOSTICS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="resignal.html">RESIGNAL Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="signal.html">SIGNAL Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="handler-scope.html">Scope Rules for Handlers</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="diagnostics-area.html">The MySQL Diagnostics Area</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="conditions-and-parameters.html">Condition Handling and OUT or INOUT Parameters</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="condition-handling-restrictions.html">Restrictions on Condition Handling</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-server-administration-statements.html">Database Administration Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="account-management-statements.html">Account Management Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-user.html">ALTER USER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-role.html">CREATE ROLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-user.html">CREATE USER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-role.html">DROP ROLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-user.html">DROP USER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="grant.html">GRANT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="rename-user.html">RENAME USER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="revoke.html">REVOKE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-default-role.html">SET DEFAULT ROLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-password.html">SET PASSWORD Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-role.html">SET ROLE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="resource-group-statements.html">Resource Group Management Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="alter-resource-group.html">ALTER RESOURCE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-resource-group.html">CREATE RESOURCE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-resource-group.html">DROP RESOURCE GROUP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-resource-group.html">SET RESOURCE GROUP Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="table-maintenance-statements.html">Table Maintenance Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="analyze-table.html">ANALYZE TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="check-table.html">CHECK TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="checksum-table.html">CHECKSUM TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="optimize-table.html">OPTIMIZE TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="repair-table.html">REPAIR TABLE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="component-statements.html">Component, Plugin, and Loadable Function Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="create-function-loadable.html">CREATE FUNCTION Statement for Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="drop-function-loadable.html">DROP FUNCTION Statement for Loadable Functions</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="install-component.html">INSTALL COMPONENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="install-plugin.html">INSTALL PLUGIN Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="uninstall-component.html">UNINSTALL COMPONENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="uninstall-plugin.html">UNINSTALL PLUGIN Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="clone.html">CLONE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="set-statement.html">SET Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-variable.html">SET Syntax for Variable Assignment</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-character-set.html">SET CHARACTER SET Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="set-names.html">SET NAMES Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="show.html">SHOW Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-binary-logs.html">SHOW BINARY LOGS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-binlog-events.html">SHOW BINLOG EVENTS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-character-set.html">SHOW CHARACTER SET Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-collation.html">SHOW COLLATION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-columns.html">SHOW COLUMNS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-database.html">SHOW CREATE DATABASE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-event.html">SHOW CREATE EVENT Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-function.html">SHOW CREATE FUNCTION Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-procedure.html">SHOW CREATE PROCEDURE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-table.html">SHOW CREATE TABLE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-trigger.html">SHOW CREATE TRIGGER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-user.html">SHOW CREATE USER Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-create-view.html">SHOW CREATE VIEW Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-databases.html">SHOW DATABASES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-engine.html">SHOW ENGINE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-engines.html">SHOW ENGINES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-errors.html">SHOW ERRORS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-events.html">SHOW EVENTS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-function-code.html">SHOW FUNCTION CODE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-function-status.html">SHOW FUNCTION STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-grants.html">SHOW GRANTS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-index.html">SHOW INDEX Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-master-status.html">SHOW MASTER STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-open-tables.html">SHOW OPEN TABLES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-plugins.html">SHOW PLUGINS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-privileges.html">SHOW PRIVILEGES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-procedure-code.html">SHOW PROCEDURE CODE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-procedure-status.html">SHOW PROCEDURE STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-processlist.html">SHOW PROCESSLIST Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-profile.html">SHOW PROFILE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-profiles.html">SHOW PROFILES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-relaylog-events.html">SHOW RELAYLOG EVENTS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-replicas.html">SHOW REPLICAS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-slave-hosts.html">SHOW SLAVE HOSTS | SHOW REPLICAS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-replica-status.html">SHOW REPLICA STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-slave-status.html">SHOW SLAVE | REPLICA STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-status.html">SHOW STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-table-status.html">SHOW TABLE STATUS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-tables.html">SHOW TABLES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-triggers.html">SHOW TRIGGERS Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-variables.html">SHOW VARIABLES Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="show-warnings.html">SHOW WARNINGS Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="other-administrative-statements.html">Other Administrative Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="binlog.html">BINLOG Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="cache-index.html">CACHE INDEX Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="flush.html">FLUSH Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="kill.html">KILL Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="load-index.html">LOAD INDEX INTO CACHE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reset.html">RESET Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="reset-persist.html">RESET PERSIST Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="restart.html">RESTART Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="shutdown.html">SHUTDOWN Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable  loaded" aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sql-utility-statements.html">Utility Statements</a></div></div>                        <div class="docs-submenu hidden">
+                                    
+    <ul>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="describe.html">DESCRIBE Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="explain.html">EXPLAIN Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="help.html">HELP Statement</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="use.html">USE Statement</a></div></div>                    </li>
+        </ul>
+                            </div>
+                    </li>
+        </ul>
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="data-dictionary.html">MySQL Data Dictionary</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="innodb-storage-engine.html">The InnoDB Storage Engine</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="storage-engines.html">Alternative Storage Engines</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="replication.html">Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="group-replication.html">Group Replication</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-shell-userguide.html">MySQL Shell</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="document-store.html">Using MySQL as a Document Store</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-cluster-introduction.html">InnoDB Cluster</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="mysql-innodb-replicaset-introduction.html">InnoDB ReplicaSet</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-cluster.html">MySQL NDB Cluster 8.0</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="partitioning.html">Partitioning</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="stored-objects.html">Stored Objects</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="information-schema.html">INFORMATION_SCHEMA Tables</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="performance-schema.html">MySQL Performance Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="sys-schema.html">MySQL sys Schema</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="connectors-apis.html">Connectors and APIs</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-enterprise.html">MySQL Enterprise Edition</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="workbench.html">MySQL Workbench</a></div></div>                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="mysql-oci-marketplace.html">MySQL on OCI Marketplace</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="faqs.html">MySQL 8.0 Frequently Asked Questions</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="error-handling.html">Error Messages and Common Problems</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><a class="expandable " aria-label="Subnav" href=""><span class="icon-chevron-right"></span></a></div><div class="docs-sidebar-nav-link"><a href="indexes.html">Indexes</a></div></div>                        <div class="docs-submenu hidden">
+                            </div>
+                    </li>
+            <li>
+            <div><div class="docs-sidebar-nav-icon"><span class="icon-dot"></span></div><div class="docs-sidebar-nav-link"><a href="glossary.html">MySQL Glossary</a></div></div>                    </li>
+        </ul>
+                            </nav>
+        </div>
+
+        
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian open">
+    <div class="text">
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        <a href="/doc/dev/mysql-server/latest/">MySQL 8.0 Source Code Documentation</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian open">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.0-en.pdf">PDF (US Ltr)</a>
+            - 43.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.a4.pdf">PDF (A4)</a>
+            - 43.4Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 297.3Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 402.5Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.gz">Info (Gzip)</a>
+            - 4.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.zip">Info (Zip)</a>
+            - 4.3Mb<br />
+                                </div>
+    </div>
+
+<a class="docs-sidebar-section" href=""><span class="icon-book"></span>
+    <span class="text">Excerpts from this Manual</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+                <a href="/doc/mysql-backup-excerpt/8.0/en/">MySQL Backup and Recovery</a><br />
+                <a href="/doc/mysql-g11n-excerpt/8.0/en/">MySQL Globalization</a><br />
+                <a href="/doc/mysql-infoschema-excerpt/8.0/en/">MySQL Information Schema</a><br />
+                <a href="/doc/mysql-installation-excerpt/8.0/en/">MySQL Installation Guide</a><br />
+                <a href="/doc/mysql-security-excerpt/8.0/en/">Security in MySQL</a><br />
+                <a href="/doc/mysql-startstop-excerpt/8.0/en/">Starting and Stopping MySQL</a><br />
+                <a href="/doc/mysql-linuxunix-excerpt/8.0/en/">MySQL and Linux/Unix</a><br />
+                <a href="/doc/mysql-windows-excerpt/8.0/en/">MySQL and Windows</a><br />
+                <a href="/doc/mysql-macos-excerpt/8.0/en/">MySQL and macOS</a><br />
+                <a href="/doc/mysql-solaris-excerpt/8.0/en/">MySQL and Solaris</a><br />
+                <a href="/doc/mysql-sourcebuild-excerpt/8.0/en/">Building MySQL from Source</a><br />
+                <a href="/doc/mysql-reslimits-excerpt/8.0/en/">MySQL Restrictions and Limitations</a><br />
+                <a href="/doc/mysql-partitioning-excerpt/8.0/en/">MySQL Partitioning</a><br />
+                <a href="/doc/mysql-tutorial-excerpt/8.0/en/">MySQL Tutorial</a><br />
+                <a href="/doc/mysql-perfschema-excerpt/8.0/en/">MySQL Performance Schema</a><br />
+                <a href="/doc/mysql-replication-excerpt/8.0/en/">MySQL Replication</a><br />
+                <a href="/doc/mysql-repo-excerpt/8.0/en/">Using the MySQL Yum Repository</a><br />
+                <a href="/doc/mysql-cluster-excerpt/8.0/en/">MySQL NDB Cluster 8.0</a><br />
+            </div>
+</div>
+
+        <br /><span id="wkr"><br /></span>
+    </div>
+    </div>
+
+    <div id="docs-main" class="has-toc">
+    <div id="docs-main-inner">
+
+                <div class="right" id="docs-version-nav">
+            <a href="" id="docs-version-nav-toggle">version 8.0
+            <span class="icon-chevron-down"></span></a>
+            <div id="docs-version-list">
+                                                        <a                         href="/doc/refman/9.6/en/select.html">
+                        9.6
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.5/en/select.html">
+                        9.5
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.4/en/select.html">
+                        9.4
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/9.3/en/select.html">
+                        9.3
+                                            </a><br />
+                                                                            <a                         href="/doc/refman/8.4/en/select.html">
+                        8.4
+                                                &nbsp;current
+                                            </a><br />
+                                                                                                                <a                         href="/doc/refman/5.7/en/select.html">
+                        5.7
+                                            </a><br />
+                                                                        <div id="docs-version-nav-lang">
+                                                                                                                                                    <a                                     href="/doc/refman/8.0/ja/select.html">
+                                    8.0&nbsp;
+                                                                            Japanese
+                                                                    </a><br />
+                                                                                            </div>
+                            </div>
+        </div>
+        
+        <div id="docs-show-nav" class="left hidden" style="margin-right: 15px;">
+            <a class="docs-show-hide-nav" href="" aria-label="Show Sidebar"
+                title="Show Sidebar"><span class="icon-arrow-small-right"></span></a>
+        </div>
+
+                        <div id="docs-breadcrumbs">
+            <a href="/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a> &nbsp;/&nbsp;
+                            <span id="breadcrumbs-link"><a href="" id="show-breadcrumbs">...</a> &nbsp;/&nbsp;</span>
+                <span class="hidden" id="hidden-breadcrumbs">
+                                                        <a href="sql-statements.html">SQL Statements</a> &nbsp;/&nbsp;
+                                                            <a href="sql-data-manipulation-statements.html">Data Manipulation Statements</a> &nbsp;/&nbsp;
+                                                                                        </span>
+                                        SELECT Statement
+                                    </div>
+        
+        <div id="docs-body">
+        
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="select"></a>15.2.13 SELECT Statement</h3>
+
+</div>
+
+</div>
+
+</div>
+<div class="toc">
+<dl class="toc"><dt><span class="section"><a href="select-into.html">15.2.13.1 SELECT ... INTO Statement</a></span></dt><dt><span class="section"><a href="join.html">15.2.13.2 JOIN Clause</a></span></dt></dl>
+</div>
+<a class="indexterm" name="id269667"></a><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT
+    [ALL | DISTINCT | DISTINCTROW ]
+    [HIGH_PRIORITY]
+    [STRAIGHT_JOIN]
+    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
+    [SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
+    <em class="replaceable">select_expr</em> [, <em class="replaceable">select_expr</em>] ...
+    [<em class="replaceable">into_option</em>]
+    [FROM <em class="replaceable">table_references</em>
+      [PARTITION <em class="replaceable">partition_list</em>]]
+    [WHERE <em class="replaceable">where_condition</em>]
+    [GROUP BY {<em class="replaceable">col_name</em> | <em class="replaceable">expr</em> | <em class="replaceable">position</em>}, ... [WITH ROLLUP]]
+    [HAVING <em class="replaceable">where_condition</em>]
+    [WINDOW <em class="replaceable">window_name</em> AS (<em class="replaceable">window_spec</em>)
+        [, <em class="replaceable">window_name</em> AS (<em class="replaceable">window_spec</em>)] ...]
+    [ORDER BY {<em class="replaceable">col_name</em> | <em class="replaceable">expr</em> | <em class="replaceable">position</em>}
+      [ASC | DESC], ... [WITH ROLLUP]]
+    [LIMIT {[<em class="replaceable">offset</em>,] <em class="replaceable">row_count</em> | <em class="replaceable">row_count</em> OFFSET <em class="replaceable">offset</em>}]
+    [<em class="replaceable">into_option</em>]
+    [FOR {UPDATE | SHARE}
+        [OF <em class="replaceable">tbl_name</em> [, <em class="replaceable">tbl_name</em>] ...]
+        [NOWAIT | SKIP LOCKED]
+      | LOCK IN SHARE MODE]
+    [<em class="replaceable">into_option</em>]
+
+<em class="replaceable">into_option</em>: {
+    INTO OUTFILE '<em class="replaceable">file_name</em>'
+        [CHARACTER SET <em class="replaceable">charset_name</em>]
+        <em class="replaceable">export_options</em>
+  | INTO DUMPFILE '<em class="replaceable">file_name</em>'
+  | INTO <em class="replaceable">var_name</em> [, <em class="replaceable">var_name</em>] ...
+}
+
+<em class="replaceable">export_options</em>:
+    [{FIELDS | COLUMNS}
+        [TERMINATED BY 'string']
+        [[OPTIONALLY] ENCLOSED BY 'char']
+        [ESCAPED BY 'char']
+    ]
+    [LINES
+        [STARTING BY 'string']
+        [TERMINATED BY 'string']
+    ]</code></pre><p>
+      <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> is used to retrieve rows
+      selected from one or more tables, and can include
+      <a class="link" href="union.html" title="15.2.18 UNION Clause"><code class="literal">UNION</code></a> operations and subqueries.
+      Beginning with MySQL 8.0.31,
+      <a class="link" href="intersect.html" title="15.2.8 INTERSECT Clause"><code class="literal">INTERSECT</code></a> and
+      <a class="link" href="except.html" title="15.2.4 EXCEPT Clause"><code class="literal">EXCEPT</code></a> operations are also
+      supported. The <code class="literal">UNION</code>,
+      <code class="literal">INTERSECT</code>, and <code class="literal">EXCEPT</code>
+      operators are described in more detail later in this section. See
+      also <a class="xref" href="subqueries.html" title="15.2.15 Subqueries">Section 15.2.15, “Subqueries”</a>.
+    </p><p>
+      A <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statement can start with a
+      <a class="link" href="with.html" title="15.2.20 WITH (Common Table Expressions)"><code class="literal">WITH</code></a> clause to define common table
+      expressions accessible within the
+      <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>. See <a class="xref" href="with.html" title="15.2.20 WITH (Common Table Expressions)">Section 15.2.20, “WITH (Common Table Expressions)”</a>.
+    </p><p>
+      The most commonly used clauses of
+      <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements are these:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Each <em class="replaceable"><code>select_expr</code></em> indicates a column
+          that you want to retrieve. There must be at least one
+          <em class="replaceable"><code>select_expr</code></em>.
+        </p></li><li class="listitem"><p>
+          <em class="replaceable"><code>table_references</code></em> indicates the
+          table or tables from which to retrieve rows. Its syntax is
+          described in <a class="xref" href="join.html" title="15.2.13.2 JOIN Clause">Section 15.2.13.2, “JOIN Clause”</a>.
+        </p></li><li class="listitem"><p>
+          <code class="literal">SELECT</code> supports explicit partition
+          selection using the <code class="literal">PARTITION</code> clause with a
+          list of partitions or subpartitions (or both) following the
+          name of the table in a
+          <em class="replaceable"><code>table_reference</code></em> (see
+          <a class="xref" href="join.html" title="15.2.13.2 JOIN Clause">Section 15.2.13.2, “JOIN Clause”</a>). In this case, rows are selected only
+          from the partitions listed, and any other partitions of the
+          table are ignored. For more information and examples, see
+          <a class="xref" href="partitioning-selection.html" title="26.5 Partition Selection">Section 26.5, “Partition Selection”</a>.
+        </p></li><li class="listitem"><p>
+          The <code class="literal">WHERE</code> clause, if given, indicates the
+          condition or conditions that rows must satisfy to be selected.
+          <em class="replaceable"><code>where_condition</code></em> is an expression
+          that evaluates to true for each row to be selected. The
+          statement selects all rows if there is no
+          <code class="literal">WHERE</code> clause.
+        </p><p>
+          In the <code class="literal">WHERE</code> expression, you can use any of
+          the functions and operators that MySQL supports, except for
+          aggregate (group) functions. See
+          <a class="xref" href="expressions.html" title="11.5 Expressions">Section 11.5, “Expressions”</a>, and
+          <a class="xref" href="functions.html" title="Chapter 14 Functions and Operators">Chapter 14, <i>Functions and Operators</i></a>.
+</p></li></ul>
+</div>
+<p>
+      <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> can also be used to retrieve
+      rows computed without reference to any table.
+    </p><p>
+      For example:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT 1 + 1;
+        -&gt; 2</code></pre><p>
+      <a class="indexterm" name="id269768"></a>
+
+      You are permitted to specify <code class="literal">DUAL</code> as a dummy
+      table name in situations where no tables are referenced:
+    </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">mysql&gt; SELECT 1 + 1 FROM DUAL;
+        -&gt; 2</code></pre><p>
+      <code class="literal">DUAL</code> is purely for the convenience of people
+      who require that all <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+      statements should have <code class="literal">FROM</code> and possibly other
+      clauses. MySQL may ignore the clauses. MySQL does not require
+      <code class="literal">FROM DUAL</code> if no tables are referenced.
+    </p><p>
+      In general, clauses used must be given in exactly the order shown
+      in the syntax description. For example, a
+      <code class="literal">HAVING</code> clause must come after any
+      <code class="literal">GROUP BY</code> clause and before any <code class="literal">ORDER
+      BY</code> clause. The <code class="literal">INTO</code> clause, if
+      present, can appear in any position indicated by the syntax
+      description, but within a given statement can appear only once,
+      not in multiple positions. For more information about
+      <code class="literal">INTO</code>, see <a class="xref" href="select-into.html" title="15.2.13.1 SELECT ... INTO Statement">Section 15.2.13.1, “SELECT ... INTO Statement”</a>.
+    </p><p>
+      The list of <em class="replaceable"><code>select_expr</code></em> terms comprises
+      the select list that indicates which columns to retrieve. Terms
+      specify a column or expression or can use
+      <code class="literal">*</code>-shorthand:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          A select list consisting only of a single unqualified
+          <code class="literal">*</code> can be used as shorthand to select all
+          columns from all tables:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM t1 INNER JOIN t2 ...</code></pre></li><li class="listitem"><p>
+          <code class="literal"><em class="replaceable"><code>tbl_name</code></em>.*</code> can
+          be used as a qualified shorthand to select all columns from
+          the named table:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT t1.*, t2.* FROM t1 INNER JOIN t2 ...</code></pre></li><li class="listitem"><p>
+          If a table has invisible columns, <code class="literal">*</code> and
+          <code class="literal"><em class="replaceable"><code>tbl_name</code></em>.*</code> do
+          not include them. To be included, invisible columns must be
+          referenced explicitly.
+        </p></li><li class="listitem"><p>
+          Use of an unqualified <code class="literal">*</code> with other items in
+          the select list may produce a parse error. For example:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT id, * FROM t1</code></pre><p>
+          To avoid this problem, use a qualified
+          <code class="literal"><em class="replaceable"><code>tbl_name</code></em>.*</code>
+          reference:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT id, t1.* FROM t1</code></pre><p>
+          Use qualified
+          <code class="literal"><em class="replaceable"><code>tbl_name</code></em>.*</code>
+          references for each table in the select list:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT AVG(score), t1.* FROM t1 ...</code></pre></li></ul>
+</div>
+<p>
+      The following list provides additional information about other
+      <code class="literal">SELECT</code> clauses:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          <a class="indexterm" name="id269822"></a>
+
+          <a class="indexterm" name="id269825"></a>
+
+          A <em class="replaceable"><code>select_expr</code></em> can be given an alias
+          using <code class="literal">AS
+          <em class="replaceable"><code>alias_name</code></em></code>. The alias is
+          used as the expression's column name and can be used in
+          <code class="literal">GROUP BY</code>, <code class="literal">ORDER BY</code>, or
+          <code class="literal">HAVING</code> clauses. For example:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT CONCAT(last_name,', ',first_name) AS full_name
+  FROM mytable ORDER BY full_name;</code></pre><p>
+          The <code class="literal">AS</code> keyword is optional when aliasing a
+          <em class="replaceable"><code>select_expr</code></em> with an identifier. The
+          preceding example could have been written like this:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT CONCAT(last_name,', ',first_name) full_name
+  FROM mytable ORDER BY full_name;</code></pre><p>
+          However, because the <code class="literal">AS</code> is optional, a
+          subtle problem can occur if you forget the comma between two
+          <em class="replaceable"><code>select_expr</code></em> expressions: MySQL
+          interprets the second as an alias name. For example, in the
+          following statement, <code class="literal">columnb</code> is treated as
+          an alias name:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT columna columnb FROM mytable;</code></pre><p>
+          For this reason, it is good practice to be in the habit of
+          using <code class="literal">AS</code> explicitly when specifying column
+          aliases.
+        </p><p>
+          It is not permissible to refer to a column alias in a
+          <code class="literal">WHERE</code> clause, because the column value
+          might not yet be determined when the <code class="literal">WHERE</code>
+          clause is executed. See <a class="xref" href="problems-with-alias.html" title="B.3.4.4 Problems with Column Aliases">Section B.3.4.4, “Problems with Column Aliases”</a>.
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id269851"></a>
+
+          <a class="indexterm" name="id269853"></a>
+
+          The <code class="literal">FROM
+          <em class="replaceable"><code>table_references</code></em></code> clause
+          indicates the table or tables from which to retrieve rows. If
+          you name more than one table, you are performing a join. For
+          information on join syntax, see <a class="xref" href="join.html" title="15.2.13.2 JOIN Clause">Section 15.2.13.2, “JOIN Clause”</a>. For
+          each table specified, you can optionally specify an alias.
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql"><em class="replaceable">tbl_name</em> [[AS] <em class="replaceable">alias</em>] [<em class="replaceable">index_hint</em>]</code></pre><a class="indexterm" name="id269862"></a><a class="indexterm" name="id269864"></a><p>
+          The use of index hints provides the optimizer with information
+          about how to choose indexes during query processing. For a
+          description of the syntax for specifying these hints, see
+          <a class="xref" href="index-hints.html" title="10.9.4 Index Hints">Section 10.9.4, “Index Hints”</a>.
+        </p><p>
+          You can use <code class="literal">SET
+          max_seeks_for_key=<em class="replaceable"><code>value</code></em></code>
+          as an alternative way to force MySQL to prefer key scans
+          instead of table scans. See
+          <a class="xref" href="server-system-variables.html" title="7.1.8 Server System Variables">Section 7.1.8, “Server System Variables”</a>.
+        </p></li><li class="listitem"><p>
+          You can refer to a table within the default database as
+          <em class="replaceable"><code>tbl_name</code></em>, or as
+          <em class="replaceable"><code>db_name</code></em>.<em class="replaceable"><code>tbl_name</code></em>
+          to specify a database explicitly. You can refer to a column as
+          <em class="replaceable"><code>col_name</code></em>,
+          <em class="replaceable"><code>tbl_name</code></em>.<em class="replaceable"><code>col_name</code></em>,
+          or
+          <em class="replaceable"><code>db_name</code></em>.<em class="replaceable"><code>tbl_name</code></em>.<em class="replaceable"><code>col_name</code></em>.
+          You need not specify a <em class="replaceable"><code>tbl_name</code></em> or
+          <em class="replaceable"><code>db_name</code></em>.<em class="replaceable"><code>tbl_name</code></em>
+          prefix for a column reference unless the reference would be
+          ambiguous. See <a class="xref" href="identifier-qualifiers.html" title="11.2.2 Identifier Qualifiers">Section 11.2.2, “Identifier Qualifiers”</a>, for
+          examples of ambiguity that require the more explicit column
+          reference forms.
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id269890"></a>
+
+          <a class="indexterm" name="id269893"></a>
+
+          A table reference can be aliased using
+          <code class="literal"><em class="replaceable"><code>tbl_name</code></em> AS
+          <em class="replaceable"><code>alias_name</code></em></code> or
+          <em class="replaceable"><code>tbl_name alias_name</code></em>. These
+          statements are equivalent:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT t1.name, t2.salary FROM employee AS t1, info AS t2
+  WHERE t1.name = t2.name;
+
+SELECT t1.name, t2.salary FROM employee t1, info t2
+  WHERE t1.name = t2.name;</code></pre></li><li class="listitem"><p>
+          <a class="indexterm" name="id269902"></a>
+
+          Columns selected for output can be referred to in
+          <code class="literal">ORDER BY</code> and <code class="literal">GROUP BY</code>
+          clauses using column names, column aliases, or column
+          positions. Column positions are integers and begin with 1:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT college, region, seed FROM tournament
+  ORDER BY region, seed;
+
+SELECT college, region AS r, seed AS s FROM tournament
+  ORDER BY r, s;
+
+SELECT college, region, seed FROM tournament
+  ORDER BY 2, 3;</code></pre><p>
+          To sort in reverse order, add the <code class="literal">DESC</code>
+          (descending) keyword to the name of the column in the
+          <code class="literal">ORDER BY</code> clause that you are sorting by.
+          The default is ascending order; this can be specified
+          explicitly using the <code class="literal">ASC</code> keyword.
+        </p><p>
+          If <code class="literal">ORDER BY</code> occurs within a parenthesized
+          query expression and also is applied in the outer query, the
+          results are undefined and may change in a future version of
+          MySQL.
+        </p><p>
+          Use of column positions is deprecated because the syntax has
+          been removed from the SQL standard.
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id269916"></a>
+
+          Prior to MySQL 8.0.13, MySQL supported a nonstandard syntax
+          extension that permitted explicit <code class="literal">ASC</code> or
+          <code class="literal">DESC</code> designators for <code class="literal">GROUP
+          BY</code> columns. MySQL 8.0.12 and later supports
+          <code class="literal">ORDER BY</code> with grouping functions so that
+          use of this extension is no longer necessary. (Bug #86312, Bug
+          #26073525) This also means you can sort on an arbitrary column
+          or columns when using <code class="literal">GROUP BY</code>, like this:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT a, b, COUNT(c) AS t FROM test_table GROUP BY a,b ORDER BY a,t DESC;</code></pre><p>
+          As of MySQL 8.0.13, the <code class="literal">GROUP BY</code> extension
+          is no longer supported: <code class="literal">ASC</code> or
+          <code class="literal">DESC</code> designators for <code class="literal">GROUP
+          BY</code> columns are not permitted.
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id269932"></a>
+
+          <a class="indexterm" name="id269935"></a>
+
+          When you use <code class="literal">ORDER BY</code> or <code class="literal">GROUP
+          BY</code> to sort a column in a
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>, the server sorts values
+          using only the initial number of bytes indicated by the
+          <a class="link" href="server-system-variables.html#sysvar_max_sort_length"><code class="literal">max_sort_length</code></a> system
+          variable.
+        </p></li><li class="listitem"><p>
+          MySQL extends the use of <code class="literal">GROUP BY</code> to permit
+          selecting fields that are not mentioned in the <code class="literal">GROUP
+          BY</code> clause. If you are not getting the results that
+          you expect from your query, please read the description of
+          <code class="literal">GROUP BY</code> found in
+          <a class="xref" href="aggregate-functions-and-modifiers.html" title="14.19 Aggregate Functions">Section 14.19, “Aggregate Functions”</a>.
+        </p></li><li class="listitem"><p>
+          <code class="literal">GROUP BY</code> permits a <code class="literal">WITH
+          ROLLUP</code> modifier. See
+          <a class="xref" href="group-by-modifiers.html" title="14.19.2 GROUP BY Modifiers">Section 14.19.2, “GROUP BY Modifiers”</a>.
+        </p><p>
+          <a class="indexterm" name="id269956"></a>
+
+          Previously, it was not permitted to use <code class="literal">ORDER
+          BY</code> in a query having a <code class="literal">WITH
+          ROLLUP</code> modifier. This restriction is lifted as of
+          MySQL 8.0.12. See <a class="xref" href="group-by-modifiers.html" title="14.19.2 GROUP BY Modifiers">Section 14.19.2, “GROUP BY Modifiers”</a>.
+        </p></li><li class="listitem"><p>
+          The <code class="literal">HAVING</code> clause, like the
+          <code class="literal">WHERE</code> clause, specifies selection
+          conditions. The <code class="literal">WHERE</code> clause specifies
+          conditions on columns in the select list, but cannot refer to
+          aggregate functions. The <code class="literal">HAVING</code> clause
+          specifies conditions on groups, typically formed by the
+          <code class="literal">GROUP BY</code> clause. The query result includes
+          only groups satisfying the <code class="literal">HAVING</code>
+          conditions. (If no <code class="literal">GROUP BY</code> is present, all
+          rows implicitly form a single aggregate group.)
+        </p><p>
+          The <code class="literal">HAVING</code> clause is applied nearly last,
+          just before items are sent to the client, with no
+          optimization. (<code class="literal">LIMIT</code> is applied after
+          <code class="literal">HAVING</code>.)
+        </p><a class="indexterm" name="id269975"></a><p>
+          The SQL standard requires that <code class="literal">HAVING</code> must
+          reference only columns in the <code class="literal">GROUP BY</code>
+          clause or columns used in aggregate functions. However, MySQL
+          supports an extension to this behavior, and permits
+          <code class="literal">HAVING</code> to refer to columns in the
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> list and columns in
+          outer subqueries as well.
+        </p><p>
+          If the <code class="literal">HAVING</code> clause refers to a column
+          that is ambiguous, a warning occurs. In the following
+          statement, <code class="literal">col2</code> is ambiguous because it is
+          used as both an alias and a column name:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT COUNT(col1) AS col2 FROM t GROUP BY col2 HAVING col2 = 2;</code></pre><p>
+          Preference is given to standard SQL behavior, so if a
+          <code class="literal">HAVING</code> column name is used both in
+          <code class="literal">GROUP BY</code> and as an aliased column in the
+          select column list, preference is given to the column in the
+          <code class="literal">GROUP BY</code> column.
+        </p></li><li class="listitem"><p>
+          Do not use <code class="literal">HAVING</code> for items that should be
+          in the <code class="literal">WHERE</code> clause. For example, do not
+          write the following:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT <em class="replaceable">col_name</em> FROM <em class="replaceable">tbl_name</em> HAVING <em class="replaceable">col_name</em> &gt; 0;</code></pre><p>
+          Write this instead:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT <em class="replaceable">col_name</em> FROM <em class="replaceable">tbl_name</em> WHERE <em class="replaceable">col_name</em> &gt; 0;</code></pre></li><li class="listitem"><p>
+          The <code class="literal">HAVING</code> clause can refer to aggregate
+          functions, which the <code class="literal">WHERE</code> clause cannot:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SELECT user, MAX(salary) FROM users
+  GROUP BY user HAVING MAX(salary) &gt; 10;</code></pre><p>
+          (This did not work in some older versions of MySQL.)
+        </p></li><li class="listitem"><p>
+          MySQL permits duplicate column names. That is, there can be
+          more than one <em class="replaceable"><code>select_expr</code></em> with the
+          same name. This is an extension to standard SQL. Because MySQL
+          also permits <code class="literal">GROUP BY</code> and
+          <code class="literal">HAVING</code> to refer to
+          <em class="replaceable"><code>select_expr</code></em> values, this can result
+          in an ambiguity:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT 12 AS a, a FROM t GROUP BY a;</code></pre><p>
+          In that statement, both columns have the name
+          <code class="literal">a</code>. To ensure that the correct column is
+          used for grouping, use different names for each
+          <em class="replaceable"><code>select_expr</code></em>.
+        </p></li><li class="listitem"><p>
+          The <code class="literal">WINDOW</code> clause, if present, defines
+          named windows that can be referred to by window functions. For
+          details, see <a class="xref" href="window-functions-named-windows.html" title="14.20.4 Named Windows">Section 14.20.4, “Named Windows”</a>.
+        </p></li><li class="listitem"><p>
+          MySQL resolves unqualified column or alias references in
+          <code class="literal">ORDER BY</code> clauses by searching in the
+          <em class="replaceable"><code>select_expr</code></em> values, then in the
+          columns of the tables in the <code class="literal">FROM</code> clause.
+          For <code class="literal">GROUP BY</code> or <code class="literal">HAVING</code>
+          clauses, it searches the <code class="literal">FROM</code> clause before
+          searching in the <em class="replaceable"><code>select_expr</code></em>
+          values. (For <code class="literal">GROUP BY</code> and
+          <code class="literal">HAVING</code>, this differs from the pre-MySQL 5.0
+          behavior that used the same rules as for <code class="literal">ORDER
+          BY</code>.)
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id270038"></a>
+
+          The <code class="literal">LIMIT</code> clause can be used to constrain
+          the number of rows returned by the
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statement.
+          <code class="literal">LIMIT</code> takes one or two numeric arguments,
+          which must both be nonnegative integer constants, with these
+          exceptions:
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p>
+              Within prepared statements, <code class="literal">LIMIT</code>
+              parameters can be specified using <code class="literal">?</code>
+              placeholder markers.
+            </p></li><li class="listitem"><p>
+              Within stored programs, <code class="literal">LIMIT</code>
+              parameters can be specified using integer-valued routine
+              parameters or local variables.
+</p></li></ul>
+</div>
+<p>
+          With two arguments, the first argument specifies the offset of
+          the first row to return, and the second specifies the maximum
+          number of rows to return. The offset of the initial row is 0
+          (not 1):
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM tbl LIMIT 5,10;  # Retrieve rows 6-15</code></pre><p>
+          To retrieve all rows from a certain offset up to the end of
+          the result set, you can use some large number for the second
+          parameter. This statement retrieves all rows from the 96th row
+          to the last:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM tbl LIMIT 95,18446744073709551615;</code></pre><p>
+          With one argument, the value specifies the number of rows to
+          return from the beginning of the result set:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM tbl LIMIT 5;     # Retrieve first 5 rows</code></pre><p>
+          In other words, <code class="literal">LIMIT
+          <em class="replaceable"><code>row_count</code></em></code> is equivalent
+          to <code class="literal">LIMIT 0,
+          <em class="replaceable"><code>row_count</code></em></code>.
+        </p><p>
+          For prepared statements, you can use placeholders. The
+          following statements return one row from the
+          <code class="literal">tbl</code> table:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET @a=1;
+PREPARE STMT FROM 'SELECT * FROM tbl LIMIT ?';
+EXECUTE STMT USING @a;</code></pre><p>
+          The following statements return the second to sixth rows from
+          the <code class="literal">tbl</code> table:
+        </p><pre class="programlisting copytoclipboard language-sql"><code class="language-sql">SET @skip=1; SET @numrows=5;
+PREPARE STMT FROM 'SELECT * FROM tbl LIMIT ?, ?';
+EXECUTE STMT USING @skip, @numrows;</code></pre><p>
+          For compatibility with PostgreSQL, MySQL also supports the
+          <code class="literal">LIMIT <em class="replaceable"><code>row_count</code></em> OFFSET
+          <em class="replaceable"><code>offset</code></em></code> syntax.
+        </p><p>
+          If <code class="literal">LIMIT</code> occurs within a parenthesized
+          query expression and also is applied in the outer query, the
+          results are undefined and may change in a future version of
+          MySQL.
+        </p></li><li class="listitem"><p>
+          The <a class="link" href="select-into.html" title="15.2.13.1 SELECT ... INTO Statement"><code class="literal">SELECT ...
+          INTO</code></a> form of <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+          enables the query result to be written to a file or stored in
+          variables. For more information, see
+          <a class="xref" href="select-into.html" title="15.2.13.1 SELECT ... INTO Statement">Section 15.2.13.1, “SELECT ... INTO Statement”</a>.
+        </p></li><li class="listitem"><p>
+          <a class="indexterm" name="id270084"></a>
+
+          <a class="indexterm" name="id270086"></a>
+
+          <a class="indexterm" name="id270088"></a>
+
+          <a class="indexterm" name="id270090"></a>
+
+          <a class="indexterm" name="id270092"></a>
+
+          If you use <code class="literal">FOR UPDATE</code> with a storage engine
+          that uses page or row locks, rows examined by the query are
+          write-locked until the end of the current transaction.
+        </p><p>
+          You cannot use <code class="literal">FOR UPDATE</code> as part of the
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> in a statement such as
+          <a class="link" href="create-table-select.html" title="15.1.20.4 CREATE TABLE ... SELECT Statement"><code class="literal">CREATE
+          TABLE <em class="replaceable"><code>new_table</code></em> SELECT ... FROM
+          <em class="replaceable"><code>old_table</code></em> ...</code></a>. (If you
+          attempt to do so, the statement is rejected with the error
+          <span class="errortext">Can't update table
+          '<em class="replaceable"><code>old_table</code></em>' while
+          '<em class="replaceable"><code>new_table</code></em>' is being
+          created</span>.)
+        </p><p>
+          <code class="literal">FOR SHARE</code> and <code class="literal">LOCK IN SHARE
+          MODE</code> set shared locks that permit other transactions
+          to read the examined rows but not to update or delete them.
+          <code class="literal">FOR SHARE</code> and <code class="literal">LOCK IN SHARE
+          MODE</code> are equivalent. However, <code class="literal">FOR
+          SHARE</code>, like <code class="literal">FOR UPDATE</code>, supports
+          <code class="literal">NOWAIT</code>, <code class="literal">SKIP LOCKED</code>, and
+          <code class="literal">OF <em class="replaceable"><code>tbl_name</code></em></code>
+          options. <code class="literal">FOR SHARE</code> is a replacement for
+          <code class="literal">LOCK IN SHARE MODE</code>, but <code class="literal">LOCK IN
+          SHARE MODE</code> remains available for backward
+          compatibility.
+        </p><p>
+          <code class="literal">NOWAIT</code> causes a <code class="literal">FOR
+          UPDATE</code> or <code class="literal">FOR SHARE</code> query to
+          execute immediately, returning an error if a row lock cannot
+          be obtained due to a lock held by another transaction.
+        </p><p>
+          <code class="literal">SKIP LOCKED</code> causes a <code class="literal">FOR
+          UPDATE</code> or <code class="literal">FOR SHARE</code> query to
+          execute immediately, excluding rows from the result set that
+          are locked by another transaction.
+        </p><p>
+          <code class="literal">NOWAIT</code> and <code class="literal">SKIP LOCKED</code>
+          options are unsafe for statement-based replication.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            Queries that skip locked rows return an inconsistent view of
+            the data. <code class="literal">SKIP LOCKED</code> is therefore not
+            suitable for general transactional work. However, it may be
+            used to avoid lock contention when multiple sessions access
+            the same queue-like table.
+</p>
+</div>
+<p>
+          <code class="literal">OF <em class="replaceable"><code>tbl_name</code></em></code>
+          applies <code class="literal">FOR UPDATE</code> and <code class="literal">FOR
+          SHARE</code> queries to named tables. For example:
+        </p><pre class="programlisting copytoclipboard language-sql one-line"><code class="language-sql">SELECT * FROM t1, t2 FOR SHARE OF t1 FOR UPDATE OF t2;</code></pre><p>
+          All tables referenced by the query block are locked when
+          <code class="literal">OF <em class="replaceable"><code>tbl_name</code></em></code> is
+          omitted. Consequently, using a locking clause without
+          <code class="literal">OF <em class="replaceable"><code>tbl_name</code></em></code> in
+          combination with another locking clause returns an error.
+          Specifying the same table in multiple locking clauses returns
+          an error. If an alias is specified as the table name in the
+          <code class="literal">SELECT</code> statement, a locking clause may only
+          use the alias. If the <code class="literal">SELECT</code> statement does
+          not specify an alias explicitly, the locking clause may only
+          specify the actual table name.
+        </p><p>
+          For more information about <code class="literal">FOR UPDATE</code> and
+          <code class="literal">FOR SHARE</code>, see
+          <a class="xref" href="innodb-locking-reads.html" title="17.7.2.4 Locking Reads">Section 17.7.2.4, “Locking Reads”</a>. For additional
+          information about <code class="literal">NOWAIT</code> and <code class="literal">SKIP
+          LOCKED</code> options, see
+          <a class="xref" href="innodb-locking-reads.html#innodb-locking-reads-nowait-skip-locked" title="Locking Read Concurrency with NOWAIT and SKIP LOCKED">Locking Read Concurrency with NOWAIT and SKIP LOCKED</a>.
+</p></li></ul>
+</div>
+<p>
+      Following the <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> keyword, you
+      can use a number of modifiers that affect the operation of the
+      statement. <code class="literal">HIGH_PRIORITY</code>,
+      <code class="literal">STRAIGHT_JOIN</code>, and modifiers beginning with
+      <code class="literal">SQL_</code> are MySQL extensions to standard SQL.
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          The <code class="literal">ALL</code> and <code class="literal">DISTINCT</code>
+          modifiers specify whether duplicate rows should be returned.
+          <code class="literal">ALL</code> (the default) specifies that all
+          matching rows should be returned, including duplicates.
+          <code class="literal">DISTINCT</code> specifies removal of duplicate
+          rows from the result set. It is an error to specify both
+          modifiers. <code class="literal">DISTINCTROW</code> is a synonym for
+          <code class="literal">DISTINCT</code>.
+        </p><p>
+          In MySQL 8.0.12 and later, <code class="literal">DISTINCT</code> can be
+          used with a query that also uses <code class="literal">WITH
+          ROLLUP</code>. (Bug #87450, Bug #26640100)
+        </p><a class="indexterm" name="id270172"></a><a class="indexterm" name="id270175"></a><a class="indexterm" name="id270178"></a></li><li class="listitem"><p>
+          <code class="literal">HIGH_PRIORITY</code> gives the
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> higher priority than a
+          statement that updates a table. You should use this only for
+          queries that are very fast and must be done at once. A
+          <code class="literal">SELECT HIGH_PRIORITY</code> query that is issued
+          while the table is locked for reading runs even if there is an
+          update statement waiting for the table to be free. This
+          affects only storage engines that use only table-level locking
+          (such as <code class="literal">MyISAM</code>, <code class="literal">MEMORY</code>,
+          and <code class="literal">MERGE</code>).
+        </p><a class="indexterm" name="id270190"></a><p>
+          <code class="literal">HIGH_PRIORITY</code> cannot be used with
+          <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a> statements that are part
+          of a <a class="link" href="union.html" title="15.2.18 UNION Clause"><code class="literal">UNION</code></a>.
+        </p></li><li class="listitem"><p>
+          <code class="literal">STRAIGHT_JOIN</code> forces the optimizer to join
+          the tables in the order in which they are listed in the
+          <code class="literal">FROM</code> clause. You can use this to speed up a
+          query if the optimizer joins the tables in nonoptimal order.
+          <code class="literal">STRAIGHT_JOIN</code> also can be used in the
+          <em class="replaceable"><code>table_references</code></em> list. See
+          <a class="xref" href="join.html" title="15.2.13.2 JOIN Clause">Section 15.2.13.2, “JOIN Clause”</a>.
+        </p><a class="indexterm" name="id270206"></a><a class="indexterm" name="id270209"></a><a class="indexterm" name="id270212"></a><p>
+          <code class="literal">STRAIGHT_JOIN</code> does not apply to any table
+          that the optimizer treats as a
+          <a class="link" href="explain-output.html#jointype_const"><code class="literal">const</code></a> or
+          <a class="link" href="explain-output.html#jointype_system"><code class="literal">system</code></a> table. Such a table
+          produces a single row, is read during the optimization phase
+          of query execution, and references to its columns are replaced
+          with the appropriate column values before query execution
+          proceeds. These tables appear first in the query plan
+          displayed by <a class="link" href="explain.html" title="15.8.2 EXPLAIN Statement"><code class="literal">EXPLAIN</code></a>. See
+          <a class="xref" href="using-explain.html" title="10.8.1 Optimizing Queries with EXPLAIN">Section 10.8.1, “Optimizing Queries with EXPLAIN”</a>. This exception may not apply
+          to <a class="link" href="explain-output.html#jointype_const"><code class="literal">const</code></a> or
+          <a class="link" href="explain-output.html#jointype_system"><code class="literal">system</code></a> tables that are used
+          on the <code class="literal">NULL</code>-complemented side of an outer
+          join (that is, the right-side table of a <code class="literal">LEFT
+          JOIN</code> or the left-side table of a <code class="literal">RIGHT
+          JOIN</code>.
+        </p></li><li class="listitem"><p>
+          <code class="literal">SQL_BIG_RESULT</code> or
+          <code class="literal">SQL_SMALL_RESULT</code> can be used with
+          <code class="literal">GROUP BY</code> or <code class="literal">DISTINCT</code> to
+          tell the optimizer that the result set has many rows or is
+          small, respectively. For <code class="literal">SQL_BIG_RESULT</code>,
+          MySQL directly uses disk-based temporary tables if they are
+          created, and prefers sorting to using a temporary table with a
+          key on the <code class="literal">GROUP BY</code> elements. For
+          <code class="literal">SQL_SMALL_RESULT</code>, MySQL uses in-memory
+          temporary tables to store the resulting table instead of using
+          sorting. This should not normally be needed.
+        </p><a class="indexterm" name="id270240"></a><a class="indexterm" name="id270243"></a></li><li class="listitem"><p>
+          <code class="literal">SQL_BUFFER_RESULT</code> forces the result to be
+          put into a temporary table. This helps MySQL free the table
+          locks early and helps in cases where it takes a long time to
+          send the result set to the client. This modifier can be used
+          only for top-level <a class="link" href="select.html" title="15.2.13 SELECT Statement"><code class="literal">SELECT</code></a>
+          statements, not for subqueries or following
+          <a class="link" href="union.html" title="15.2.18 UNION Clause"><code class="literal">UNION</code></a>.
+        </p><a class="indexterm" name="id270253"></a></li><li class="listitem"><p>
+          <code class="literal">SQL_CALC_FOUND_ROWS</code> tells MySQL to
+          calculate how many rows there would be in the result set,
+          disregarding any <code class="literal">LIMIT</code> clause. The number
+          of rows can then be retrieved with <code class="literal">SELECT
+          FOUND_ROWS()</code>. See
+          <a class="xref" href="information-functions.html" title="14.15 Information Functions">Section 14.15, “Information Functions”</a>.
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+
+<div class="admon-title">
+Note
+</div>
+<p>
+            The <code class="literal">SQL_CALC_FOUND_ROWS</code> query modifier
+            and accompanying <a class="link" href="information-functions.html#function_found-rows"><code class="literal">FOUND_ROWS()</code></a>
+            function are deprecated as of MySQL 8.0.17; expect them to
+            be removed in a future version of MySQL. See the
+            <a class="link" href="information-functions.html#function_found-rows"><code class="literal">FOUND_ROWS()</code></a> description for
+            information about an alternative strategy.
+</p>
+</div>
+<a class="indexterm" name="id270269"></a></li><li class="listitem"><p>
+          The <code class="literal">SQL_CACHE</code> and
+          <code class="literal">SQL_NO_CACHE</code> modifiers were used with the
+          query cache prior to MySQL 8.0. The query cache
+          was removed in MySQL 8.0. The
+          <code class="literal">SQL_CACHE</code> modifier was removed as well.
+          <code class="literal">SQL_NO_CACHE</code> is deprecated, and has no
+          effect; expect it to be removed in a future MySQL release.
+</p><a class="indexterm" name="id270278"></a><a class="indexterm" name="id270281"></a></li></ul>
+</div>
+</div><br />
+        </div>
+
+                <div id="docs-in-page-nav-container">
+            <div id="docs-in-page-nav">
+                
+    <a href="replace.html"
+        aria-label="Previous" title="Previous: REPLACE Statement"><span
+        class="icon-chevron-left"></span> PREV</a> &nbsp;
+<a href="index.html" aria-label="Start" title="Start"> HOME</a> &nbsp;
+        <a aria-label="Up" href="sql-data-manipulation-statements.html" title="Up: Data Manipulation Statements"> UP</a> &nbsp;
+    <a href="select-into.html" aria-label="Next"
+        title="Next: SELECT ... INTO Statement">NEXT <span
+        class="icon-chevron-right"></span></a>
+            </div>
+        </div>
+        
+         <div id="docs-body-extra">
+             
+<a class="docs-sidebar-section" href=""><span class="icon-related"></span>
+    <span class="text">Related Documentation</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+        <a href="/doc/relnotes/mysql/8.0/en/">MySQL 8.0 Release Notes</a><br />
+        <a href="/doc/dev/mysql-server/latest/">MySQL 8.0 Source Code Documentation</a><br />
+        </div>
+</div>
+
+    <a class="docs-sidebar-section" href=""><span class="icon-download-thin"></span>
+        <span class="text">
+            Download
+                            this Manual
+                    </span>
+    </a>
+    <div class="docs-sidebar-accordian">
+        <div class="text">
+                                    <a href="https://downloads.mysql.com/docs/refman-8.0-en.pdf">PDF (US Ltr)</a>
+            - 43.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.a4.pdf">PDF (A4)</a>
+            - 43.4Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.tar.gz">Man Pages (TGZ)</a>
+            - 297.3Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/refman-8.0-en.man-gpl.zip">Man Pages (Zip)</a>
+            - 402.5Kb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.gz">Info (Gzip)</a>
+            - 4.3Mb<br />
+                                                <a href="https://downloads.mysql.com/docs/mysql-8.0.info.zip">Info (Zip)</a>
+            - 4.3Mb<br />
+                                </div>
+    </div>
+
+<a class="docs-sidebar-section" href=""><span class="icon-book"></span>
+    <span class="text">Excerpts from this Manual</span></a>
+<div class="docs-sidebar-accordian">
+    <div class="text">
+                <a href="/doc/mysql-backup-excerpt/8.0/en/">MySQL Backup and Recovery</a><br />
+                <a href="/doc/mysql-g11n-excerpt/8.0/en/">MySQL Globalization</a><br />
+                <a href="/doc/mysql-infoschema-excerpt/8.0/en/">MySQL Information Schema</a><br />
+                <a href="/doc/mysql-installation-excerpt/8.0/en/">MySQL Installation Guide</a><br />
+                <a href="/doc/mysql-security-excerpt/8.0/en/">Security in MySQL</a><br />
+                <a href="/doc/mysql-startstop-excerpt/8.0/en/">Starting and Stopping MySQL</a><br />
+                <a href="/doc/mysql-linuxunix-excerpt/8.0/en/">MySQL and Linux/Unix</a><br />
+                <a href="/doc/mysql-windows-excerpt/8.0/en/">MySQL and Windows</a><br />
+                <a href="/doc/mysql-macos-excerpt/8.0/en/">MySQL and macOS</a><br />
+                <a href="/doc/mysql-solaris-excerpt/8.0/en/">MySQL and Solaris</a><br />
+                <a href="/doc/mysql-sourcebuild-excerpt/8.0/en/">Building MySQL from Source</a><br />
+                <a href="/doc/mysql-reslimits-excerpt/8.0/en/">MySQL Restrictions and Limitations</a><br />
+                <a href="/doc/mysql-partitioning-excerpt/8.0/en/">MySQL Partitioning</a><br />
+                <a href="/doc/mysql-tutorial-excerpt/8.0/en/">MySQL Tutorial</a><br />
+                <a href="/doc/mysql-perfschema-excerpt/8.0/en/">MySQL Performance Schema</a><br />
+                <a href="/doc/mysql-replication-excerpt/8.0/en/">MySQL Replication</a><br />
+                <a href="/doc/mysql-repo-excerpt/8.0/en/">Using the MySQL Yum Repository</a><br />
+                <a href="/doc/mysql-cluster-excerpt/8.0/en/">MySQL NDB Cluster 8.0</a><br />
+            </div>
+</div>
+         </div>
+     </div>
+     </div>
+
+</div>
+
+<script>
+$(function() {
+    var doc = new $.doc({ 'mobile': $.browser.mobile, 'docId': 1, 'highlight': true });
+});
+</script>
+    
+
+            
+        </div>
+    </div>
+
+    <footer class="collapsed">
+        <div id="footer-bottom">
+                                    <div id="footer-collapse">
+                <a href="" id="expand-footer"
+                    aria-label="Expand Footer"
+                    title="Expand Footer"><span
+                    class="icon-plus-square"></span></a>
+            </div>
+                        <div class="footer-contact">
+                <div id="footer-contact-icon" style="display: none;">
+                    <span class="icon-call-phone"></span>
+                </div>
+                <div id="footer-contact-numbers" style="display: none;">
+                    <strong>Contact MySQL Sales</strong><br/>
+                    USA/Canada: +1-866-221-0634 &nbsp;
+                    (<a href="https://www.mysql.com/about/contact/phone/" class="darker-blue">More Countries &raquo;</a>)
+                </div>
+                <div id="footer-contact-copyright" style="display: inline-block;">
+                    <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                    &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a aria-label="Join us on Facebook" title="Join us on Facebook" href="http://www.facebook.com/mysql"><span class="icon-facebook-square"></span></a>
+                <a aria-label="Follow us on X" title="Follow us on X" href="https://x.com/mysql"><span class="icon-x-twitter-square"></span></a>
+                <a aria-label="Follow us on LinkedIn" title="Follow us on LinkedIn" href="https://www.linkedin.com/company/mysql"><span class="icon-linkedin-square"></span></a>
+                <a aria-label="Visit our YouTube channel" title="Visit our YouTube channel" href="http://www.youtube.com/mysqlchannel"><span class="icon-youtube-square"></span></a>
+            </div>
+            <br class="clear" />
+        </div>
+        <div id="footer-links">
+
+            <div id="site-footer-links">
+                <div id="footer-nav"></div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/products/">Products</a></li>
+                        <li><a href="https://www.mysql.com/products/heatwave/">MySQL HeatWave</a></li>
+                        <li><a href="https://www.mysql.com/products/enterprise/">MySQL Enterprise Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/standard/">MySQL Standard Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/classic/">MySQL Classic Edition</a></li>
+                        <li><a href="https://www.mysql.com/products/cluster/">MySQL Cluster CGE</a></li>
+                        <li><a href="https://www.mysql.com/oem/">MySQL Embedded (OEM/ISV)</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/services/">Services</a></li>
+                        <li><a href="https://www.mysql.com/training/">Training</a></li>
+                        <li><a href="https://www.mysql.com/certification/">Certification</a></li>
+                        <li><a href="https://www.mysql.com/support/">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/downloads/">Downloads</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/cluster/">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/shell/">MySQL Shell</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/router/">MySQL Router</a></li>
+                        <li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://dev.mysql.com/doc/">Documentation</a></li>
+                        <li><a href="https://dev.mysql.com/doc/refman/en/">MySQL Reference Manual</a></li>
+                        <li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-cluster.html">MySQL NDB Cluster</a></li>
+                        <li><a href="https://dev.mysql.com/doc/index-connectors.html">MySQL Connectors</a></li>
+                        <li><a href="https://dev.mysql.com/doc/#topic">Topic Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="links">
+                    <ul>
+                        <li class="top"><a href="https://www.mysql.com/about/">About MySQL</a></li>
+                        <li><a href="https://www.mysql.com/about/contact/">Contact Us</a></li>
+                        <li><a href="https://blogs.oracle.com/mysql/">Blogs</a></li>
+                                                                        <li><a href="https://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                        <li><a href="https://www.mysql.com/partners/">Partners</a></li>
+                        <li><a href="https://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                        <li><a href="https://www.mysql.com/sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+
+                            </div>
+
+            <div id="footer-logo">
+                <a href="http://www.oracle.com/" aria-label="Oracle" title="Oracle"><span class="oracle-logo"></span></a>
+                &nbsp; <a href="https://www.oracle.com/legal/copyright.html">&copy; 2026 Oracle</a>
+                <div class="footer-legal-links">
+                    <a href="https://www.oracle.com/legal/privacy/">Privacy</a> /
+                    <a href="https://www.oracle.com/legal/privacy/privacy-choices.html">Do Not Sell My Info</a> |
+                    <a href="https://www.oracle.com/us/legal/terms/index.html">Terms of Use</a> |
+                    <a href="https://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a> |
+                    <div id="teconsent"></div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+
+            <script>
+    if ((oracle.truste.api.getGdprConsentDecision().consentDecision) &&
+            (oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(0) != -1 ||
+             oracle.truste.api.getGdprConsentDecision().consentDecision.indexOf(2) != -1) )
+    {
+        document.write('<script src="https://labs.mysql.com/common/js/metrics/ora_mysql.js"><\/script>');
+        document.write('<script type="text/javascript" async src="//c.oracleinfinity.io/acs/account/wh3g12c3gg/js/mysql/odc.js?_ora.context=analytics:production"><\/script>');
+    }
+    </script>
+
+        
+    
+</body>
+</html>
