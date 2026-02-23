@@ -50,14 +50,18 @@ def test_import_parsers():
 def test_hashing():
     from cnw_ai.utils.hashing import make_chunk_id, text_hash
 
-    cid = make_chunk_id("src", "file.md", 0)
-    assert len(cid) == 24
+    cid = make_chunk_id("src", "file.md", "intro", 0)
+    assert len(cid) == 36  # UUID format: 8-4-4-4-12
+    assert cid.count("-") == 4
 
     # Deterministic
-    assert make_chunk_id("src", "file.md", 0) == cid
+    assert make_chunk_id("src", "file.md", "intro", 0) == cid
 
-    # Different inputs → different ids
-    assert make_chunk_id("src", "file.md", 1) != cid
+    # Different section → different id
+    assert make_chunk_id("src", "file.md", "other", 0) != cid
+
+    # Different chunk_index → different id
+    assert make_chunk_id("src", "file.md", "intro", 1) != cid
 
     h = text_hash("Hello World")
     assert len(h) == 16

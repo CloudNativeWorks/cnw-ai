@@ -5,7 +5,6 @@ Skips test/vendor/generated files. Only ingests documentation-valuable content.
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 from cnw_ai.pipeline.models import ParsedDocument, SourceConfig
@@ -24,17 +23,8 @@ _SKIP_PATTERNS = [
     "**/__pycache__/**",
 ]
 
-# Go doc comment pattern
-_GO_DOC_RE = re.compile(
-    r"(?:^|\n)((?://\s?.*\n)+)(?:func|type|var|const)\s+(\w+)",
-    re.MULTILINE,
-)
-
-# Python docstring pattern
-_PY_DOC_RE = re.compile(
-    r'(?:def|class)\s+(\w+).*?:\s*\n\s*"""(.*?)"""',
-    re.DOTALL,
-)
+# Max file size to parse (skip huge generated/vendor files)
+_MAX_FILE_SIZE = 200_000  # 200KB
 
 
 def _should_skip(file_path: Path) -> bool:
@@ -55,34 +45,87 @@ def _should_skip(file_path: Path) -> bool:
     return False
 
 
+_GO_DECL_KEYWORDS = {"func", "type", "var", "const"}
+
+
 def _extract_go_docs(text: str) -> list[tuple[str, str]]:
-    """Extract Go doc comments with their symbol names."""
+    """Extract Go doc comments with their symbol names (line-based, no regex)."""
     results = []
-    for match in _GO_DOC_RE.finditer(text):
-        comment = match.group(1).strip()
-        symbol = match.group(2)
-        # Clean up // prefixes
-        lines = [line.lstrip("/").strip() for line in comment.split("\n")]
-        doc = "\n".join(lines).strip()
-        if len(doc) > 30:
-            results.append((symbol, doc))
+    lines = text.split("\n")
+    comment_buf: list[str] = []
+
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("//"):
+            comment_buf.append(stripped.lstrip("/").strip())
+            continue
+
+        # Check if this line is a Go declaration
+        if comment_buf and stripped:
+            first_word = stripped.split("(")[0].split(" ")[0]
+            if first_word in _GO_DECL_KEYWORDS:
+                # Extract symbol name
+                parts = stripped.split()
+                symbol = parts[1].split("(")[0].split("[")[0] if len(parts) > 1 else ""
+                if symbol:
+                    doc = "\n".join(comment_buf).strip()
+                    if len(doc) > 30:
+                        results.append((symbol, doc))
+
+        comment_buf.clear()
+
     return results
 
 
 def _extract_python_docs(text: str) -> list[tuple[str, str]]:
-    """Extract Python docstrings."""
+    """Extract Python docstrings (line-based scan)."""
     results = []
-    for match in _PY_DOC_RE.finditer(text):
-        symbol = match.group(1)
-        doc = match.group(2).strip()
-        if len(doc) > 30:
-            results.append((symbol, doc))
+    lines = text.split("\n")
+    i = 0
+    while i < len(lines):
+        stripped = lines[i].strip()
+        # Look for def/class
+        if stripped.startswith(("def ", "class ")):
+            keyword = "def" if stripped.startswith("def") else "class"
+            symbol = stripped[len(keyword):].strip().split("(")[0].split(":")[0].strip()
+            # Scan for docstring on next non-empty lines
+            j = i + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            if j < len(lines) and '"""' in lines[j]:
+                doc_lines = []
+                line_j = lines[j].strip()
+                # Single-line docstring
+                if line_j.count('"""') >= 2:
+                    doc = line_j.strip('" ')
+                    if len(doc) > 30:
+                        results.append((symbol, doc))
+                    i = j + 1
+                    continue
+                # Multi-line docstring
+                doc_lines.append(line_j.replace('"""', "").strip())
+                j += 1
+                while j < len(lines):
+                    if '"""' in lines[j]:
+                        doc_lines.append(lines[j].strip().replace('"""', "").strip())
+                        break
+                    doc_lines.append(lines[j].strip())
+                    j += 1
+                doc = "\n".join(doc_lines).strip()
+                if len(doc) > 30:
+                    results.append((symbol, doc))
+                i = j + 1
+                continue
+        i += 1
     return results
 
 
 def parse_code(file_path: Path, source: SourceConfig) -> list[ParsedDocument]:
     """Parse code files, extracting only documentation-valuable content."""
     if _should_skip(file_path):
+        return []
+
+    if file_path.stat().st_size > _MAX_FILE_SIZE:
         return []
 
     text = file_path.read_text(encoding="utf-8", errors="replace")

@@ -48,6 +48,7 @@ def get_vectorstore() -> QdrantVectorStore:
         collection_name=COLLECTION_NAME,
         embedding=embeddings,
         url=QDRANT_URL,
+        content_payload_key="text",
     )
 
 
@@ -78,7 +79,6 @@ def get_chain():
     llm = ChatOllama(
         model=LLM_MODEL,
         base_url=OLLAMA_BASE_URL,
-        extra_body={"think": False},
     )
 
     chain = (

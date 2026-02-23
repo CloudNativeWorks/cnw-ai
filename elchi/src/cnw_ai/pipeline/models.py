@@ -79,9 +79,12 @@ class ChunkDoc:
     oneof: str = ""
 
     def to_payload(self) -> dict:
-        """Convert to Qdrant payload dict."""
-        payload = {
-            "text": self.text,
+        """Convert to Qdrant payload dict.
+
+        langchain-qdrant expects: {"text": ..., "metadata": {...}}
+        Top-level keys also kept for Qdrant payload filtering.
+        """
+        meta = {
             "source_id": self.source_id,
             "domain": self.domain,
             "source_type": self.source_type,
@@ -97,19 +100,35 @@ class ChunkDoc:
             "text_hash": self.text_hash,
         }
         if self.license:
-            payload["license"] = self.license
+            meta["license"] = self.license
         if self.origin:
-            payload["origin"] = self.origin
+            meta["origin"] = self.origin
         if self.gtype:
-            payload["gtype"] = self.gtype
+            meta["gtype"] = self.gtype
         if self.message:
-            payload["message"] = self.message
+            meta["message"] = self.message
         if self.proto_field:
-            payload["proto_field"] = self.proto_field
+            meta["proto_field"] = self.proto_field
         if self.deprecated:
-            payload["deprecated"] = self.deprecated
+            meta["deprecated"] = self.deprecated
         if self.oneof:
-            payload["oneof"] = self.oneof
+            meta["oneof"] = self.oneof
+
+        # text at top level for content_payload_key="text"
+        # metadata nested for metadata_payload_key="metadata"
+        # flat copies of filterable fields for Qdrant payload indexes
+        payload = {
+            "text": self.text,
+            "metadata": meta,
+            # Flat copies for Qdrant index/filter
+            "source_id": self.source_id,
+            "domain": self.domain,
+            "source_type": self.source_type,
+            "priority": self.priority,
+            "component": self.component,
+            "tags": self.tags,
+            "text_hash": self.text_hash,
+        }
         return payload
 
 

@@ -9,7 +9,7 @@ CONFIG_DIR = PROJECT_ROOT / "config"
 DEFAULT_SOURCES_YAML = CONFIG_DIR / "sources.yaml"
 
 # Ollama models
-LLM_MODEL = "qwen3:4b"
+LLM_MODEL = "deepseek-r1:8b"
 EMBEDDING_MODEL = "nomic-embed-text"
 EMBEDDING_DIM = 768
 OLLAMA_BASE_URL = "http://localhost:11434"

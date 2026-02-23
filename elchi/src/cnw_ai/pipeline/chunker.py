@@ -128,7 +128,7 @@ def chunk_documents(
                 continue
 
             chunk = ChunkDoc(
-                chunk_id=make_chunk_id(doc.source_id, doc.uri, i),
+                chunk_id=make_chunk_id(doc.source_id, doc.uri, doc.section, i),
                 text=text_content,
                 source_id=doc.source_id,
                 domain=doc.domain,
