@@ -70,8 +70,9 @@ while true; do
     fi
 
     # --- CPU ---
-    cpu_idle=$(top -bn1 2>/dev/null | grep '%Cpu' | awk '{print $8}' | cut -d. -f1)
-    [ -z "$cpu_idle" ] && cpu_idle=100
+    cpu_idle=$(LC_ALL=C top -bn1 2>/dev/null | grep '%Cpu' | awk '{for(i=1;i<=NF;i++) if($i=="id," || $i=="id") print $(i-1)}' | tr -d ',' | cut -d. -f1)
+    cpu_idle=${cpu_idle:-100}
+    [[ "$cpu_idle" =~ ^[0-9]+$ ]] || cpu_idle=100
     cpu_used=$((100 - cpu_idle))
     load=$(uptime | awk -F'load average:' '{print $2}' | xargs)
     cores=$(nproc)
