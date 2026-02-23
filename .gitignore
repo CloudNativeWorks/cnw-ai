@@ -1,0 +1,24 @@
+# Data & runtime
+clustereye/data/workdir/
+clustereye/data/qdrant_storage/
+clustereye/data/export/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
