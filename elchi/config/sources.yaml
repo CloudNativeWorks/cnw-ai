@@ -1,0 +1,70 @@
+sources:
+  # JSONL Dataset (mevcut)
+  - id: elchi-dataset
+    domain: elchi
+    priority: 1
+    source_type: jsonl
+    location: data/dataset.jsonl
+    tags: [qa, curated]
+    component: general
+
+  - id: elchi-dataset-extended
+    domain: elchi
+    priority: 1
+    source_type: jsonl
+    location: /Users/spehlivan/Documents/CloudNativeWorks/elchi-ai/dataset.jsonl
+    tags: [qa, curated]
+    component: general
+
+  # Elchi Local Repos
+  - id: elchi-backend
+    domain: elchi
+    priority: 1
+    source_type: local
+    location: /Users/spehlivan/Documents/CloudNativeWorks/elchi-backend
+    include_globs: ["**/*.md", "docs/**/*", "**/*.yaml"]
+    exclude_globs: ["**/vendor/**", "**/.git/**", "**/node_modules/**"]
+    tags: [backend, api]
+    component: controller
+
+  - id: elchi-proto
+    domain: elchi
+    priority: 1
+    source_type: local
+    location: /Users/spehlivan/Documents/CloudNativeWorks/elchi-proto
+    include_globs: ["**/*.proto", "**/*.md"]
+    exclude_globs: ["**/.git/**", "**/*.pb.go"]
+    parser_hint: auto
+    tags: [proto, grpc]
+    component: proto
+
+  - id: elchi-gslb
+    domain: elchi
+    priority: 1
+    source_type: local
+    location: /Users/spehlivan/Documents/CloudNativeWorks/elchi-gslb
+    include_globs: ["**/*.md", "**/*.go", "Corefile*"]
+    exclude_globs: ["**/.git/**", "**/*_test.go", "**/coredns/pb/**"]
+    tags: [gslb, dns]
+    component: gslb
+
+  # Envoy (Git repo)
+  - id: envoy-docs
+    domain: envoy
+    priority: 2
+    source_type: git
+    location: https://github.com/envoyproxy/envoy.git
+    branch: main
+    include_globs: ["docs/root/**/*.rst", "api/envoy/**/*.proto"]
+    exclude_globs: ["**/test/**"]
+    tags: [envoy, proxy, xds]
+
+  # FRR (Git repo)
+  - id: frr-docs
+    domain: frr
+    priority: 3
+    source_type: git
+    location: https://github.com/FRRouting/frr.git
+    branch: master
+    include_globs: ["doc/user/**/*.rst", "doc/developer/**/*.rst"]
+    tags: [frr, bgp, routing]

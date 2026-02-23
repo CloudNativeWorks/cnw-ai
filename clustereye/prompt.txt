@@ -1,0 +1,115 @@
+Claude Prompt — ClusterEye Offline AI Assistant (macOS + Ollama + Qdrant) “Sıfırdan”
+
+Sen kıdemli bir platform mühendisi ve Python engineer’sin. Bana sıfırdan bir repo iskeleti ve çalışan bir sistem kuracaksın: macOS (Apple Silicon M1, 16GB RAM) üzerinde Ollama + Qdrant çalıştırıp, bir Offline RAG API hazırlayacak; ayrıca config-driven bir ingest pipeline ile ClusterEye knowledge base’i oluşturacak.
+
+1) Ürün/Kapsam Bağlamı (ClusterEye Domain)
+
+ClusterEye, agent tabanlı veritabanı izleme ve yönetim platformu. Desteklenen DB’ler: PostgreSQL, MongoDB, MSSQL (ve ayrıca MySQL, ClickHouse, ElasticSearch).  ￼
+Sistem bileşenleri örnek olarak: Dashboard, Monitoring API, Veritabanı Agentleri, Alarm & Bildirim Sistemi, AI Analiz Motoru.  ￼
+
+Benim hedefim: ClusterEye için kapalı devre çalışacak bir “AI asistan”ın bilgi tabanını oluşturmak ve API üzerinden soru sorabilmek. Dev ortamında web’den/repodan içerik toplayıp vektör veriyi üretip, sonra air-gapped kutuya taşınabilecek şekilde paketlemek istiyorum.
+
+2) Hedef Çıktılar (Deliverables)
+
+Repo içinde aşağıdakiler olacak:
+	1.	Bootstrap script (macOS):
+	•	Qdrant’ı docker ile ayağa kaldırır
+	•	Ollama’yı kontrol eder (yüklü değilse kurulum yönergesi/otomatik kurulum opsiyonu)
+	•	Embedding modeli ve LLM modelini indirir (config ile)
+	•	Healthcheck yapar (Qdrant collection erişimi, Ollama endpoint)
+	2.	Ingest Pipeline (Python, production-grade):
+	•	Kaynakları tek bir YAML config’ten alır (config/sources.yaml)
+	•	Kaynak tipleri: git, web, local, pdf (pdf opsiyonel)
+	•	Fetch → Parse/Normalize → Chunk → Embed → Upsert (Qdrant) aşamalarını uygular
+	•	Deterministik chunk_id ve idempotent upsert
+	•	--dry-run, --domains, --source-ids, --reindex, --max-items, --workers destekler
+	•	Raporda kaç dosya/chunk işlendi ve hatalar listelenir
+	3.	RAG API (Python FastAPI tercih):
+	•	POST /ask : question + opsiyonel filtreler (domain/source/component) alır
+	•	Soru → embed → Qdrant search → context assemble → Ollama generate
+	•	Kaynak atıfları: dönen chunk’ların uri + section + source_id bilgilerini response’ta verir
+	•	GET /health : Qdrant/Ollama durumunu döner
+	4.	Export/Import:
+	•	Dev ortamında üretilen Qdrant koleksiyonunu (snapshot veya export) air-gapped ortama taşımayı kolaylaştıran komutlar/skriptler.
+
+3) Teknoloji Seçimleri (Minimum & Stabil)
+	•	Vector DB: Qdrant
+	•	LLM Serving: Ollama
+	•	Embedding: varsayılan Ollama nomic-embed-text, alternatif sentence-transformers BAAI/bge-m3 (config ile seçilebilir)
+	•	Chunking: heading-aware + recursive splitter
+	•	Logging: structlog (json format)
+	•	HTTP: httpx
+	•	HTML extraction: readability/trafilatura opsiyonel; yoksa bs4 + basit main-content heuristics
+
+4) Config Tasarımı (sources.yaml)
+
+Config, ingest otomasyonunun kalbi. Şunları destekle:
+	•	id, domain (clustereye|postgres|mongodb|mssql|mysql|clickhouse|elasticsearch|linux|systemd|networking), priority (1-5)
+	•	source_type (git|web|local|pdf)
+	•	location (repo url / url listesi / local path)
+	•	version (branch/tag ya da doküman versiyonu string)
+	•	include_globs, exclude_globs
+	•	parser_hint (md|rst|html|pdf|code|auto)
+	•	tags (list)
+	•	component (agent|monitoring-api|alerting|ai-engine|dashboard|general) — ClusterEye içerikleri için
+
+5) Ne tür veriler ingest edilecek?
+
+Bu pipeline “Soru-cevap dataset” şart koşmayacak; ana içerik doküman parçaları olacak.
+
+A) İç kaynaklar (benim repo/dosyalarım varsayımı):
+	•	docs/, README, runbook’lar, mimari notlar
+	•	API şemaları (OpenAPI varsa), agent config örnekleri
+	•	Alarm/bildirim açıklamaları, metrik sözlüğü
+	•	DB destek matrisi ve troubleshooting
+
+B) Dış kaynaklar (web/git):
+	•	PostgreSQL / MongoDB / MSSQL / MySQL / ClickHouse / ElasticSearch: performans tuning, index, connection pool, backup, replication, slow query konuları
+	•	Linux basics: disk, CPU, memory, network troubleshooting
+	•	systemd: service unit, journald
+	•	networking: TCP basics, conntrack, TLS/keepalive
+(Bu dış kaynaklarda “aşırı crawl” yapma; seed URL listesi + depth limit + rate limit şart.)
+
+6) Chunk + Metadata Standardı (Çok önemli)
+
+Her chunk Qdrant payload’ında şunlar zorunlu:
+	•	domain, source_id, source_type, priority
+	•	version, uri, title, section, chunk_index
+	•	tags, component (varsa)
+	•	ingested_at
+	•	text
+Opsiyonel:
+	•	db_engine (postgres/mongo/mssql…), topic (slow-query, index, backup, replication, alerting, agent-install…)
+
+7) Retrieval Kalitesi
+	•	Qdrant search: topK (default 8-12)
+	•	Filtreler: domain/source_id/component/tags
+	•	Basit rerank: score * (1 + priority_boost) veya “ClusterEye internal domain” önceliği
+	•	Dedup: aynı normalized text hash’i tekrar yazma
+
+8) Proje Yapısı (Öner)
+
+Repo yapısını ve dosyaları üret:
+	•	config/sources.yaml
+	•	scripts/bootstrap_macos.sh
+	•	src/ingest/* (fetcher/parsers/chunker/embedder/store/runner)
+	•	src/api/main.py (FastAPI)
+	•	pyproject.toml + opsiyonel extras (pdf, transformers)
+	•	Makefile: make bootstrap, make ingest, make serve, make reindex SOURCE_ID=...
+
+9) Çalıştırma Akışı
+	1.	make bootstrap
+	2.	make ingest (önce --dry-run)
+	3.	make serve
+	4.	curl /ask ile örnek sorular
+
+10) Önemli Kısıtlar
+	•	Her şey local çalışacak; dış SaaS yok.
+	•	macOS M1 16GB’de makul hız: batch embedding, concurrency kontrollü.
+	•	Hata olursa pipeline kırılmasın; raporlasın.
+	•	Web kaynaklarında cache/etag, rate limit ve max-depth olsun.
+
+Şimdi bu gereksinimlere göre:
+	1.	repo dizin ağacını yaz,
+	2.	sonra dosyaları sırayla (tam içerikleriyle) üret,
+	3.	en sonda “Quickstart” bölümünü ekle.

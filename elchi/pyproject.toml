@@ -1,0 +1,33 @@
+[project]
+name = "cnw-ai"
+version = "0.2.0"
+description = "Envoy/Elchi expert RAG system powered by Ollama"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    # RAG / LLM (used by rag.py + app.py)
+    "langchain>=0.3",
+    "langchain-ollama>=0.3",
+    "langchain-qdrant>=0.2",
+    "langchain-text-splitters>=1.1.1",
+    "streamlit>=1.40",
+    # Pipeline (ingest only)
+    "qdrant-client>=1.12",
+    "gitpython>=3.1",
+    "httpx>=0.27",
+    "beautifulsoup4>=4.12",
+    "markdownify>=0.14",
+    "pyyaml>=6.0",
+    "structlog>=24.0",
+]
+
+[project.optional-dependencies]
+pdf = ["pymupdf>=1.24"]
+transformers = ["sentence-transformers>=3.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cnw-ingest = "cnw_ai.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
