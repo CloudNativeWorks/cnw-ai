@@ -1,0 +1,39 @@
+[project]
+name = "clustereye"
+version = "0.1.0"
+description = "Offline AI assistant for database monitoring"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "langchain>=0.3",
+    "langchain-ollama>=0.3",
+    "langchain-qdrant>=0.2",
+    "qdrant-client>=1.12",
+    "gitpython>=3.1",
+    "httpx>=0.27",
+    "beautifulsoup4>=4.12",
+    "markdownify>=0.14",
+    "pyyaml>=6.0",
+    "structlog>=24.0",
+]
+
+[project.optional-dependencies]
+pdf = ["pymupdf>=1.24"]
+dev = ["pytest>=8.0", "httpx>=0.27"]
+
+[project.scripts]
+clustereye-ingest = "clustereye.cli:main_ingest"
+clustereye-export = "clustereye.cli:main_export"
+clustereye-import = "clustereye.cli:main_import"
+clustereye-serve = "clustereye.cli:main_serve"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/clustereye"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

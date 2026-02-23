@@ -1,0 +1,201 @@
+sources:
+  # --- PostgreSQL ---
+  - id: pg-monitoring
+    domain: postgres
+    db_engine: postgres
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://www.postgresql.org/docs/current/monitoring-stats.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [postgres, monitoring, stats]
+
+  - id: pg-replication
+    domain: postgres
+    db_engine: postgres
+    topic: replication
+    priority: 1
+    source_type: web
+    location: https://www.postgresql.org/docs/current/high-availability.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [postgres, replication, ha]
+
+  - id: pg-admin
+    domain: postgres
+    db_engine: postgres
+    topic: configuration
+    priority: 2
+    source_type: web
+    location: https://www.postgresql.org/docs/current/admin.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [postgres, admin, configuration]
+
+  - id: pg-performance
+    domain: postgres
+    db_engine: postgres
+    topic: tuning
+    priority: 1
+    source_type: web
+    location: https://www.postgresql.org/docs/current/performance-tips.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [postgres, performance, tuning]
+
+  - id: pgbouncer
+    domain: postgres
+    db_engine: postgres
+    topic: connection
+    priority: 2
+    source_type: git
+    location: https://github.com/pgbouncer/pgbouncer.git
+    branch: master
+    include_globs:
+      - "doc/*.md"
+      - "doc/*.rst"
+    tags: [postgres, pgbouncer, connection-pooling]
+
+  # --- MongoDB ---
+  - id: mongo-monitoring
+    domain: mongodb
+    db_engine: mongodb
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://www.mongodb.com/docs/manual/administration/monitoring/
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [mongodb, monitoring]
+
+  - id: mongo-replication
+    domain: mongodb
+    db_engine: mongodb
+    topic: replication
+    priority: 1
+    source_type: web
+    location: https://www.mongodb.com/docs/manual/replication/
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [mongodb, replication, replica-set]
+
+  # --- MySQL ---
+  - id: mysql-status
+    domain: mysql
+    db_engine: mysql
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html
+    crawl_depth: 0
+    rate_limit: 2.0
+    tags: [mysql, monitoring, status-variables]
+
+  - id: mysql-performance-schema
+    domain: mysql
+    db_engine: mysql
+    topic: tuning
+    priority: 1
+    source_type: web
+    location: https://dev.mysql.com/doc/refman/8.0/en/performance-schema.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [mysql, performance-schema, tuning]
+
+  # --- MSSQL ---
+  - id: mssql-monitoring
+    domain: mssql
+    db_engine: mssql
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-and-tuning-for-performance
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [mssql, monitoring, performance]
+
+  - id: mssql-tuning
+    domain: mssql
+    db_engine: mssql
+    topic: tuning
+    priority: 1
+    source_type: web
+    location: https://learn.microsoft.com/en-us/sql/relational-databases/performance/best-practices-with-query-store
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [mssql, tuning, query-store]
+
+  # --- ClickHouse ---
+  - id: clickhouse-operations
+    domain: clickhouse
+    db_engine: clickhouse
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://clickhouse.com/docs/en/operations
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [clickhouse, operations, monitoring]
+
+  - id: clickhouse-sql
+    domain: clickhouse
+    db_engine: clickhouse
+    topic: configuration
+    priority: 2
+    source_type: git
+    location: https://github.com/ClickHouse/ClickHouse.git
+    branch: master
+    include_globs:
+      - "docs/en/sql-reference/**/*.md"
+    exclude_globs:
+      - "docs/en/sql-reference/**/changelog/**"
+    tags: [clickhouse, sql, reference]
+
+  # --- Elasticsearch ---
+  - id: es-cluster-monitoring
+    domain: elasticsearch
+    db_engine: elasticsearch
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://www.elastic.co/guide/en/elasticsearch/reference/current/monitor-elasticsearch-cluster.html
+    crawl_depth: 1
+    rate_limit: 2.0
+    tags: [elasticsearch, monitoring, cluster]
+
+  # --- Linux ---
+  - id: linux-perf-tools
+    domain: linux
+    db_engine: ""
+    topic: monitoring
+    priority: 1
+    source_type: web
+    location: https://www.brendangregg.com/linuxperf.html
+    crawl_depth: 0
+    rate_limit: 2.0
+    tags: [linux, performance, tools]
+
+  # --- systemd ---
+  - id: systemd-man
+    domain: systemd
+    db_engine: ""
+    topic: systemd
+    priority: 2
+    source_type: web
+    location: https://www.freedesktop.org/software/systemd/man/latest/systemctl.html
+    crawl_depth: 0
+    rate_limit: 2.0
+    tags: [systemd, service-management]
+
+  # --- Networking ---
+  - id: networking-troubleshooting
+    domain: networking
+    db_engine: ""
+    topic: network
+    priority: 2
+    source_type: web
+    location: https://www.brendangregg.com/blog/2024-03-24/linux-crisis-tools.html
+    crawl_depth: 0
+    rate_limit: 2.0
+    tags: [networking, troubleshooting, linux]

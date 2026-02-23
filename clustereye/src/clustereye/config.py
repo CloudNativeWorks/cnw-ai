@@ -3,8 +3,8 @@ from pathlib import Path
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
-DATASET_PATH = DATA_DIR / "dataset.jsonl"
 WORKDIR = DATA_DIR / "workdir"
+EXPORT_DIR = DATA_DIR / "export"
 CONFIG_DIR = PROJECT_ROOT / "config"
 DEFAULT_SOURCES_YAML = CONFIG_DIR / "sources.yaml"
 
@@ -16,7 +16,7 @@ OLLAMA_BASE_URL = "http://localhost:11434"
 
 # Qdrant
 QDRANT_URL = "http://localhost:6333"
-COLLECTION_NAME = "elchi_docs"
+COLLECTION_NAME = "clustereye_docs"
 
 # Chunking
 CHUNK_SIZE = 4000  # chars (~1000 tokens)
@@ -31,3 +31,14 @@ UPSERT_BATCH_SIZE = 100
 
 # Retrieval
 TOP_K = 8
+
+# API
+API_HOST = "0.0.0.0"
+API_PORT = 8000
+
+# Workers
+DEFAULT_WORKERS = 1
+
+# Crawler
+CRAWL_MAX_DEPTH = 1
+CRAWL_RATE_LIMIT = 2.0

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from cnw_ai.pipeline.models import ParsedDocument, SourceConfig
+from clustereye.pipeline.models import ParsedDocument, SourceConfig
 
 
 def parse_jsonl(file_path: Path, source: SourceConfig) -> list[ParsedDocument]:
@@ -28,7 +28,6 @@ def parse_jsonl(file_path: Path, source: SourceConfig) -> list[ParsedDocument]:
             category = entry.get("category", "")
 
             # Topic-first format: resource and category at the top
-            # so embeddings capture the subject, not just "Question: What is..."
             header = resource
             if category:
                 header = f"{resource} - {category}" if resource else category
@@ -53,6 +52,8 @@ def parse_jsonl(file_path: Path, source: SourceConfig) -> list[ParsedDocument]:
                     component=source.component or resource.lower(),
                     license=source.license,
                     origin=source.location,
+                    db_engine=source.db_engine,
+                    topic=source.topic,
                 )
             )
 

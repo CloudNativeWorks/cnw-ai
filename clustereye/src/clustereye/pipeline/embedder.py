@@ -1,22 +1,18 @@
-"""Embedding provider: Ollama or sentence-transformers.
-
-Uses qdrant-client and httpx directly - no langchain dependency.
-"""
+"""Embedding provider: Ollama via httpx - no langchain dependency."""
 
 from __future__ import annotations
 
 import httpx
 
-from cnw_ai.config import EMBED_BATCH_SIZE, EMBEDDING_MODEL, OLLAMA_BASE_URL
-from cnw_ai.pipeline.models import ChunkDoc
-from cnw_ai.utils.logging import get_logger
+from clustereye.config import EMBED_BATCH_SIZE, EMBEDDING_MODEL, OLLAMA_BASE_URL
+from clustereye.pipeline.models import ChunkDoc
+from clustereye.utils.logging import get_logger
 
 log = get_logger(__name__)
 
 
 def _embed_batch_ollama(texts: list[str], model: str, base_url: str) -> list[list[float]]:
     """Embed a batch of texts using Ollama API."""
-    # Ollama supports batch embedding via /api/embed
     resp = httpx.post(
         f"{base_url}/api/embed",
         json={"model": model, "input": texts},

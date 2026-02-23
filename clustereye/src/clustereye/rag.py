@@ -1,5 +1,8 @@
 """RAG pipeline: retrieve relevant docs from Qdrant and query Ollama."""
 
+import re
+import time
+
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
@@ -7,7 +10,7 @@ from langchain_ollama import ChatOllama, OllamaEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 
-from cnw_ai.config import (
+from clustereye.config import (
     COLLECTION_NAME,
     EMBEDDING_MODEL,
     LLM_MODEL,
@@ -16,15 +19,16 @@ from cnw_ai.config import (
     TOP_K,
 )
 
-SYSTEM_PROMPT = """You are an expert AI assistant on Elchi and Envoy Proxy.
-Elchi is an Envoy proxy management platform. It manages WAF, GSLB, Listeners, Routes, Clusters,
-Certificates, Secrets and many other components.
+SYSTEM_PROMPT = """You are ClusterEye, an expert AI assistant for database monitoring and operations.
+You specialize in PostgreSQL, MongoDB, MySQL, MSSQL, ClickHouse, Elasticsearch, Linux performance,
+systemd services, and networking troubleshooting.
 
 Rules:
 - Answer directly and concisely based ONLY on the context below.
 - Do NOT show your reasoning or thinking process.
 - Do NOT speculate or make things up.
 - If the context does not contain the answer, say "I don't have information about that."
+- When applicable, include specific commands, queries, or configuration examples.
 
 Context:
 {context}
@@ -34,6 +38,9 @@ Question: {question}
 Answer:"""
 
 PROMPT = ChatPromptTemplate.from_template(SYSTEM_PROMPT)
+
+# Regex to strip <think>...</think> from deepseek-r1 responses
+_THINK_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
 
 
 def get_qdrant_client() -> QdrantClient:
@@ -65,7 +72,6 @@ def _format_docs(docs):
 
 def _dedup_and_rerank(docs, boost_factor: float = 0.1):
     """Deduplicate by text_hash, then rerank by priority."""
-    # Dedup: keep first occurrence (highest vector score) per text_hash
     seen_hashes = set()
     unique_docs = []
     for doc in docs:
@@ -76,13 +82,17 @@ def _dedup_and_rerank(docs, boost_factor: float = 0.1):
             seen_hashes.add(h)
         unique_docs.append(doc)
 
-    # Rerank by priority
     for doc in unique_docs:
         priority = doc.metadata.get("priority", 3)
         boost = 1 + boost_factor * (5 - priority)
         doc.metadata["_boosted_score"] = boost
     unique_docs.sort(key=lambda d: d.metadata.get("_boosted_score", 1), reverse=True)
     return unique_docs
+
+
+def _strip_think_tags(text: str) -> str:
+    """Strip <think>...</think> blocks from deepseek-r1 responses."""
+    return _THINK_RE.sub("", text).strip()
 
 
 def get_retriever():
@@ -109,11 +119,31 @@ def get_chain():
 
 
 def ask(question: str) -> dict:
-    """Ask a question and return the answer with source documents."""
+    """Ask a question and return the answer with source documents and timing."""
+    start = time.monotonic()
+
     retriever = get_retriever()
     chain = get_chain()
 
     docs = retriever.invoke(question)
     docs = _dedup_and_rerank(docs)
-    answer = chain.invoke(question)
-    return {"answer": answer, "source_documents": docs}
+    raw_answer = chain.invoke(question)
+    answer = _strip_think_tags(raw_answer)
+
+    elapsed_ms = int((time.monotonic() - start) * 1000)
+
+    sources = []
+    for doc in docs:
+        sources.append({
+            "uri": doc.metadata.get("uri", ""),
+            "title": doc.metadata.get("title", ""),
+            "section": doc.metadata.get("section", ""),
+            "db_engine": doc.metadata.get("db_engine", ""),
+            "topic": doc.metadata.get("topic", ""),
+        })
+
+    return {
+        "answer": answer,
+        "sources": sources,
+        "timing_ms": elapsed_ms,
+    }
