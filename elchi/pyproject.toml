@@ -23,7 +23,7 @@ dependencies = [
 [project.optional-dependencies]
 pdf = ["pymupdf>=1.24"]
 transformers = ["sentence-transformers>=3.0"]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=9.0.3"]
 
 [project.scripts]
 cnw-ingest = "cnw_ai.cli:main"
