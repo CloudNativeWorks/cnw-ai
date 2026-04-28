@@ -8,7 +8,7 @@ dependencies = [
     "langchain>=0.3",
     "langchain-ollama>=0.3",
     "langchain-qdrant>=0.2",
-    "langchain-text-splitters>=1.1.1",
+    "langchain-text-splitters>=1.1.2",
     "streamlit>=1.40",
     # Pipeline (ingest only)
     "qdrant-client>=1.12",
